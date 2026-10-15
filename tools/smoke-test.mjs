@@ -984,19 +984,22 @@ async function main() {
   await new Promise((r) => (closed.listening ? r() : closed.on('listening', r)));
   const closedPort = closed.address().port;
   await new Promise((r) => closed.close(r)); // nothing listens there now
-  const ollamaEnv = (extra = {}) => ({
-    IRUSHY_ENGINE: 'ollama',
-    OLLAMA_BASE_URL: om.ollamaUrl,
-    OLLAMA_MODEL: 'irushy-test',
-    IRUSHY_RATE_LIMIT_MAX: '100000',
-    IRUSHY_REQUEST_TIMEOUT_MS: '1500',
-    IRUSHY_MAX_PROVIDER_RETRIES: '0',
-    IRUSHY_PROVIDER_RPM: '1',
-    IRUSHY_ASSESSMENT_SECRET: ASSESS_SECRET,
-    IRUSHY_TEST_NET_ALLOW: `127.0.0.1:${om.port},127.0.0.1:${closedPort}`,
-    ...extra
-  });
-  // denyNetwork stays ON: the only reachable ports are the mock and a closed one.
+  const ollamaEnv = (extra = {}) => {
+    const env = {
+      IRUSHY_ENGINE: 'ollama',
+      OLLAMA_BASE_URL: om.ollamaUrl,
+      OLLAMA_MODEL: 'irushy-test',
+      IRUSHY_RATE_LIMIT_MAX: '100000',
+      IRUSHY_REQUEST_TIMEOUT_MS: '1500',
+      IRUSHY_MAX_PROVIDER_RETRIES: '0',
+      IRUSHY_PROVIDER_RPM: '1',
+      IRUSHY_ASSESSMENT_SECRET: ASSESS_SECRET,
+      ...extra
+    };
+    // denyNetwork stays ON; the one reachable host:port is this server's own OLLAMA_BASE_URL
+    env.IRUSHY_TEST_NET_ALLOW = new URL(env.OLLAMA_BASE_URL).host;
+    return env;
+  };
   const O = await startServer({ name: 'ollama', env: ollamaEnv() });
   const OU = await startServer({ name: 'ollama-unreachable', env: ollamaEnv({ OLLAMA_BASE_URL: `http://127.0.0.1:${closedPort}` }) });
   const OM = await startServer({ name: 'ollama-model-missing', env: ollamaEnv({ OLLAMA_MODEL: 'not-pulled-yet' }) });
@@ -1136,7 +1139,7 @@ async function main() {
     }
     for (const srv of servers.filter((x) => x.name.startsWith('ollama'))) {
       const m = srv.stderr().match(/NETWORK_ALLOWED (\d+)/);
-      check(`${srv.name} server: contacted only the configured Ollama port (${m ? m[1] : 0} allowed calls, nothing else)`, m && Number(m[1]) > 0 && /NETWORK_ATTEMPTS 0/.test(srv.stderr()));
+      check(`${srv.name} server: contacted only its own OLLAMA_BASE_URL (${m ? m[1] : 0} calls there, nothing else)`, m && Number(m[1]) > 0 && /NETWORK_ATTEMPTS 0/.test(srv.stderr()));
     }
   }
 
