@@ -8,7 +8,9 @@ label.
 > were rebuilt from the documents in this folder and the widget's contract,
 > and the default engine is now IRUSHY's own local engine. The earlier test
 > counts (157 / 65) belonged to code that is not in the repository; the new
-> suites report their own numbers (`npm test` 1609, `npm run check:ui` 69).
+> suites report their own numbers (`npm test` 1725, `npm run check:ui` 69).
+> The optional Ollama backend was added afterwards; it accounts for the move
+> from the first report's 1609.
 
 ---
 
@@ -97,6 +99,13 @@ label.
     `adminHint` and the verified links;
   - a missing key gives "IRUSHY is not connected yet.";
   - it never switches models on its own and never silently falls back.
+- On the optional Ollama backend:
+  - Ollama not running, a missing model, timeouts and HTTP errors map to the
+    same explicit codes, with Ollama-specific `adminHint`s (`ollama serve`,
+    `ollama pull`);
+  - it never shows "not connected", because a missing `OLLAMA_MODEL` stops the
+    server at startup instead;
+  - it never switches models and never falls back to another engine.
 
 ### 8. Security and privacy
 See [`SECURITY.md`](SECURITY.md). Verified by test:
@@ -110,7 +119,31 @@ See [`SECURITY.md`](SECURITY.md). Verified by test:
 - duplicate submissions answered once, and history trimmed;
 - hostile optional-backend output neutralised.
 
-### 9. The one widget change
+### 9. Optional Ollama backend (verified against a mock only)
+- `IRUSHY_ENGINE=ollama` with `OLLAMA_MODEL` answers from a model on this
+  machine through Ollama's native API. There is no key, no account and no
+  fallback. It is off by default, and its settings are not even read while
+  the local engine is selected.
+- Questions stay on this machine: another host, or an Ollama cloud model, makes
+  the server refuse to start unless `IRUSHY_OLLAMA_ALLOW_REMOTE=true`.
+- **Proven by test** against a mock Ollama. The test servers run with the
+  network blocked except for the mock's one port, and the suite checks they
+  contacted nothing else. Covered:
+  - wire format, and a byte-identical request for the same question;
+  - follow-up grounding and Tamil;
+  - the sample label, the length cap, removal of reasoning traces and of a
+    sentence cut off at the token limit;
+  - the full error table, the startup check, `verify:ollama`;
+  - the assessment guard (Ollama never called).
+- **Not verified:** a real Ollama install and a real model. The sandbox could
+  not download either. Before students use it, run `npm run verify:ollama`
+  and have a teacher try the acceptance questions with the chosen model.
+  See [`ENGINE.md` §10](ENGINE.md#10-other-backends).
+- Shared with APInex (a change to that backend): model answers are capped at
+  `IRUSHY_MAX_ANSWER_CHARS` and labelled as sample content whenever a sample
+  entry was among the model's references, cited or not.
+
+### 10. The one widget change
 The widget used to show *"Student results are not available to IRUSHY."*
 whenever the **answer** contained "result", "mark" or "score". Local-engine
 lessons contain those words (the SQL example's `mark` column), so the notice
@@ -203,8 +236,8 @@ modified. Steps are in [`INTEGRATION.md`](INTEGRATION.md). Production needs:
   not part of the rebuild; the local engine has no web access by design.
 - **`verify-apinex`** does not check the account balance, because no balance
   endpoint is documented in this repository.
-- **Self-hosted Ollama-compatible backend:** not built. It would sit behind the
-  same engine interface, off by default.
+- **Self-hosted Ollama-compatible backend:** built after the rebuild (see
+  "Optional Ollama backend" above). It is tested against a mock only.
 - **`build-resources-from-live`** is rebuilt but could not be run against the
   live site from the sandbox, which had no route to tnhhsscta.com. Its parser
   is tested on markup built from `data/resources.json`.

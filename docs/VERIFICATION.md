@@ -20,12 +20,12 @@ npm run check:ui    # browser suite (needs Chromium once: npx playwright install
 Last run:
 
 ```
-npm test          RESULT: 1609 passed, 0 failed, 1609 total   (about 4 s)
-npm run check:ui  RESULT: 69 passed, 0 failed, 69 total       (about 7 s)
+npm test          RESULT: 1725 passed, 0 failed, 1725 total   (about 8 s)
+npm run check:ui  RESULT: 69 passed, 0 failed, 69 total       (about 8 s)
 ```
 
 About the numbers:
-- **Server suite:** most of the 1609 are per-answer checks. Every chat answer
+- **Server suite:** most of the 1725 are per-answer checks. Every chat answer
   in the suite goes through the same contract, citation, link, labelling,
   language, length and determinism checks, which is why the count is high. The
   section table below shows where they come from.
@@ -34,6 +34,12 @@ About the numbers:
   question type with a different set of checks. On unchanged files the count
   is stable.
 - **No comparison with 157 / 65:** those suites are not in the repository.
+- **1609 → 1725:** the first rebuild report said 1609. The optional Ollama
+  backend added 116 checks: the allow-list harness (3), Ollama config (34),
+  `verify-ollama` (2), the APInex checks for the guarantees both backends now
+  share (4), the Ollama server section (57), and per-server log and network
+  checks for the four Ollama test servers (16). The rest are unchanged, and
+  the old suite file still passes unchanged against the new code.
 - **Browser used here:** Playwright's own Chromium download is blocked in this
   sandbox. The browser suite therefore ran on the Chromium build shipped in the
   npm package `@sparticuz/chromium` (via `IRUSHY_CHROMIUM_PATH`). On a normal
@@ -61,11 +67,23 @@ Each attempt is printed as `NETWORK_BLOCKED …`, and the total as
 | each local server reports `NETWORK_ATTEMPTS 0` and no `NETWORK_BLOCKED` line at shutdown (default, production, teacher, limits; and the UI run) | pass |
 | in-process: the engine module answers 14 single questions and two four-step follow-up chains with `fetch`, sockets, TLS, DNS and http(s) patched to throw, recording **0** attempts | pass |
 
-The only code that may use the network is the optional APInex backend. Its
-pass talks to `tools/mock-provider.mjs` on 127.0.0.1 and never to a real
-provider. The only script that talks to the real APInex is
-`npm run verify:apinex`; without a key it exits 2 before attempting any
-connection, which is also tested under the block.
+The only code that may use the network is the two optional backends, and the
+suites never reach a real provider or a real Ollama:
+
+- **APInex pass:** talks to `tools/mock-provider.mjs` on 127.0.0.1. The only
+  script that talks to the real APInex is `npm run verify:apinex`; without a
+  key it exits 2 before attempting any connection, which is also tested under
+  the block.
+- **Ollama pass:** runs **with** the block. The preload takes an exact
+  allow-list (`IRUSHY_TEST_NET_ALLOW`, loopback `host:port` only), and each
+  Ollama test server gets just its own `OLLAMA_BASE_URL`: the mock, or a
+  closed port for "Ollama not running". The suite first proves the allow-list
+  is exact: the listed port works, another loopback port and a listed
+  non-loopback host stay blocked. At shutdown, each Ollama server must report
+  `NETWORK_ATTEMPTS 0` and `NETWORK_ALLOWED` above 0. That means it talked to
+  its Ollama address and nothing else. The server never reads that variable.
+- **`npm run verify:ollama`:** without `OLLAMA_MODEL`, or with another
+  machine and no opt-in, it exits 2 with `NETWORK_ATTEMPTS 0`.
 
 ---
 
@@ -95,14 +113,15 @@ network blocked). Each answer passes the full contract and quality checks:
 
 ---
 
-## What the 1609 server checks cover
+## What the 1725 server checks cover
 
 | Section | Checks |
 |---|---|
-| Harness: the network block is real | 3 |
+| Harness: the network block is real; the test allow-list opens exactly one loopback port and ignores non-loopback entries | 6 |
 | Config: works with no .env, local engine by default; unknown engine fails loudly; placeholder key = no key; `.env.example` selects `local` | 10 |
+| Config, optional Ollama backend: default `127.0.0.1:11434`; chat budget 30; stray `OLLAMA_*` ignored by the local engine; no `OLLAMA_MODEL` → refuses to start; LAN / docker / public / `0.0.0.0` hosts and cloud models (`:cloud`, `-cloud`) refused without `IRUSHY_OLLAMA_ALLOW_REMOTE`; loopback forms accepted; credentials in the URL refused and not echoed; helper and status-mapping units; reasoning-trace removal; reference selection (low scores dropped, the history topic sent in full, forged ids never sent); `.env.example` documents it, commented out | 34 |
 | Knowledge: 13 notes valid and `sample-unapproved`; every keyword and term selects its own note; `conceptRef` real or null; phrasebooks paired (same frames, 2–4 variants, same slots, Tamil in Tamil, no informal நீ); glossary ids; SVG validator; log redaction | 108 |
-| Tools: `verify-apinex` refuses without a key (exit 2, no connection); resource-check parser, id derivation, diff and merge; nothing written when the site is unreachable | 10 |
+| Tools: `verify-apinex` refuses without a key and `verify-ollama` without a model or for another machine (exit 2, no connection); resource-check parser, id derivation, diff and merge; nothing written when the site is unreachable | 12 |
 | Intent classifier: 78-line Tamil/English regression table, including the traps ("Where…" is not the SQL WHERE clause; "binary search" is not Number systems; "answer key for 11th CS" is materials; "Can IRUSHY answer in Tamil?" is website help; forged ids in history ignored) | 78 |
 | No network, in-process | 24 |
 | Default server: health (`connected`, `requires_key: false`, `uses_network: false`), deep self-test, config without key material, site links/services/suggestions, diagnostics (names only), 404, API headers, CORS | 15 |
@@ -117,8 +136,9 @@ network blocked). Each answer passes the full contract and quality checks:
 | Assessment guard with a secret: completed token → explanation (EN + TA); similar question avoids the missed question; active, wrong secret, tampered, not permitted → refused; "give me the answers" refused even with a completed token | 60 |
 | Limits: chat budget 429 + `Retry-After` + bilingual + links; reads not starved; read budget bounded; provider RPM does not apply to the local engine | 5 |
 | Determinism across two separately started servers | 4 |
-| Optional APInex backend (mock only): config, hostile output sanitised (script, markup, unverified URL removed and reported, invented citation dropped), wire format (model, Bearer, `max_tokens` 700, non-streaming, system rules, only retrieved entries, Tamil instruction), error mapping for 401/402/404/429/503/400/bad JSON/empty/timeout, **no other model tried**, guard does not call the provider, duplicate `request_id` reaches the provider once, provider RPM bucket, no key → "IRUSHY is not connected yet." + `adminHint` + links, and the local engine never says "not connected" | 27 |
-| Logs and shutdown: every log line is JSON; no secret in any log; no message bodies; `NETWORK_ATTEMPTS 0` per local server | 19 |
+| Optional APInex backend (mock only): config, hostile output sanitised (script, markup, unverified URL removed and reported, invented citation dropped), wire format (model, Bearer, `max_tokens` 700, non-streaming, system rules, only retrieved entries, Tamil instruction), error mapping for 401/402/404/429/503/400/bad JSON/empty/timeout, **no other model tried**, guard does not call the provider, duplicate `request_id` reaches the provider once, provider RPM bucket, no key → "IRUSHY is not connected yet." + `adminHint` + links, and the local engine never says "not connected"; the shared guarantees (sample label, length cap, nothing left → `bad_provider_response`, labelled when a sample note was shown but not cited) | 31 |
+| Optional Ollama backend (mock only, network blocked except its own address): refuses to start without a model or with a cloud model (nothing sent); startup check logged (ok / not running / model missing / cloud alias) and `/api/health?deep=1`; config and diagnostics expose no address; full response contract with `meta.engine: "ollama"`, `provider_model`, `requires_key: false`; hostile output sanitised; wire (`/api/chat`, `stream: false`, temperature 0, integer seed, `num_predict` 700, no `think`/`keep_alive`, **no Authorization header**, only retrieved entries, page ids without URLs); same question → byte-identical request; follow-up sends the history topic's full note; Tamil instruction, Tamil note and Tamil label; sample label, length cap, reasoning trace hidden, cut-off sentence dropped; completed-test context only with a verified token; guard never calls Ollama; dedupe; no provider RPM; error table for 404/400/401/429/500/503/bad JSON/empty/only-URL/timeout with `adminHint`s; one call, no other model, no local fallback; Ollama not running → `network_error` with links, never "not connected" | 57 |
+| Logs and shutdown: every log line is JSON; no secret in any log; no message bodies; `NETWORK_ATTEMPTS 0` per server (local and Ollama); each Ollama server contacted only its own `OLLAMA_BASE_URL` | 35 |
 
 ## What the 69 browser checks cover
 
@@ -195,6 +215,14 @@ ones.
     notes.
 11. **Retrieval was ranked by "what is".** Stopwords counted in BM25 queries;
     retrieval now uses content words only.
+12. **Model answers were neither length-capped nor reliably labelled.**
+    Found while adding the Ollama backend: APInex output had no character
+    cap, and was labelled as sample content only when the model *cited* a
+    sample id. Both optional backends now get the cap, and the label whenever
+    a sample entry was among their references.
+13. **Two screenshots caught the panel mid-fade** (06 and 10 showed the page
+    through the panel), because fast error replies arrived during the open
+    animation. Screenshots now finish CSS animations first.
 
 ---
 

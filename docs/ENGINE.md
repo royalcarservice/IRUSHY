@@ -16,8 +16,10 @@ It recognises what is being asked, then assembles the answer from:
 
 What it cannot answer from those, it says it does not know.
 
-The optional APInex backend (`IRUSHY_ENGINE=apinex`) still exists behind the
-same interface. It is never used unless you set it, and it is never a fallback.
+Two optional backends sit behind the same interface: APInex, a hosted gateway
+(`IRUSHY_ENGINE=apinex`), and Ollama, a model on this machine
+(`IRUSHY_ENGINE=ollama`). Neither is used unless you set it, and neither is ever
+a fallback. See §10.
 
 ---
 
@@ -172,6 +174,10 @@ The knowledge version is a hash of every loaded data file. Editing a note or
 the phrasebook may change the wording of later answers, and that is expected.
 `npm test` checks determinism on every answer (same request twice), and across
 two separately started servers.
+
+This guarantee is the local engine's. The optional Ollama backend sends a
+byte-identical request for the same question, but its wording also depends on
+the model, the Ollama version and the hardware (§10).
 
 ---
 
@@ -344,8 +350,129 @@ It will not:
 
 ## 10. Other backends
 
-`IRUSHY_ENGINE=apinex` uses the APInex gateway through the same interface,
-covered in `README.md` and `docs/SECURITY.md`. A self-hosted Ollama-compatible
-backend could be added the same way, as `server/lib/engine/ollama.js`, behind
-`IRUSHY_ENGINE=ollama`. It is not built. It would stay off by default, and no
-test may depend on it.
+Two optional backends implement the same interface. Both are **off by
+default**, both are chosen only by an explicit `IRUSHY_ENGINE`, and neither is
+ever used as a fallback for the other or for the local engine.
+
+| | `IRUSHY_ENGINE=apinex` | `IRUSHY_ENGINE=ollama` |
+|---|---|---|
+| What answers | the APInex gateway (OpenAI-compatible) | a model on this machine, through Ollama's native API |
+| Key / account | `APINEX_API_KEY` | none; IRUSHY sends no credentials |
+| Required setting | the key (without it: *"IRUSHY is not connected yet."*) | `OLLAMA_MODEL` (without it the server refuses to start) |
+| Network | the internet | `OLLAMA_BASE_URL`, default `http://127.0.0.1:11434`; another machine or an Ollama cloud model only with `IRUSHY_OLLAMA_ALLOW_REMOTE=true` |
+| Check a real setup | `npm run verify:apinex` | `npm run verify:ollama` |
+| Default chat budget | 20 per 5 min per IP, plus 5 provider calls a minute | 30 per 5 min per IP |
+| Code | `server/lib/engine/apinex.js` | `server/lib/engine/ollama.js` |
+
+Both are covered in `README.md` and `docs/SECURITY.md`. The rest of this
+section describes what they share, and then the Ollama backend.
+
+### What every model backend gets
+
+Before a model is called, the chat route has already done everything the
+local engine relies on. It has bounded and cleaned the input and history,
+classified the message with the same rules as the local engine (`meta.intent`
+is filled in either way), and run the assessment guard. A request about an
+active test is refused **without calling the model**.
+
+`server/lib/prompts.js` then builds the only things a model ever sees:
+
+- the rules (cite ids in brackets, never write URLs, say when you do not know,
+  never invent services, fees, contacts, exam rules or marks, never reveal
+  test answers, plain text only) and the ids of the verified pages;
+- **reference entries**: the retrieved entries that scored at least 40% of the
+  best hit, at most 6. The concept note the conversation is about comes first
+  and in full (definition, key points, the simple version, the worked example
+  and the common mistake). That topic is named in the message or carried over
+  from the ids cited in IRUSHY's previous answer, as for the local engine
+  (§3), so "explain more simply" stays grounded in the note a teacher reviews;
+- for a test the **server** has verified as completed, the returned question,
+  the student's answer and the correct answer;
+- the bounded history and the message.
+
+Then `server/lib/respond.js` treats model output exactly as it would anything
+untrusted:
+
+- markup is stripped, including any `<think>` reasoning trace;
+- every URL that is not a verified site page is removed and reported in
+  `urlsRemoved`;
+- every `[id]` that does not exist in `data/` is removed;
+- the answer is cut at a sentence end to fit `IRUSHY_MAX_ANSWER_CHARS`;
+- if **any** sample entry was among the references, the answer carries
+  `sampleContentUsed: true`, the bilingual notice and the visible sample label
+  as its last line, because a model can use an entry without citing it;
+- an answer with nothing left after cleaning becomes `bad_provider_response`,
+  never an empty bubble.
+
+### The Ollama backend
+
+What IRUSHY sends: `POST {OLLAMA_BASE_URL}/api/chat` with `stream: false` and
+these options:
+
+- `temperature: 0`;
+- `seed`, an integer derived from the request (the same question gets the same
+  seed);
+- `num_predict = IRUSHY_MAX_OUTPUT_TOKENS` (default 700);
+- `num_ctx`, only if you set `OLLAMA_NUM_CTX`.
+
+It sends no `keep_alive` and no `think`, so Ollama's own defaults apply. A
+reply that stopped at the token limit (`done_reason: "length"`) loses its
+unfinished last sentence. `message.thinking` is never read.
+
+What IRUSHY checks:
+
+- **At startup** (`GET /api/tags`) it logs `engine_probe`: Ollama reachable,
+  the model installed, and whether that name actually points at a cloud model
+  (`remote_host` in Ollama's list). `/api/health?deep=1` runs the same check.
+- **At configuration**, before anything is sent, it refuses to start when:
+  - `OLLAMA_MODEL` is missing;
+  - the address is not http(s), or holds a user name or password;
+  - the host is not a loopback address, or the model's tag is `cloud` or ends
+    in `-cloud` (Ollama runs those on ollama.com, possibly on a paid plan),
+    unless `IRUSHY_OLLAMA_ALLOW_REMOTE=true`.
+
+  For a strictly local Ollama you can also turn Ollama's cloud features off on
+  the Ollama side (`OLLAMA_NO_CLOUD=1`, see Ollama's FAQ). Note that IRUSHY
+  reads `OLLAMA_BASE_URL`; `OLLAMA_HOST` is Ollama's own server setting.
+
+How failures look to the visitor: a bilingual error, the verified links, and
+Retry. For the admin, `error.adminHint` and the log line `chat_failed` say what
+to do:
+
+| Ollama | IRUSHY `error.code` | `adminHint` points to |
+|---|---|---|
+| not running / refused | `network_error` (503) | `OLLAMA_BASE_URL`, `ollama serve`, `npm run verify:ollama` |
+| no answer within `IRUSHY_REQUEST_TIMEOUT_MS` | `timeout` (504) | a smaller model, fewer output tokens, or a longer timeout (the widget waits 60 s) |
+| HTTP 404, model not found | `model_unavailable` (502) | `ollama pull <model>`, `ollama list` |
+| HTTP 400 / 401 / 403 / 422 | `invalid_request` (502) | the HTTP status in the log; a proxy if 401/403 |
+| HTTP 429 | `rate_limited` (429) | (from a proxy or a cloud model) |
+| HTTP 5xx | `provider_unavailable` (503) | the log; memory for the model |
+| invalid JSON, empty, or nothing left after cleaning | `bad_provider_response` (502) | thinking models using up the token budget |
+
+Retries: at most `IRUSHY_MAX_PROVIDER_RETRIES` (default 1), and only for 429,
+502, 503 and 504. IRUSHY never retries with another model.
+
+What it does **not** promise:
+
+- **Word-for-word determinism.** IRUSHY's side is deterministic: the same
+  question sends a byte-identical request, and the suite checks this. The
+  reply also depends on the model, the Ollama version and the hardware.
+  `npm run verify:ollama` shows whether your setup repeats itself.
+- **Tamil quality.** That depends on the model. `npm run verify:ollama` reports
+  whether the model replied to a Tamil message in Tamil. Only a teacher can
+  judge whether the Tamil is right.
+- **Answer quality.** The guard rails above stop invented links, ids and test
+  answers. They cannot make a model's explanation correct, so ask a teacher to
+  try the acceptance questions in `docs/VERIFICATION.md` with your model before
+  students use it.
+
+Seeing why an answer was given works as in §7. With `"debug": true`,
+`meta.debug` shows `engine: "ollama"`, the model, the retrieved and the sent
+reference ids, `test_context`, the seed and options, `done_reason`, the token
+counts and the time Ollama reported. It never contains message text.
+
+What was verified, and what was not: every behaviour above is checked by
+`npm test` against a mock Ollama (`tools/mock-provider.mjs`). Those test
+servers run with the network blocked except for the mock's one port, and the
+suite checks they contacted nothing else. It has **not** been run against a
+real Ollama install: the build sandbox could not download Ollama or a model.

@@ -9,8 +9,9 @@ share one widget, one server pipeline and one set of verified data files.
 
 IRUSHY answers with **its own local engine**. It needs no API key, no account,
 no quota and no network, and the same question always gets the same answer.
-An optional APInex backend can still be switched on, but nothing uses it unless
-you ask for it.
+Two optional backends can be switched on instead: APInex (a hosted gateway,
+needs a key) or Ollama (a model on your own machine, no key). Nothing uses
+either of them unless you ask for it.
 
 > **This repository is a separate local development copy.** It was built by
 > reading the public live site and it **never writes to it**. The live website
@@ -38,6 +39,7 @@ you ask for it.
 | Verified website knowledge and 58 published material links | `data/` | **Working** (recorded from the live site on 2026-10-15) |
 | Local preview of the real site with the widget on it | `public/` | **Working** |
 | Optional APInex backend | `server/lib/engine/apinex.js`, `tools/verify-apinex.mjs` | **Off by default**; needs your key in `.env` (never in chat) |
+| Optional Ollama backend | `server/lib/engine/ollama.js`, `tools/verify-ollama.mjs` | **Off by default**; a model on this machine, no key. Tested against a mock only, **not yet with a real Ollama install** |
 | Approved videos / diagrams / question bank | `data/videos.json`, `data/diagrams.json`, `data/question-bank.json` | **Awaiting content**: empty on purpose; sample files are clearly labelled |
 | Student results access | `server/routes/teacher.js` | **Deliberately unavailable**: needs real teacher→student permissions; never simulated |
 
@@ -80,15 +82,52 @@ With `IRUSHY_ENGINE=apinex` and no key, IRUSHY answers
 local engine never shows that message. IRUSHY never falls back from one
 backend to the other on its own, and never switches to a paid model.
 
+### Optional: a model on this machine (Ollama)
+
+Only if you want answers from a language model running on the same machine.
+Install [Ollama](https://ollama.com), pull a model that you have tried in
+Tamil and English, and put this in your local `.env`:
+
+```ini
+IRUSHY_ENGINE=ollama
+OLLAMA_MODEL=llama3.2          # example: any name from "ollama list"
+# OLLAMA_BASE_URL=http://127.0.0.1:11434   (the default)
+```
+
+```bash
+ollama pull llama3.2     # once, on this machine
+npm run verify:ollama    # running? model installed? one tiny answer; Tamil?
+npm start                # the startup log says whether Ollama and the model answered
+```
+
+- **No key, no account.** IRUSHY sends no credentials to Ollama.
+- **This machine only.** Another machine (a LAN box, a docker service) or an
+  Ollama cloud model (a name ending in `cloud`, run on ollama.com and possibly
+  paid) would send visitors' questions off the server. IRUSHY refuses to start
+  with either unless you also set `IRUSHY_OLLAMA_ALLOW_REMOTE=true`.
+- **No fallback.** If Ollama is not running or the model is missing, the
+  visitor gets a clear error with the verified links and the admin gets an
+  `adminHint` (`ollama serve`, `ollama pull …`). IRUSHY never switches models
+  and never quietly answers from another engine instead.
+- **Same guard rails as every answer:** markup stripped, unverified URLs and
+  invented `[ids]` removed, length capped, sample content labelled, test
+  answers refused before the model is called.
+- **Determinism is only guaranteed by the local engine.** IRUSHY sends the
+  same request for the same question (temperature 0, a fixed seed), but the
+  words also depend on the model, the Ollama version and the hardware.
+
+How it works and what it sends: [`docs/ENGINE.md` §10](docs/ENGINE.md#10-other-backends).
+
 ### Scripts
 
 | Command | What it does |
 |---|---|
 | `npm start` | run the server (API + local site preview) on `PORT` (default 8787) |
 | `npm run dev` | same, with auto-restart on file changes |
-| `npm test` | **1609** server checks in about 4 s. Every local-engine server runs with **outbound network blocked**. Covers the bilingual acceptance matrix, every intent, determinism, guards, limits, teacher tools, and the optional backend against a mock |
+| `npm test` | **1725** server checks in about 8 s. Every local-engine server runs with **outbound network blocked**. Covers the bilingual acceptance matrix, every intent, determinism, guards, limits, teacher tools, and both optional backends against a mock (the Ollama servers with the network blocked except their own address) |
 | `npm run check:ui` | **69** real-browser checks (desktop + mobile) against the local engine, no mock; screenshots into `docs/screenshots/` |
 | `npm run verify:apinex` | the only real APInex call, for the optional backend. Refuses without a key (exit 2) |
+| `npm run verify:ollama` | checks a real Ollama for the optional backend: running, model installed and local, one tiny answer, same reply twice, Tamil reply. Refuses without `OLLAMA_MODEL` (exit 2) |
 | `npm run build:data` | read-only re-check of the published materials and site pages; dry run unless `--write` |
 
 `npm run check:ui` needs Chromium once: `npx playwright install chromium`, or
@@ -121,10 +160,11 @@ point `IRUSHY_CHROMIUM_PATH` at any Chromium build.
    │                                                               │
    │  engine/ ── local (default) ─ intent → composer → phrasebook  │
    │         │                     no key, no network, same answer │
-   │         └── apinex (optional, off) ─ the only code that may   │
-   │                                      use a key or the network │
+   │         ├── apinex (optional, off) ─ hosted gateway, key      │
+   │         └── ollama (optional, off) ─ model on this machine,   │
+   │                                      no key; no fallback      │
    │  respond.js     links only from site-pages, [ids] checked,    │
-   │                 sample label + bilingual notice               │
+   │                 sample label + notice, length cap: all engines│
    └───────────────────────────────────────────────────────────────┘
 ```
 
@@ -182,7 +222,7 @@ putting `teacher` in the page grants nothing.
 |---|---|---|
 | `POST /api/chat` | any session | the assistant. Body: `{ message, lang, mode_requested, history, context, request_id, debug? }` |
 | `GET /api/config` | any | public runtime configuration (no secrets) |
-| `GET /api/health` | any | readiness; `?deep=1` runs the engine's self-test (local) or probes the provider (apinex) |
+| `GET /api/health` | any | readiness; `?deep=1` runs the engine's self-test (local), probes the provider (apinex), or checks that Ollama runs and the model is installed (ollama) |
 | `GET /api/site/links?mode=&lang=` | any | verified website links |
 | `GET /api/site/services?lang=` | any | the services published on the live site |
 | `GET /api/suggestions?mode=&lang=` | any | starter questions |
@@ -202,12 +242,14 @@ Every chat response carries the same fields, whichever engine answered:
 - `suggestions`, `notices`, `results_access`, `assessment`, `blocked`;
 - `meta`: `engine`, `engine_version`, `intent`, `confidence`,
   `knowledge_version`, `transcript_stored: false`, `key_on_server_only: true`,
-  `requires_key`, and `debug` when asked for.
+  `requires_key`, and `debug` when asked for. The optional backends add
+  `provider_model`.
 
 Failures return `ok: false` with an explicit `error.code`, a bilingual
 message, an `adminHint` for configuration problems, and the verified website
 links. The local engine can only fail with `engine_error`, `busy` or the
-input and limit codes. The optional backend adds:
+input and limit codes. The optional backends add (Ollama never uses the
+first three, which are about keys and accounts):
 
 | `not_connected` | `invalid_credentials` | `insufficient_quota` | `model_unavailable` | `rate_limited` |
 |---|---|---|---|---|
@@ -217,8 +259,9 @@ input and limit codes. The optional backend adds:
 
 ## 6. Security posture (short version)
 
-- The default engine has **no key at all**. When the optional backend is on,
-  its key exists only in the server process. It is never in the widget,
+- The default engine has **no key at all**, and neither has the optional
+  Ollama backend. When the optional APInex backend is on, its key exists only
+  in the server process. It is never in the widget,
   `/api/config`, a response or a log; a redactor strips it, `sk-...` patterns
   and `Authorization` headers. `.env` is git-ignored.
 - Roles come from an **HMAC-signed, HttpOnly** cookie. A client-side "Teacher"
