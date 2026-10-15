@@ -7,7 +7,7 @@
 // all facts come from data/ (FAQ, materials, concept notes, banks). The
 // composer never writes a URL into the text and never invents a source.
 
-import { pick, normalize, contentTokens, overlapScore } from '../lang.js';
+import { pick, normalize, contentTokens, overlapScore, hasTamil } from '../lang.js';
 import { matchGlossary } from './match.js';
 import { classOf, subjectOf, mediumOf, materialWords, lessonNumber } from './intent.js';
 import {
@@ -309,7 +309,12 @@ export function materials(ctx, d) {
     lesson: lessonNumber(raw)
   };
   const topicHit = ctx.cls.signals.topic && ctx.cls.signals.topic.score >= 1 ? ctx.cls.signals.topic.concept : null;
-  const qTokens = contentTokens(raw).filter((t) => !/^(material|note|pdf|download|study|11th|12th|11|12|class|medium|tamil|english|computer|science|application|technology|cs|ca|ct|give|send|list|need|want|share|any|book)$/.test(t));
+  // Material titles on the site are English, so only English words can match
+  // a title; class / subject / medium are already applied as filters above
+  // (in either language).
+  const qTokens = contentTokens(raw).filter(
+    (t) => !hasTamil(t) && !/^(material|note|pdf|download|study|11th|12th|11|12|class|medium|tamil|english|computer|science|application|technology|cs|ca|ct|give|send|list|need|want|share|any|book|plus|one|two|xi|xii)$/.test(t)
+  );
 
   const scored = [];
   for (const m of k.resources) {
@@ -326,6 +331,8 @@ export function materials(ctx, d) {
     if (topicHit && [topicHit.conceptRef, ...(topicHit.relatedMaterials || [])].includes(m.id)) score += 5;
     if (qTokens.length) score += 2 * overlapScore(qTokens, title);
     if (STUDY_WORDS.test(m.title.en)) score += 0.5;
+    // A Tamil question with no medium named: Tamil-medium files first (tie-break only).
+    if (!filters.medium && lang === 'ta' && m.medium === 'Tamil Medium') score += 0.3;
     const wanted = filters.types.length || filters.lesson || topicHit || qTokens.length;
     if (wanted && score < 1) continue;
     scored.push({ m, score });

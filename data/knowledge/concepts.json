@@ -2767,7 +2767,11 @@
         ]
       },
       "excludePhrases": [
-        "internet of things"
+        "internet of things",
+        "internet safety",
+        "online safety",
+        "இணையப் பாதுகாப்பு",
+        "இணைய பாதுகாப்பு"
       ],
       "conceptRef": null,
       "relatedMaterials": []
