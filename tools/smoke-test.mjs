@@ -28,6 +28,8 @@ import { mintAssessmentToken } from '../server/lib/policy.js';
 import { tamilShare, hasTamil } from '../server/lib/lang.js';
 import { buildIndex } from '../server/lib/retrieve.js';
 import { makeRedactor } from '../server/lib/log.js';
+import { parseMaterialLinks, materialFromFile, diffResources, mergeResources } from './build-resources-from-live.mjs';
+import crypto from 'node:crypto';
 
 const R = createReporter('IRUSHY server suite (npm test)');
 const check = R.check;
@@ -224,6 +226,34 @@ async function main() {
       const o = red(JSON.stringify({ a: `key ${TEST_KEY}`, password: 'x1234567' }));
       return !o.includes(TEST_KEY) && !o.includes('x1234567') && !!JSON.parse(o);
     })());
+  }
+
+  R.section('Tools: optional APInex check and the read-only resource check');
+  {
+    const v = spawnSync(process.execPath, ['--import', DENY_NETWORK, 'tools/verify-apinex.mjs'], { cwd: ROOT, encoding: 'utf8', timeout: 15000, env: { PATH: process.env.PATH, HOME: process.env.HOME, IRUSHY_ENV_FILE: 'none' } });
+    check('verify-apinex without a key: refuses with exit code 2', v.status === 2, { status: v.status, err: v.stderr.slice(0, 200) });
+    check('verify-apinex without a key: sends nothing (no connection attempted)', /nothing was sent/i.test(v.stderr) && !/NETWORK_BLOCKED/.test(v.stderr));
+    const fixture =
+      '<html><body><table>' +
+      KNOW.resources.map((r) => `<tr><td>${r.class}</td><td>${r.title.en.replace(/&/g, '&amp;')}</td><td><a href="Material/${r.file}">View</a></td><td><a href="/Material/${r.file}" download>Download</a></td></tr>`).join('') +
+      '<tr><td><a href="https://evil.example.com/Material/x.pdf">x</a></td></tr></table></body></html>';
+    const found = parseMaterialLinks(fixture);
+    check('resource check: parses every published PDF link from the Materials page markup', found.length === KNOW.resources.length && found.every((f) => KNOW.resources.some((r) => r.url === f.url)), found.length);
+    check('resource check: ignores links to other hosts', !found.some((f) => /evil/.test(f.url)));
+    check('resource check: id, class, subject, medium derived from the file name', JSON.stringify(materialFromFile('TNHHSSCTA-CA-1-TM-Mat1.pdf')) === JSON.stringify({ id: 'mat.CA-1-TM-1', subject: 'Computer Applications', class: 11, year: '1st year', medium: 'Tamil Medium', language: 'ta', file: 'TNHHSSCTA-CA-1-TM-Mat1.pdf' }));
+    check('resource check: every existing id matches its file name', KNOW.resources.every((r) => materialFromFile(r.file) && materialFromFile(r.file).id === r.id));
+    const d0 = diffResources(KNOW.resources, found);
+    check('resource check: no difference against data/resources.json for the same page', d0.added.length === 0 && d0.missing.length === 0 && d0.retitled.length === 0);
+    const changed = [...found.slice(1), { file: 'TNHHSSCTA-CS-2-EM-Mat99.pdf', url: 'https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-EM-Mat99.pdf', title: 'New lesson' }];
+    const d1 = diffResources(KNOW.resources, changed);
+    check('resource check: reports a newly published file and a file no longer linked', d1.added.length === 1 && d1.missing.length === 1);
+    const merged = mergeResources(KNOW.resources.map((r) => ({ ...r, file: r.file, title: r.title })), changed, '2026-10-15');
+    check('resource check --write: adds the new file, keeps the unlinked one for review', merged.length === KNOW.resources.length + 1 && merged.some((r) => r.id === 'mat.CS-2-EM-99'));
+    const resFile = path.join(ROOT, 'data', 'resources.json');
+    const before = crypto.createHash('sha256').update(fs.readFileSync(resFile)).digest('hex');
+    const b = spawnSync(process.execPath, ['--import', DENY_NETWORK, 'tools/build-resources-from-live.mjs', '--write'], { cwd: ROOT, encoding: 'utf8', timeout: 15000, env: { PATH: process.env.PATH, HOME: process.env.HOME } });
+    const after = crypto.createHash('sha256').update(fs.readFileSync(resFile)).digest('hex');
+    check('resource check with the site unreachable: clear message, nothing written', b.status === 3 && /Nothing was changed/.test(b.stderr) && before === after, { status: b.status });
   }
 
   // ===== 2. intent classifier regression table (in-process) =================
