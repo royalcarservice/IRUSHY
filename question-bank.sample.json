@@ -1,0 +1,1095 @@
+{
+  "_meta": {
+    "purpose": "SAMPLE question bank for IRUSHY. This is NOT approved school content and must never be presented as such.",
+    "provenance": "sample-unapproved",
+    "loadedWhen": "IRUSHY_ALLOW_SAMPLE_CONTENT=true (default true only outside production)",
+    "labelling": "Every answer, paper or list built from these entries must be marked 'Sample - not approved' in the UI and in the response payload (provenance includes 'sample-unapproved').",
+    "mustBeReviewedBy": "A subject teacher, before any of it is used with students.",
+    "scope": "Only universally-true school computing facts are used here (number systems, logic gates, HTML, SQL, Python, networking). No school-specific marks, exam patterns, lesson numbers or policies are invented.",
+    "conceptRefNote": "conceptRef points at real published TNHHSSCTA material where a matching file exists; otherwise it is null and IRUSHY says so instead of guessing."
+  },
+  "items": [
+    {
+      "id": "qb.CS11.TM.numbersystems.001",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "topic": "Number systems",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "How many digits are used in the binary number system?",
+        "ta": "இரும எண் முறையில் எத்தனை இலக்கங்கள் பயன்படுகின்றன?"
+      },
+      "answer": "2",
+      "explanation": {
+        "en": "The binary system has base 2, so it uses only the digits 0 and 1.",
+        "ta": "இரும எண் முறையின் அடிமானம் 2. எனவே 0 மற்றும் 1 ஆகிய இரு இலக்கங்கள் மட்டுமே பயன்படுகின்றன."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "binary",
+        "conversion",
+        "decimal",
+        "number system",
+        "practice",
+        "question",
+        "test",
+        "எண் முறைமை"
+      ]
+    },
+    {
+      "id": "qb.CS11.TM.numbersystems.002",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "topic": "Number systems",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "Write the decimal value of the binary number 1011.",
+        "ta": "இரும எண் 1011 இன் பதின்ம மதிப்பை எழுதுக."
+      },
+      "answer": "11",
+      "explanation": {
+        "en": "1x8 + 0x4 + 1x2 + 1x1 = 11. Each binary position is a power of 2, read from left to right: 8, 4, 2, 1.",
+        "ta": "1x8 + 0x4 + 1x2 + 1x1 = 11. இடமிருந்து வலமாக ஒவ்வொரு இரும இடமும் 2 இன் அடுக்கு: 8, 4, 2, 1."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "binary",
+        "conversion",
+        "decimal",
+        "number system",
+        "practice",
+        "question",
+        "test",
+        "எண் முறைமை"
+      ]
+    },
+    {
+      "id": "qb.CS11.TM.numbersystems.003",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "topic": "Number systems",
+      "type": "mcq",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "The hexadecimal number system uses base ____.",
+        "ta": "பதினறும எண் முறையின் அடிமானம் ____."
+      },
+      "options": [
+        {
+          "key": "A",
+          "text": {
+            "en": "2",
+            "ta": "2"
+          }
+        },
+        {
+          "key": "B",
+          "text": {
+            "en": "8",
+            "ta": "8"
+          }
+        },
+        {
+          "key": "C",
+          "text": {
+            "en": "16",
+            "ta": "16"
+          }
+        },
+        {
+          "key": "D",
+          "text": {
+            "en": "10",
+            "ta": "10"
+          }
+        }
+      ],
+      "answer": "C",
+      "explanation": {
+        "en": "Hexadecimal is base 16: digits 0-9 then A-F, where A=10, B=11, C=12, D=13, E=14, F=15.",
+        "ta": "பதினறும எண் முறையின் அடிமானம் 16. இலக்கங்கள் 0-9, பின்னர் A-F. இங்கு A=10, B=11, C=12, D=13, E=14, F=15."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "binary",
+        "conversion",
+        "decimal",
+        "number system",
+        "practice",
+        "question",
+        "test",
+        "எண் முறைமை"
+      ]
+    },
+    {
+      "id": "qb.CS11.TM.numbersystems.004",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "topic": "Number systems",
+      "type": "two_mark",
+      "marks": 2,
+      "difficulty": "medium",
+      "question": {
+        "en": "Convert the decimal number 45 into binary.",
+        "ta": "பதின்ம எண் 45 ஐ இரும எண்ணாக மாற்றுக."
+      },
+      "answer": "101101",
+      "explanation": {
+        "en": "Repeated division by 2, collecting remainders: 45/2=22 r1, 22/2=11 r0, 11/2=5 r1, 5/2=2 r1, 2/2=1 r0, 1/2=0 r1. Read remainders bottom to top: 101101.",
+        "ta": "2 ஆல் தொடர்ந்து வகுத்து மீதிகளை எழுதுங்கள்: 45/2=22 மீ1, 22/2=11 மீ0, 11/2=5 மீ1, 5/2=2 மீ1, 2/2=1 மீ0, 1/2=0 மீ1. மீதிகளை கீழிருந்து மேலாக படிக்க: 101101."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "binary",
+        "conversion",
+        "decimal",
+        "number system",
+        "practice",
+        "question",
+        "test",
+        "எண் முறைமை"
+      ]
+    },
+    {
+      "id": "qb.CS11.TM.numbersystems.005",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "topic": "Number systems",
+      "type": "two_mark",
+      "marks": 2,
+      "difficulty": "medium",
+      "question": {
+        "en": "Convert the binary number 1101 into octal.",
+        "ta": "இரும எண் 1101 ஐ எண்கோண எண்ணாக மாற்றுக."
+      },
+      "answer": "15",
+      "explanation": {
+        "en": "Group the binary digits in threes from the right: 001 101. Each group is 1 and 5 in decimal, giving 15 in octal.",
+        "ta": "வலமிருந்து இரும இலக்கங்களை மூன்று மூன்றாக பிரிக்கவும்: 001 101. ஒவ்வொரு குழுவும் பதின்மத்தில் 1 மற்றும் 5. எனவே எண்கோண எண் 15."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "binary",
+        "conversion",
+        "decimal",
+        "number system",
+        "practice",
+        "question",
+        "test",
+        "எண் முறைமை"
+      ]
+    },
+    {
+      "id": "qb.CS11.EM.boolean.001",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Boolean algebra",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "Which logic gate gives output 1 only when both inputs are 1?",
+        "ta": "இரண்டு உள்ளீடுகளும் 1 ஆக இருக்கும்போது மட்டும் வெளியீடு 1 தரும் வாயில் எது?"
+      },
+      "answer": "AND gate",
+      "explanation": {
+        "en": "An AND gate outputs 1 only for the combination 1,1. Any other input combination gives 0.",
+        "ta": "AND வாயில் 1,1 என்ற உள்ளீட்டு சேர்க்கைக்கு மட்டுமே 1 தரும். மற்ற அனைத்து சேர்க்கைகளுக்கும் 0."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "AND",
+        "NAND",
+        "NOT",
+        "OR",
+        "boolean",
+        "logic gates",
+        "practice",
+        "question",
+        "test",
+        "truth table",
+        "தர்க்க வாயில்"
+      ]
+    },
+    {
+      "id": "qb.CS11.EM.boolean.002",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Boolean algebra",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "What is the output of a NOT gate when the input is 0?"
+      },
+      "answer": "1",
+      "explanation": {
+        "en": "A NOT gate (inverter) always outputs the opposite of its input, so input 0 gives output 1.",
+        "ta": "NOT வாயில் உள்ளீட்டின் எதிர் மதிப்பைத் தரும். எனவே உள்ளீடு 0 எனில் வெளியீடு 1."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "AND",
+        "NAND",
+        "NOT",
+        "OR",
+        "boolean",
+        "logic gates",
+        "practice",
+        "question",
+        "test",
+        "truth table",
+        "தர்க்க வாயில்"
+      ]
+    },
+    {
+      "id": "qb.CS11.EM.boolean.003",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Boolean algebra",
+      "type": "mcq",
+      "marks": 1,
+      "difficulty": "medium",
+      "question": {
+        "en": "Which gate is equivalent to an AND gate followed by a NOT gate?"
+      },
+      "options": [
+        {
+          "key": "A",
+          "text": {
+            "en": "NOR",
+            "ta": "NOR"
+          }
+        },
+        {
+          "key": "B",
+          "text": {
+            "en": "NAND",
+            "ta": "NAND"
+          }
+        },
+        {
+          "key": "C",
+          "text": {
+            "en": "XOR",
+            "ta": "XOR"
+          }
+        },
+        {
+          "key": "D",
+          "text": {
+            "en": "OR",
+            "ta": "OR"
+          }
+        }
+      ],
+      "answer": "B",
+      "explanation": {
+        "en": "NAND means 'NOT AND'. Its output is the opposite of the AND output, so it is 0 only for inputs 1,1.",
+        "ta": "NAND என்பது 'NOT AND'. AND இன் வெளியீட்டின் எதிர் மதிப்பைத் தரும். எனவே 1,1 என்ற உள்ளீட்டுக்கு மட்டும் 0."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "AND",
+        "NAND",
+        "NOT",
+        "OR",
+        "boolean",
+        "logic gates",
+        "practice",
+        "question",
+        "test",
+        "truth table",
+        "தர்க்க வாயில்"
+      ]
+    },
+    {
+      "id": "qb.CS11.EM.boolean.004",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Boolean algebra",
+      "type": "two_mark",
+      "marks": 2,
+      "difficulty": "medium",
+      "question": {
+        "en": "How many rows are there in the truth table of a 2-input logic gate?"
+      },
+      "answer": "4",
+      "explanation": {
+        "en": "With 2 inputs and 2 possible states each, the number of combinations is 2 x 2 = 4, so the truth table has 4 rows.",
+        "ta": "2 உள்ளீடுகள், ஒவ்வொன்றுக்கும் 2 நிலைகள். எனவே சேர்க்கைகள் 2 x 2 = 4. அதனால் உண்மை அட்டவணையில் 4 வரிசைகள்."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "AND",
+        "NAND",
+        "NOT",
+        "OR",
+        "boolean",
+        "logic gates",
+        "practice",
+        "question",
+        "test",
+        "truth table",
+        "தர்க்க வாயில்"
+      ]
+    },
+    {
+      "id": "qb.CS11.EM.computerorg.001",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Computer organisation",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "Which unit of the CPU performs arithmetic and logic operations?"
+      },
+      "answer": "ALU (Arithmetic Logic Unit)",
+      "explanation": {
+        "en": "The Arithmetic Logic Unit inside the CPU carries out arithmetic (add, subtract) and logic (compare, AND, OR) operations.",
+        "ta": "CPU வின் உள்ளே உள்ள கணித தர்க்க அலகு (ALU) கூட்டல், கழித்தல் போன்ற கணிதச் செயல்களையும், ஒப்பீடு, AND, OR போன்ற தர்க்கச் செயல்களையும் செய்கிறது."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "alu",
+        "bit",
+        "byte",
+        "cpu",
+        "memory",
+        "practice",
+        "question",
+        "test",
+        "நினைவகம்"
+      ]
+    },
+    {
+      "id": "qb.CS11.EM.memory.001",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Computer memory",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "How many bits make one byte?"
+      },
+      "answer": "8",
+      "explanation": {
+        "en": "One byte equals 8 bits. Memory sizes are normally measured in bytes.",
+        "ta": "ஒரு பைட் என்பது 8 பிட்கள்."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "alu",
+        "bit",
+        "byte",
+        "cpu",
+        "memory",
+        "practice",
+        "question",
+        "test",
+        "நினைவகம்"
+      ]
+    },
+    {
+      "id": "qb.CS11.EM.memory.002",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Computer memory",
+      "type": "mcq",
+      "marks": 1,
+      "difficulty": "medium",
+      "question": {
+        "en": "Which of these is a volatile memory?"
+      },
+      "options": [
+        {
+          "key": "A",
+          "text": {
+            "en": "ROM",
+            "ta": "ROM"
+          }
+        },
+        {
+          "key": "B",
+          "text": {
+            "en": "RAM",
+            "ta": "RAM"
+          }
+        },
+        {
+          "key": "C",
+          "text": {
+            "en": "Hard disk",
+            "ta": "வன் வட்டு"
+          }
+        },
+        {
+          "key": "D",
+          "text": {
+            "en": "DVD",
+            "ta": "DVD"
+          }
+        }
+      ],
+      "answer": "B",
+      "explanation": {
+        "en": "RAM loses its contents when power is switched off, so it is volatile. ROM, hard disks and DVDs keep data without power.",
+        "ta": "மின்சாரம் நிற்கும்போது RAM அதன் தகவலை இழக்கும். எனவே அது நிலையற்றது (volatile). ROM, வன் வட்டு, DVD ஆகியவை தகவலைத் தக்கவைக்கும்."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "alu",
+        "bit",
+        "byte",
+        "cpu",
+        "memory",
+        "practice",
+        "question",
+        "test",
+        "நினைவகம்"
+      ]
+    },
+    {
+      "id": "qb.CS11.TM.software.001",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "topic": "Operating systems",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "Name the system software that manages hardware and runs application programs.",
+        "ta": "வன்பொருளை நிர்வகித்து, செயலி நிரல்களை இயக்கும் முறைமை மென்பொருளின் பெயர் என்ன?"
+      },
+      "answer": "Operating system",
+      "explanation": {
+        "en": "An operating system (for example Windows or Linux) manages memory, files, devices and processes, and gives applications a way to use the hardware.",
+        "ta": "இயக்க முறைமை (உதாரணம்: Windows, Linux) நினைவகம், கோப்புகள், சாதனங்கள், செயல்முறைகளை நிர்வகிக்கிறது."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "practice",
+        "question",
+        "test"
+      ]
+    },
+    {
+      "id": "qb.CS12.EM.python.001",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Python basics",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "Which built-in Python function displays output on the screen?"
+      },
+      "answer": "print()",
+      "explanation": {
+        "en": "print() sends its arguments to standard output, for example print(\"Hi\") shows Hi.",
+        "ta": "print() சார்பு திரையில் வெளியீட்டைக் காட்டும். எடுத்துக்காட்டு: print(\"Hi\") என்பது Hi எனக் காட்டும்."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "code",
+        "practice",
+        "print",
+        "program",
+        "python",
+        "question",
+        "test"
+      ]
+    },
+    {
+      "id": "qb.CS12.EM.python.002",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Python basics",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "What data type does the value 3.14 have in Python?"
+      },
+      "answer": "float",
+      "explanation": {
+        "en": "A number written with a decimal point is a float (floating-point number). Whole numbers such as 3 are int.",
+        "ta": "தசமப் புள்ளியுடன் எழுதப்படும் எண் float வகையைச் சேர்ந்தது. 3 போன்ற முழு எண் int."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "code",
+        "practice",
+        "print",
+        "program",
+        "python",
+        "question",
+        "test"
+      ]
+    },
+    {
+      "id": "qb.CS12.EM.python.003",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Python basics",
+      "type": "two_mark",
+      "marks": 2,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is displayed by len(\"IRUSHY\") in Python?"
+      },
+      "answer": "6",
+      "explanation": {
+        "en": "len() returns the number of characters. IRUSHY has I,R,U,S,H,Y = 6 characters.",
+        "ta": "len() எழுத்துகளின் எண்ணிக்கையைத் தரும். IRUSHY இல் 6 எழுத்துகள் உள்ளன."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "code",
+        "practice",
+        "print",
+        "program",
+        "python",
+        "question",
+        "test"
+      ]
+    },
+    {
+      "id": "qb.CS12.EM.python.004",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Python basics",
+      "type": "mcq",
+      "marks": 1,
+      "difficulty": "medium",
+      "question": {
+        "en": "Which operator gives the remainder of a division in Python?"
+      },
+      "options": [
+        {
+          "key": "A",
+          "text": {
+            "en": "/",
+            "ta": "/"
+          }
+        },
+        {
+          "key": "B",
+          "text": {
+            "en": "//",
+            "ta": "//"
+          }
+        },
+        {
+          "key": "C",
+          "text": {
+            "en": "%",
+            "ta": "%"
+          }
+        },
+        {
+          "key": "D",
+          "text": {
+            "en": "**",
+            "ta": "**"
+          }
+        }
+      ],
+      "answer": "C",
+      "explanation": {
+        "en": "% is the modulus operator: 7 % 2 gives 1. // gives the whole-number quotient and ** gives a power.",
+        "ta": "% என்பது மீதி காணும் செயற்குறி: 7 % 2 = 1. // முழு எண் ஈவு, ** அடுக்கு."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "code",
+        "practice",
+        "print",
+        "program",
+        "python",
+        "question",
+        "test"
+      ]
+    },
+    {
+      "id": "qb.CS12.EM.html.001",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "HTML",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "Which HTML tag creates a hyperlink?"
+      },
+      "answer": "<a>",
+      "explanation": {
+        "en": "The anchor tag <a> with an href attribute creates a link, for example <a href=\"page.html\">Go</a>.",
+        "ta": "<a> குறிச்சொல் href பண்புடன் இணைப்பை உருவாக்கும். எடுத்துக்காட்டு: <a href=\"page.html\">Go</a>."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "css",
+        "html",
+        "practice",
+        "question",
+        "tag",
+        "test",
+        "web page"
+      ]
+    },
+    {
+      "id": "qb.CS12.EM.html.002",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "HTML",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "Which tag holds the visible content of an HTML page?"
+      },
+      "answer": "<body>",
+      "explanation": {
+        "en": "<head> holds information about the page; <body> holds what the visitor actually sees.",
+        "ta": "<head> பக்கம் பற்றிய தகவலை வைக்கும்; <body> பார்வையாளர் பார்க்கும் உள்ளடக்கத்தை வைக்கும்."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "css",
+        "html",
+        "practice",
+        "question",
+        "tag",
+        "test",
+        "web page"
+      ]
+    },
+    {
+      "id": "qb.CS12.EM.html.003",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "HTML / CSS",
+      "type": "mcq",
+      "marks": 1,
+      "difficulty": "medium",
+      "question": {
+        "en": "Which language is used to describe the presentation of an HTML page?"
+      },
+      "options": [
+        {
+          "key": "A",
+          "text": {
+            "en": "SQL",
+            "ta": "SQL"
+          }
+        },
+        {
+          "key": "B",
+          "text": {
+            "en": "CSS",
+            "ta": "CSS"
+          }
+        },
+        {
+          "key": "C",
+          "text": {
+            "en": "HTTP",
+            "ta": "HTTP"
+          }
+        },
+        {
+          "key": "D",
+          "text": {
+            "en": "FTP",
+            "ta": "FTP"
+          }
+        }
+      ],
+      "answer": "B",
+      "explanation": {
+        "en": "CSS (Cascading Style Sheets) controls colour, spacing, fonts and layout of HTML content.",
+        "ta": "CSS (Cascading Style Sheets) HTML உள்ளடக்கத்தின் நிறம், இடைவெளி, எழுத்துரு, அமைப்பு ஆகியவற்றைக் கட்டுப்படுத்தும்."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "css",
+        "html",
+        "practice",
+        "question",
+        "tag",
+        "test",
+        "web page"
+      ]
+    },
+    {
+      "id": "qb.CS12.EM.sql.001",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Database / SQL",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "Which SQL statement is used to fetch rows from a table?"
+      },
+      "answer": "SELECT",
+      "explanation": {
+        "en": "SELECT reads data, for example SELECT name FROM student; The FROM clause names the table.",
+        "ta": "SELECT தரவைப் பெறும். எடுத்துக்காட்டு: SELECT name FROM student; FROM விதி அட்டவணையின் பெயரைக் குறிக்கும்."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "database",
+        "practice",
+        "query",
+        "question",
+        "sql",
+        "table",
+        "test",
+        "தரவுத்தளம்"
+      ]
+    },
+    {
+      "id": "qb.CS12.EM.sql.002",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Database / SQL",
+      "type": "two_mark",
+      "marks": 2,
+      "difficulty": "medium",
+      "question": {
+        "en": "What is a primary key in a database table?"
+      },
+      "answer": "A column (or set of columns) whose value uniquely identifies each row.",
+      "explanation": {
+        "en": "A primary key must be unique for every row and cannot be NULL. It is used to locate a row reliably.",
+        "ta": "முதன்மைத் திறவுகோல் ஒவ்வொரு வரிசையையும் தனித்துவமாக அடையாளம் காட்டும். அது ஒருபோதும் NULL ஆக இருக்கக் கூடாது."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "database",
+        "practice",
+        "query",
+        "question",
+        "sql",
+        "table",
+        "test",
+        "தரவுத்தளம்"
+      ]
+    },
+    {
+      "id": "qb.CS12.EM.sql.003",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": "English Medium",
+      "language": "en",
+      "topic": "Database / SQL",
+      "type": "mcq",
+      "marks": 1,
+      "difficulty": "medium",
+      "question": {
+        "en": "Which clause filters the rows returned by a SELECT statement?"
+      },
+      "options": [
+        {
+          "key": "A",
+          "text": {
+            "en": "ORDER BY",
+            "ta": "ORDER BY"
+          }
+        },
+        {
+          "key": "B",
+          "text": {
+            "en": "WHERE",
+            "ta": "WHERE"
+          }
+        },
+        {
+          "key": "C",
+          "text": {
+            "en": "GROUP BY",
+            "ta": "GROUP BY"
+          }
+        },
+        {
+          "key": "D",
+          "text": {
+            "en": "HAVING",
+            "ta": "HAVING"
+          }
+        }
+      ],
+      "answer": "B",
+      "explanation": {
+        "en": "WHERE keeps only the rows that satisfy a condition, e.g. WHERE mark > 50. HAVING filters groups, not rows.",
+        "ta": "WHERE நிபந்தனையை நிறைவேற்றும் வரிசைகளை மட்டும் தேர்ந்தெடுக்கும். எடுத்துக்காட்டு: WHERE mark > 50."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "database",
+        "practice",
+        "query",
+        "question",
+        "sql",
+        "table",
+        "test",
+        "தரவுத்தளம்"
+      ]
+    },
+    {
+      "id": "qb.CA11.TM.spreadsheet.001",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Applications",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "topic": "Spreadsheet",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "In a spreadsheet, what is the name of the cell at column B and row 3?",
+        "ta": "விரிதாளில் B நிரல், 3 வரிசை சந்திக்கும் கலத்தின் பெயர் என்ன?"
+      },
+      "answer": "B3",
+      "explanation": {
+        "en": "Cells are named column letter followed by row number, so column B, row 3 is B3.",
+        "ta": "கலத்தின் பெயர் நிரல் எழுத்து + வரிசை எண். எனவே B நிரல், 3 வரிசை = B3."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "cell",
+        "excel",
+        "practice",
+        "question",
+        "spreadsheet",
+        "sum",
+        "test",
+        "விரிதாள்"
+      ]
+    },
+    {
+      "id": "qb.CA11.TM.spreadsheet.002",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Applications",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "topic": "Spreadsheet",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "Which spreadsheet function adds a range of numbers?",
+        "ta": "எண்களின் வரம்பைக் கூட்டும் விரிதாள் சார்பு எது?"
+      },
+      "answer": "SUM( )",
+      "explanation": {
+        "en": "=SUM(A1:A10) adds all the values from A1 to A10.",
+        "ta": "=SUM(A1:A10) என்பது A1 முதல் A10 வரையிலான எண்களைக் கூட்டும்."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "cell",
+        "excel",
+        "practice",
+        "question",
+        "spreadsheet",
+        "sum",
+        "test",
+        "விரிதாள்"
+      ]
+    },
+    {
+      "id": "qb.CA11.TM.networks.001",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Applications",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "topic": "Computer networks",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "What does LAN stand for?",
+        "ta": "LAN என்பதன் விரிவாக்கம் என்ன?"
+      },
+      "answer": "Local Area Network",
+      "explanation": {
+        "en": "A LAN covers a small area such as one school building. A WAN covers a large area.",
+        "ta": "LAN ஒரு சிறிய பரப்பை (எடுத்துக்காட்டாக ஒரு பள்ளிக் கட்டடம்) இணைக்கும். WAN பெரிய பரப்பை இணைக்கும்."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "http",
+        "internet",
+        "lan",
+        "network",
+        "practice",
+        "question",
+        "test",
+        "wan",
+        "வலைப்பின்னல்"
+      ]
+    },
+    {
+      "id": "qb.CA11.TM.networks.002",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Applications",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "topic": "Internet",
+      "type": "one_word",
+      "marks": 1,
+      "difficulty": "easy",
+      "question": {
+        "en": "Which protocol is used to transfer web pages?",
+        "ta": "வலைப் பக்கங்களை பரிமாற்றப் பயன்படும் நெறிமுறை எது?"
+      },
+      "answer": "HTTP (HTTPS when secured)",
+      "explanation": {
+        "en": "HTTP is the web transfer protocol. HTTPS is the encrypted version and is what most sites, including this one, use.",
+        "ta": "HTTP வலைப் பக்க பரிமாற்ற நெறிமுறை. HTTPS என்பது அதன் மறையாக்கப்பட்ட வடிவம்; இந்தத் தளம் உட்பட பெரும்பாலான தளங்கள் பயன்படுத்துவது HTTPS."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "practice",
+        "question",
+        "test"
+      ]
+    },
+    {
+      "id": "qb.CA11.TM.internet.003",
+      "status": "sample-unapproved",
+      "kind": "question",
+      "class": 11,
+      "subject": "Computer Applications",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "topic": "Internet safety",
+      "type": "two_mark",
+      "marks": 2,
+      "difficulty": "easy",
+      "question": {
+        "en": "Why should you not share your password with anyone, including an assistant?",
+        "ta": "உங்கள் கடவுச்சொல்லை யாருடனும், உதவியாளர் உட்பட, பகிரக் கூடாது ஏன்?"
+      },
+      "answer": "Because anyone who knows it can act as you, and no genuine assistant or website staff needs it.",
+      "explanation": {
+        "en": "Passwords prove identity. Sharing one lets another person read or change your account, and a genuine support service will never ask for it in a chat.",
+        "ta": "கடவுச்சொல் உங்கள் அடையாளத்தை உறுதிப்படுத்தும். அதைப் பகிர்ந்தால் மற்றவர் உங்கள் கணக்கைப் பயன்படுத்தலாம். உண்மையான உதவிச் சேவை அதை உரையாடலில் கேட்காது."
+      },
+      "conceptRef": null,
+      "keywords": [
+        "practice",
+        "question",
+        "test"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "_meta": {
+    "purpose": "Verified website-help content for IRUSHY's HOMEPAGE mode. Every fact and destination here was observed on the live TNHHSSCTA website.",
+    "provenance": "verified-site",
+    "checked": "2026-10-15",
+    "origin": "https://tnhhsscta.com",
+    "rules": [
+      "Only add entries supported by something actually published on the live site.",
+      "'links[].id' must reference an id in data/site-pages.json. IRUSHY resolves URLs from there, so a wrong or invented destination cannot be shown.",
+      "Never add account-handling, password-reset, fees, refund or policy claims unless published on the site."
+    ]
+  },
+  "items": [
+    {
+      "id": "faq.what-is-site",
+      "topic": "about",
+      "keywords": ["what is this website", "about this site", "TNHHSSCTA", "who runs", "இந்த இணையதளம்", "இது என்ன"],
+      "question": { "en": "What is this website?", "ta": "இந்த இணையதளம் என்ன?" },
+      "answer": {
+        "en": "TNHHSSCTA is described on its own home page as an e-computer education service and \u201cthe Computer teachers guide\u201d. It publishes computer-science study materials, an online one-word test, and registration/ sign-in pages for teachers, students and the NEET programme. The web admin shown on the home page is P.R.Babu Shyam Prasad, GHSS-Vadacheri, Tirupattur District.",
+        "ta": "\u0b87\u0ba8\u0bcd\u0ba4 \u0b87\u0ba3\u0bc8\u0baf\u0ba4\u0bb3\u0ba4\u0bcd\u0ba4\u0bc8 TNHHSSCTA \u2014 \u0b95\u0ba3\u0bbf\u0ba9\u0bbf \u0b95\u0bb2\u0bcd\u0bb5\u0bbf \u0b9a\u0bc7\u0bb5\u0bc8 \u0b8e\u0ba9\u0bcd\u0bb1\u0bc1 \u0b85\u0ba4\u0ba9\u0bcd \u0bae\u0bc1\u0b95\u0baa\u0bcd\u0baa\u0bbf\u0bb2\u0bcd \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bbf\u0b9f\u0baa\u0bcd\u0baa\u0b9f\u0bcd\u0b9f\u0bc1\u0bb3\u0bcd\u0bb3\u0ba4\u0bc1 \u2014 \u201c\u0b95\u0ba3\u0bbf\u0ba9\u0bbf \u0b86\u0b9a\u0bbf\u0bb0\u0bbf\u0baf\u0bb0\u0bcd\u0b95\u0bb3\u0bbf\u0ba9\u0bcd \u0bb5\u0bb4\u0bbf\u0b95\u0bbe\u0b9f\u0bcd\u0b9f\u0bbf\u201d. \u0b95\u0ba3\u0bbf\u0ba9\u0bbf \u0b85\u0bb1\u0bbf\u0bb5\u0bbf\u0baf\u0bb2\u0bcd \u0baa\u0bbe\u0b9f\u0b95\u0bcd\u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bb3\u0bcd, \u0b86\u0ba9\u0bcd\u0bb2\u0bc8\u0ba9\u0bcd \u0b92\u0bb0\u0bc1 \u0bb5\u0bbe\u0bb0\u0bcd\u0ba4\u0bcd\u0ba4\u0bc8\u0ba4\u0bcd \u0ba4\u0bc7\u0bb0\u0bcd\u0bb5\u0bc1, \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd \u0b86\u0b9a\u0bbf\u0bb0\u0bbf\u0baf\u0bb0\u0bcd/\u0bae\u0bbe\u0ba3\u0bb5\u0bb0\u0bcd/\u0ba8\u0bc0\u0b9f\u0bcd \u0baa\u0ba4\u0bbf\u0bb5\u0bc1 \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd \u0b89\u0bb3\u0bcd\u0ba8\u0bc1\u0bb4\u0bc8\u0bb5\u0bc1 \u0baa\u0b95\u0bcd\u0b95\u0b99\u0bcd\u0b95\u0bb3\u0bcd \u0b89\u0bb3\u0bcd\u0bb3\u0ba9."
+      },
+      "links": [{ "id": "site.home", "label": { "en": "TNHHSSCTA home page", "ta": "TNHHSSCTA \u0bae\u0bc1\u0b95\u0baa\u0bcd\u0baa\u0bc1\u0baa\u0bcd \u0baa\u0b95\u0bcd\u0b95\u0bae\u0bcd" } }],
+      "provenance": "verified-site",
+      "audience": ["visitor", "teacher", "student"],
+      "modes": ["home"]
+    },
+    {
+      "id": "faq.find-materials",
+      "topic": "materials",
+      "keywords": ["materials", "study material", "notes", "pdf", "download", "textbook", "பாடக்குறிப்பு", "பாடம்", "பதிவிறக்கம்"],
+      "question": { "en": "Where do I find study materials?", "ta": "\u0baa\u0bbe\u0b9f\u0b95\u0bcd\u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bb3\u0bcd \u0b8e\u0b99\u0bcd\u0b95\u0bc7?" },
+      "answer": {
+        "en": "Use the \u201cMaterials\u201d button on the left menu of the home page. It opens the Computer Science materials page, which lists PDFs by class and medium \u2014 for example 11th and 12th Computer Science, Computer Applications and Computer Technology, in Tamil medium and English medium. Each row has a View and a Download link.",
+        "ta": "\u0bae\u0bc1\u0b95\u0baa\u0bcd\u0baa\u0bc1\u0baa\u0bcd \u0baa\u0b95\u0bcd\u0b95\u0ba4\u0bcd\u0ba4\u0bbf\u0ba9\u0bcd \u0b87\u0b9f\u0ba4\u0bc1 \u0baa\u0b9f\u0bcd\u0b9f\u0bbf\u0baf\u0bbf\u0bb2\u0bcd \u0b89\u0bb3\u0bcd\u0bb3 \u201cMaterials\u201d \u0baa\u0bca\u0ba4\u0bcd\u0ba4\u0bbe\u0ba9\u0bc8\u0baa\u0bcd \u0b9a\u0bca\u0b9f\u0bc1\u0b95\u0bcd\u0b95\u0bb5\u0bc1\u0bae\u0bcd. \u0b85\u0ba4\u0bc1 \u0b95\u0ba3\u0bbf\u0ba9\u0bbf \u0b85\u0bb1\u0bbf\u0bb5\u0bbf\u0baf\u0bb2\u0bcd \u0baa\u0bbe\u0b9f\u0baa\u0bcd\u0baa\u0bca\u0bb0\u0bc1\u0bb3\u0bcd \u0baa\u0b95\u0bcd\u0b95\u0ba4\u0bcd\u0ba4\u0bc8\u0ba4\u0bcd \u0ba4\u0bbf\u0bb1\u0b95\u0bcd\u0b95\u0bc1\u0bae\u0bcd. \u0b85\u0b99\u0bcd\u0b95\u0bc1 11, 12 \u0b86\u0bae\u0bcd \u0bb5\u0b95\u0bc1\u0baa\u0bcd\u0baa\u0bc1 \u0b95\u0ba3\u0bbf\u0ba9\u0bbf \u0b85\u0bb1\u0bbf\u0bb5\u0bbf\u0baf\u0bb2\u0bcd, \u0b95\u0ba3\u0bbf\u0ba9\u0bbf\u0baa\u0bcd \u0baa\u0baf\u0ba9\u0bcd\u0baa\u0bbe\u0b9f\u0bc1\u0b95\u0bb3\u0bcd, \u0b95\u0ba3\u0bbf\u0ba9\u0bbf\u0ba4\u0bcd \u0ba4\u0bca\u0bb4\u0bbf\u0bb2\u0bcd\u0ba8\u0bc1\u0b9f\u0bcd\u0baa\u0bae\u0bcd \u2014 \u0ba4\u0bae\u0bbf\u0bb4\u0bcd \u0bb5\u0b9f\u0bbf\u0bb5\u0bc1 \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd \u0b86\u0b99\u0bcd\u0b95\u0bbf\u0bb2 \u0bb5\u0b9f\u0bbf\u0bb5\u0bc1 \u2014 PDF \u0b95\u0bcd\u0b95\u0bb3\u0bcd \u0baa\u0b9f\u0bcd\u0b9f\u0bbf\u0baf\u0bb2\u0bbf\u0b9f\u0baa\u0bcd\u0baa\u0b9f\u0bcd\u0b9f\u0bc1\u0bb3\u0bcd\u0bb3\u0ba9. \u0b92\u0bb5\u0bcd\u0bb5\u0bca\u0bb0\u0bc1 \u0bb5\u0bb0\u0bbf\u0baf\u0bbf\u0bb2\u0bc1\u0bae\u0bcd View \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd Download \u0b87\u0ba3\u0bc8\u0baa\u0bcd\u0baa\u0bc1 \u0b89\u0bb3\u0bcd\u0bb3\u0ba4\u0bc1."
+      },
+      "links": [
+        { "id": "nav.materials", "label": { "en": "Materials page", "ta": "\u0baa\u0bbe\u0b9f\u0b95\u0bcd\u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0baa\u0bcd \u0baa\u0b95\u0bcd\u0b95\u0bae\u0bcd" } }
+      ],
+      "provenance": "verified-site",
+      "audience": ["student", "teacher", "visitor"],
+      "modes": ["home", "student", "teacher"]
+    },
+    {
+      "id": "faq.one-word-test",
+      "topic": "test",
+      "keywords": ["one word test", "online test", "exam", "practice test", "test link", "தேர்வு", "ஒரு வார்த்தை"],
+      "question": { "en": "How do I take the online one-word test?", "ta": "\u0b86\u0ba9\u0bcd\u0bb2\u0bc8\u0ba9\u0bcd \u0b92\u0bb0\u0bc1 \u0bb5\u0bbe\u0bb0\u0bcd\u0ba4\u0bcd\u0ba4\u0bc8\u0ba4\u0bcd \u0ba4\u0bc7\u0bb0\u0bcd\u0bb5\u0bc8 \u0b8e\u0baa\u0bcd\u0baa\u0b9f\u0bbf \u0b8e\u0b9f\u0bc1\u0baa\u0bcd\u0baa\u0ba4\u0bc1?" },
+      "answer": {
+        "en": "Open \u201cOnline One Word Test\u201d from the home page menu. The test page loads inside the same window and is meant for practising one-word questions. IRUSHY cannot start, submit or change a test for you, and I will not reveal answers while a test is still being assessed.",
+        "ta": "\u0bae\u0bc1\u0b95\u0baa\u0bcd\u0baa\u0bc1\u0baa\u0bcd \u0baa\u0b95\u0bcd\u0b95 \u0baa\u0b9f\u0bcd\u0b9f\u0bbf\u0baf\u0bbf\u0bb2\u0bcd \u201cONLINE ONE WORD TEST\u201d \u0baa\u0bca\u0ba4\u0bcd\u0ba4\u0bbe\u0ba9\u0bc8\u0baa\u0bcd \u0b9a\u0bca\u0b9f\u0bc1\u0b95\u0bcd\u0b95\u0bb5\u0bc1\u0bae\u0bcd. \u0ba4\u0bc7\u0bb0\u0bcd\u0bb5\u0bc1\u0baa\u0bcd \u0baa\u0b95\u0bcd\u0b95\u0bae\u0bcd \u0b85\u0ba4\u0bc7 \u0b9a\u0bbe\u0bb3\u0bb0\u0ba4\u0bcd\u0ba4\u0bbf\u0bb2\u0bcd \u0ba4\u0bbf\u0bb1\u0b95\u0bcd\u0b95\u0bc1\u0bae\u0bcd. IRUSHY \u0b89\u0b99\u0bcd\u0b95\u0bb3\u0bc1\u0b95\u0bcd\u0b95\u0bbe\u0b95 \u0ba4\u0bc7\u0bb0\u0bcd\u0bb5\u0bc8 \u0ba4\u0bca\u0b9f\u0b99\u0bcd\u0b95\u0bb5\u0bcb, \u0b9a\u0bae\u0bb0\u0bcd\u0baa\u0bcd\u0baa\u0bbf\u0b95\u0bcd\u0b95\u0bb5\u0bcb \u0bae\u0bc1\u0b9f\u0bbf\u0baf\u0bbe\u0ba4\u0bc1. \u0ba4\u0bc7\u0bb0\u0bcd\u0bb5\u0bc1 \u0ba8\u0b9f\u0ba8\u0bcd\u0ba4\u0bc1\u0b95\u0bca\u0ba3\u0bcd\u0b9f\u0bbf\u0bb0\u0bc1\u0b95\u0bcd\u0b95\u0bc1\u0bae\u0bcd\u0baa\u0bcb\u0ba4\u0bc1 \u0bb5\u0bbf\u0b9f\u0bc8\u0b95\u0bb3\u0bc8\u0b9a\u0bcd \u0b9a\u0bca\u0bb2\u0bcd\u0bb2\u0bc7\u0ba9."
+      },
+      "links": [
+        { "id": "nav.one-word-test", "label": { "en": "Online One Word Test", "ta": "\u0b86\u0ba9\u0bcd\u0bb2\u0bc8\u0ba9\u0bcd \u0b92\u0bb0\u0bc1 \u0bb5\u0bbe\u0bb0\u0bcd\u0ba4\u0bcd\u0ba4\u0bc8\u0ba4\u0bcd \u0ba4\u0bc7\u0bb0\u0bcd\u0bb5\u0bc1" } }
+      ],
+      "provenance": "verified-site",
+      "audience": ["student", "teacher"],
+      "modes": ["home", "student"]
+    },
+    {
+      "id": "faq.teacher-registration",
+      "topic": "registration",
+      "keywords": ["teacher registration", "register as teacher", "teacher signup", "ஆசிரியர் பதிவு"],
+      "question": { "en": "How does a teacher register?", "ta": "\u0b86\u0b9a\u0bbf\u0bb0\u0bbf\u0baf\u0bb0\u0bcd \u0b8e\u0baa\u0bcd\u0baa\u0b9f\u0bbf \u0baa\u0ba4\u0bbf\u0bb5\u0bc1 \u0b9a\u0bc6\u0baf\u0bcd\u0bb5\u0ba4\u0bc1?" },
+      "answer": {
+        "en": "Use \u201cTeacher Registration\u201d in the home page menu. The published form asks for your name, father's name, date of birth, school address, school place, phone number and email ID. Fill it in yourself \u2014 please do not type personal details into this chat.",
+        "ta": "\u0bae\u0bc1\u0b95\u0baa\u0bcd\u0baa\u0bc1\u0baa\u0bcd \u0baa\u0b95\u0bcd\u0b95 \u0baa\u0b9f\u0bcd\u0b9f\u0bbf\u0baf\u0bbf\u0bb2\u0bcd \u201cTeacher Registration\u201d \u0baa\u0bca\u0ba4\u0bcd\u0ba4\u0bbe\u0ba9\u0bc8\u0baa\u0bcd \u0b9a\u0bca\u0b9f\u0bc1\u0b95\u0bcd\u0b95\u0bb5\u0bc1\u0bae\u0bcd. \u0b85\u0ba8\u0bcd\u0ba4 \u0baa\u0b9f\u0bbf\u0bb5\u0ba4\u0bcd\u0ba4\u0bbf\u0bb2\u0bcd \u0b89\u0b99\u0bcd\u0b95\u0bb3\u0bcd \u0baa\u0bc6\u0baf\u0bb0\u0bcd, \u0ba4\u0ba8\u0bcd\u0ba4\u0bc8\u0baf\u0bbf\u0ba9\u0bcd \u0baa\u0bc6\u0baf\u0bb0\u0bcd, \u0baa\u0bbf\u0bb1\u0ba8\u0bcd\u0ba4 \u0ba4\u0bc7\u0ba4\u0bbf, \u0baa\u0bb3\u0bcd\u0bb3\u0bbf \u0bae\u0bc1\u0b95\u0bb5\u0bb0\u0bbf, \u0baa\u0bb3\u0bcd\u0bb3\u0bbf \u0b8a\u0bb0\u0bcd, \u0ba4\u0bca\u0bb2\u0bc8\u0baa\u0bc7\u0b9a\u0bbf \u0b8e\u0ba3\u0bcd \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd \u0bae\u0bbf\u0ba9\u0bcd\u0ba9\u0b9e\u0bcd\u0b9a\u0bb2\u0bcd \u0bae\u0bc1\u0b95\u0bb5\u0bb0\u0bbf \u0b95\u0bc7\u0b9f\u0bcd\u0b95\u0baa\u0bcd\u0baa\u0b9f\u0bc1\u0b95\u0bbf\u0ba9\u0bcd\u0bb1\u0ba9. \u0ba4\u0baf\u0bb5\u0bc1\u0b9a\u0bc6\u0baf\u0bcd\u0ba4\u0bc1 \u0ba4\u0ba9\u0bbf\u0baa\u0bcd\u0baa\u0b9f\u0bcd\u0b9f \u0ba4\u0b95\u0bb5\u0bb2\u0bcd\u0b95\u0bb3\u0bc8 \u0b87\u0ba8\u0bcd\u0ba4 \u0b85\u0bb0\u0bc1\u0b99\u0bcd\u0b95\u0bc1\u0ba4\u0bb2\u0bbf\u0bb2\u0bcd \u0b9f\u0bc8\u0baa\u0bcd \u0b9a\u0bc6\u0baf\u0bcd\u0baf \u0bb5\u0bc7\u0ba3\u0bcd\u0b9f\u0bbe\u0bae\u0bcd."
+      },
+      "links": [
+        { "id": "nav.teacher-registration", "label": { "en": "Teacher Registration", "ta": "\u0b86\u0b9a\u0bbf\u0bb0\u0bbf\u0baf\u0bb0\u0bcd \u0baa\u0ba4\u0bbf\u0bb5\u0bc1" } }
+      ],
+      "provenance": "verified-site",
+      "audience": ["teacher", "visitor"],
+      "modes": ["home", "teacher"]
+    },
+    {
+      "id": "faq.student-registration",
+      "topic": "registration",
+      "keywords": ["student registration", "register as student", "student signup", "மாணவர் பதிவு"],
+      "question": { "en": "How does a student register?", "ta": "\u0bae\u0bbe\u0ba3\u0bb5\u0bb0\u0bcd \u0b8e\u0baa\u0bcd\u0baa\u0b9f\u0bbf \u0baa\u0ba4\u0bbf\u0bb5\u0bc1 \u0b9a\u0bc6\u0baf\u0bcd\u0bb5\u0ba4\u0bc1?" },
+      "answer": {
+        "en": "Use \u201cStudent Registration\u201d in the home page menu. The published form asks for your name, exam number, date of birth and your teacher's ID (the example given on the form looks like CT9486564555). Ask your teacher if you do not know the teacher ID.",
+        "ta": "\u0bae\u0bc1\u0b95\u0baa\u0bcd\u0baa\u0bc1\u0baa\u0bcd \u0baa\u0b95\u0bcd\u0b95 \u0baa\u0b9f\u0bcd\u0b9f\u0bbf\u0baf\u0bbf\u0bb2\u0bcd \u201cStudent Registration\u201d \u0baa\u0bca\u0ba4\u0bcd\u0ba4\u0bbe\u0ba9\u0bc8\u0baa\u0bcd \u0b9a\u0bca\u0b9f\u0bc1\u0b95\u0bcd\u0b95\u0bb5\u0bc1\u0bae\u0bcd. \u0b85\u0ba8\u0bcd\u0ba4 \u0baa\u0b9f\u0bbf\u0bb5\u0ba4\u0bcd\u0ba4\u0bbf\u0bb2\u0bcd \u0b89\u0b99\u0bcd\u0b95\u0bb3\u0bcd \u0baa\u0bc6\u0baf\u0bb0\u0bcd, \u0ba4\u0bc7\u0bb0\u0bcd\u0bb5\u0bc1 \u0b8e\u0ba3\u0bcd, \u0baa\u0bbf\u0bb1\u0ba8\u0bcd\u0ba4 \u0ba4\u0bc7\u0ba4\u0bbf \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd \u0b86\u0b9a\u0bbf\u0bb0\u0bbf\u0baf\u0bb0\u0bbf\u0ba9\u0bcd ID \u0b95\u0bc7\u0b9f\u0bcd\u0b95\u0baa\u0bcd\u0baa\u0b9f\u0bc1\u0b95\u0bbf\u0ba9\u0bcd\u0bb1\u0ba9. \u0b86\u0b9a\u0bbf\u0bb0\u0bbf\u0baf\u0bb0\u0bcd ID \u0ba4\u0bc6\u0bb0\u0bbf\u0baf\u0bb5\u0bbf\u0bb2\u0bcd\u0bb2\u0bc8 \u0b8e\u0ba9\u0bbf\u0bb2\u0bcd \u0b89\u0b99\u0bcd\u0b95\u0bb3\u0bcd \u0b86\u0b9a\u0bbf\u0bb0\u0bbf\u0baf\u0bb0\u0bbf\u0b9f\u0bae\u0bcd \u0b95\u0bc7\u0b9f\u0bc1\u0b99\u0bcd\u0b95\u0bb3\u0bcd."
+      },
+      "links": [
+        { "id": "nav.student-registration", "label": { "en": "Student Registration", "ta": "\u0bae\u0bbe\u0ba3\u0bb5\u0bb0\u0bcd \u0baa\u0ba4\u0bbf\u0bb5\u0bc1" } }
+      ],
+      "provenance": "verified-site",
+      "audience": ["student", "visitor"],
+      "modes": ["home", "student"]
+    },
+    {
+      "id": "faq.sign-in",
+      "topic": "login",
+      "keywords": ["login", "sign in", "log in", "password", "admin login", "school login", "உள்நுழைவு", "கடவுச்சொல்"],
+      "question": { "en": "How do I sign in?", "ta": "\u0b8e\u0baa\u0bcd\u0baa\u0b9f\u0bbf \u0b89\u0bb3\u0bcd\u0ba8\u0bc1\u0bb4\u0bc8\u0bb5\u0ba4\u0bc1?" },
+      "answer": {
+        "en": "The home page menu offers two sign-in pages: Admin Login and School Login. Each asks for a user name and password. IRUSHY cannot sign you in, cannot reset or look up a password, and you should never type your password into this chat.",
+        "ta": "\u0bae\u0bc1\u0b95\u0baa\u0bcd\u0baa\u0bc1\u0baa\u0bcd \u0baa\u0b95\u0bcd\u0b95 \u0baa\u0b9f\u0bcd\u0b9f\u0bbf\u0baf\u0bbf\u0bb2\u0bcd Admin Login \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd School Login \u0b8e\u0ba9\u0bcd\u0bb1 \u0b87\u0bb0\u0ba3\u0bcd\u0b9f\u0bc1 \u0b89\u0bb3\u0bcd\u0ba8\u0bc1\u0bb4\u0bc8\u0bb5\u0bc1 \u0baa\u0b95\u0bcd\u0b95\u0b99\u0bcd\u0b95\u0bb3\u0bcd \u0b89\u0bb3\u0bcd\u0bb3\u0ba9. \u0b92\u0bb5\u0bcd\u0bb5\u0bca\u0ba9\u0bcd\u0bb1\u0bbf\u0bb2\u0bc1\u0bae\u0bcd \u0baa\u0baf\u0ba9\u0bb0\u0bcd \u0baa\u0bc6\u0baf\u0bb0\u0bcd \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd \u0b95\u0b9f\u0bb5\u0bc1\u0b9a\u0bcd\u0b9a\u0bca\u0bb2\u0bcd \u0b95\u0bc7\u0b9f\u0bcd\u0b95\u0baa\u0bcd\u0baa\u0b9f\u0bc1\u0b95\u0bbf\u0ba9\u0bcd\u0bb1\u0ba9. IRUSHY \u0b89\u0b99\u0bcd\u0b95\u0bb3\u0bc8 \u0b89\u0bb3\u0bcd\u0ba8\u0bc1\u0bb4\u0bc8\u0baf\u0bb5\u0bc8\u0b95\u0bcd\u0b95 \u0bae\u0bc1\u0b9f\u0bbf\u0baf\u0bbe\u0ba4\u0bc1; \u0b95\u0b9f\u0bb5\u0bc1\u0b9a\u0bcd\u0b9a\u0bca\u0bb2\u0bcd\u0bb2\u0bc8 \u0bae\u0bc0\u0b9f\u0bcd\u0b95\u0bb5\u0bcb \u0b95\u0bc7\u0b9f\u0bcd\u0b95\u0bb5\u0bcb \u0bae\u0bc1\u0b9f\u0bbf\u0baf\u0bbe\u0ba4\u0bc1."
+      },
+      "links": [
+        { "id": "nav.admin-login", "label": { "en": "Admin Login", "ta": "Admin \u0b89\u0bb3\u0bcd\u0ba8\u0bc1\u0bb4\u0bc8\u0bb5\u0bc1" } },
+        { "id": "nav.school-login", "label": { "en": "School Login", "ta": "School \u0b89\u0bb3\u0bcd\u0ba8\u0bc1\u0bb4\u0bc8\u0bb5\u0bc1" } }
+      ],
+      "provenance": "verified-site",
+      "audience": ["teacher", "student", "visitor"],
+      "modes": ["home"]
+    },
+    {
+      "id": "faq.neet",
+      "topic": "neet",
+      "keywords": ["NEET", "neet login", "coordinator", "நீட்"],
+      "question": { "en": "Where are the NEET pages?", "ta": "\u0ba8\u0bc0\u0b9f\u0bcd \u0baa\u0b95\u0bcd\u0b95\u0b99\u0bcd\u0b95\u0bb3\u0bcd \u0b8e\u0b99\u0bcd\u0b95\u0bc7?" },
+      "answer": {
+        "en": "The right-hand column of the home page lists two NEET entries: NEET Co-Ordinator Login and NEET Student Login. Both are sign-in / registration pages. IRUSHY does not have access to anything inside them.",
+        "ta": "\u0bae\u0bc1\u0b95\u0baa\u0bcd\u0baa\u0bc1\u0baa\u0bcd \u0baa\u0b95\u0bcd\u0b95\u0ba4\u0bcd\u0ba4\u0bbf\u0ba9\u0bcd \u0bb5\u0bb2\u0ba4\u0bc1 \u0baa\u0b95\u0bc1\u0ba4\u0bbf\u0baf\u0bbf\u0bb2\u0bcd NEET-Co-Ordinator-Login \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd NEET Student-Login \u0b8e\u0ba9\u0bcd\u0bb1 \u0b87\u0bb0\u0ba3\u0bcd\u0b9f\u0bc1 \u0b87\u0ba3\u0bc8\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bb3\u0bcd \u0b89\u0bb3\u0bcd\u0bb3\u0ba9. \u0b85\u0bb5\u0bc8 \u0b89\u0bb3\u0bcd\u0ba8\u0bc1\u0bb4\u0bc8\u0bb5\u0bc1 / \u0baa\u0ba4\u0bbf\u0bb5\u0bc1 \u0baa\u0b95\u0bcd\u0b95\u0b99\u0bcd\u0b95\u0bb3\u0bcd. \u0b85\u0bb5\u0bb1\u0bcd\u0bb1\u0bbf\u0ba9\u0bcd \u0b89\u0bb3\u0bcd\u0bb3\u0bc7 \u0b89\u0bb3\u0bcd\u0bb3 \u0b8e\u0ba4\u0bc1\u0bb5\u0bc1\u0bae\u0bcd IRUSHY \u0b95\u0bcd\u0b95\u0bc1 \u0ba4\u0bc6\u0bb0\u0bbf\u0baf\u0bbe\u0ba4\u0bc1."
+      },
+      "links": [
+        { "id": "nav.neet-coordinator-login", "label": { "en": "NEET Co-Ordinator Login", "ta": "\u0ba8\u0bc0\u0b9f\u0bcd \u0b92\u0bb0\u0bc1\u0b99\u0bcd\u0b95\u0bbf\u0ba3\u0bc8\u0baa\u0bcd\u0baa\u0bbe\u0bb3\u0bb0\u0bcd \u0b89\u0bb3\u0bcd\u0ba8\u0bc1\u0bb4\u0bc8\u0bb5\u0bc1" } },
+        { "id": "nav.neet-student-login", "label": { "en": "NEET Student Login", "ta": "\u0ba8\u0bc0\u0b9f\u0bcd \u0bae\u0bbe\u0ba3\u0bb5\u0bb0\u0bcd \u0b89\u0bb3\u0bcd\u0ba8\u0bc1\u0bb4\u0bc8\u0bb5\u0bc1" } }
+      ],
+      "provenance": "verified-site",
+      "audience": ["student", "teacher", "visitor"],
+      "modes": ["home"]
+    },
+    {
+      "id": "faq.teacher-section",
+      "topic": "navigation",
+      "keywords": ["teacher section", "teachers section", "teacher area", "student section", "students section", "ஆசிரியர் பகுதி", "மாணவர் பகுதி"],
+      "question": { "en": "Where is the Teacher Section and the Students Section?", "ta": "\u0b86\u0b9a\u0bbf\u0bb0\u0bbf\u0baf\u0bb0\u0bcd \u0baa\u0b95\u0bc1\u0ba4\u0bbf \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd \u0bae\u0bbe\u0ba3\u0bb5\u0bb0\u0bcd \u0baa\u0b95\u0bc1\u0ba4\u0bbf \u0b8e\u0b99\u0bcd\u0b95\u0bc7?" },
+      "answer": {
+        "en": "On the home page, the left menu holds the teacher and student choices: Teacher Registration, Student Registration, School Login, plus Materials and the Online One Word Test that both groups use. The right-hand column holds the two NEET logins.",
+        "ta": "\u0bae\u0bc1\u0b95\u0baa\u0bcd\u0baa\u0bc1\u0baa\u0bcd \u0baa\u0b95\u0bcd\u0b95\u0ba4\u0bcd\u0ba4\u0bbf\u0bb2\u0bcd \u0b87\u0b9f\u0ba4\u0bc1 \u0baa\u0b9f\u0bcd\u0b9f\u0bbf\u0baf\u0bbf\u0bb2\u0bcd \u0b86\u0b9a\u0bbf\u0bb0\u0bbf\u0baf\u0bb0\u0bcd \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd \u0bae\u0bbe\u0ba3\u0bb5\u0bb0\u0bcd \u0ba4\u0bc7\u0bb0\u0bcd\u0bb5\u0bc1\u0b95\u0bb3\u0bcd \u0b89\u0bb3\u0bcd\u0bb3\u0ba9: Teacher Registration, Student Registration, School Login \u2014 \u0bae\u0bc7\u0bb2\u0bc1\u0bae\u0bcd \u0b87\u0bb0\u0bc1\u0bb5\u0bb0\u0bc1\u0bae\u0bcd \u0baa\u0baf\u0ba9\u0bcd\u0baa\u0b9f\u0bc1\u0ba4\u0bcd\u0ba4\u0bc1\u0bae\u0bcd Materials \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd Online One Word Test. \u0bb5\u0bb2\u0ba4\u0bc1 \u0baa\u0b95\u0bc1\u0ba4\u0bbf\u0baf\u0bbf\u0bb2\u0bcd \u0b87\u0bb0\u0ba3\u0bcd\u0b9f\u0bc1 NEET \u0b89\u0bb3\u0bcd\u0ba8\u0bc1\u0bb4\u0bc8\u0bb5\u0bc1\u0b95\u0bb3\u0bcd \u0b89\u0bb3\u0bcd\u0bb3\u0ba9."
+      },
+      "links": [
+        { "id": "nav.teacher-registration", "label": { "en": "Teacher Registration", "ta": "\u0b86\u0b9a\u0bbf\u0bb0\u0bbf\u0baf\u0bb0\u0bcd \u0baa\u0ba4\u0bbf\u0bb5\u0bc1" } },
+        { "id": "nav.student-registration", "label": { "en": "Student Registration", "ta": "\u0bae\u0bbe\u0ba3\u0bb5\u0bb0\u0bcd \u0baa\u0ba4\u0bbf\u0bb5\u0bc1" } },
+        { "id": "nav.school-login", "label": { "en": "School Login", "ta": "School \u0b89\u0bb3\u0bcd\u0ba8\u0bc1\u0bb4\u0bc8\u0bb5\u0bc1" } }
+      ],
+      "provenance": "verified-site",
+      "audience": ["teacher", "student", "visitor"],
+      "modes": ["home"]
+    },
+    {
+      "id": "faq.contact",
+      "topic": "contact",
+      "keywords": ["contact", "phone", "who is the admin", "web admin", "தொடர்பு", "எண்"],
+      "question": { "en": "Who do I contact for help?", "ta": "\u0b89\u0ba4\u0bb5\u0bbf\u0b95\u0bcd\u0b95\u0bc1 \u0baf\u0bbe\u0bb0\u0bc8\u0ba4\u0bcd \u0ba4\u0bca\u0b9f\u0bb0\u0bcd\u0baa\u0bc1 \u0b95\u0bca\u0bb3\u0bcd\u0bb5\u0ba4\u0bc1?" },
+      "answer": {
+        "en": "The home page shows the web admin as P.R.Babu Shyam Prasad, GHSS-Vadacheri, Tirupattur District, phone TNHHSSCTA-9486564555. That is the only contact published on the site, so please use it for registration, login or material problems.",
+        "ta": "\u0bae\u0bc1\u0b95\u0baa\u0bcd\u0baa\u0bc1\u0baa\u0bcd \u0baa\u0b95\u0bcd\u0b95\u0ba4\u0bcd\u0ba4\u0bbf\u0bb2\u0bcd \u0bb5\u0bc6\u0baa\u0bcd \u0ba8\u0bbf\u0bb0\u0bcd\u0bb5\u0bbe\u0b95\u0bbf\u0baf\u0bbe\u0b95 P.R.Babu Shyam Prasad, GHSS-Vadacheri, \u0ba4\u0bbf\u0bb0\u0bc1\u0baa\u0bcd\u0baa\u0ba4\u0bcd\u0ba4\u0bc2\u0bb0\u0bcd \u0bae\u0bbe\u0bb5\u0b9f\u0bcd\u0b9f\u0bae\u0bcd, \u0ba4\u0bca\u0bb2\u0bc8\u0baa\u0bc7\u0b9a\u0bbf TNHHSSCTA-9486564555 \u0b8e\u0ba9\u0bcd\u0bb1\u0bc1 \u0b95\u0bbe\u0b9f\u0bcd\u0b9f\u0baa\u0bcd\u0baa\u0b9f\u0bcd\u0b9f\u0bc1\u0bb3\u0bcd\u0bb3\u0ba4\u0bc1. \u0b87\u0ba4\u0bc1\u0bb5\u0bc7 \u0ba4\u0bb3\u0ba4\u0bcd\u0ba4\u0bbf\u0bb2\u0bcd \u0bb5\u0bc6\u0bb3\u0bbf\u0baf\u0bbf\u0b9f\u0baa\u0bcd\u0baa\u0b9f\u0bcd\u0b9f\u0bc1\u0bb3\u0bcd\u0bb3 \u0b92\u0bb0\u0bc7 \u0ba4\u0bca\u0b9f\u0bb0\u0bcd\u0baa\u0bc1."
+      },
+      "links": [{ "id": "site.home", "label": { "en": "Home page (shows the contact details)", "ta": "\u0bae\u0bc1\u0b95\u0baa\u0bcd\u0baa\u0bc1\u0baa\u0bcd \u0baa\u0b95\u0bcd\u0b95\u0bae\u0bcd" } }],
+      "provenance": "verified-site",
+      "audience": ["visitor", "teacher", "student"],
+      "modes": ["home"]
+    },
+    {
+      "id": "faq.language",
+      "topic": "language",
+      "keywords": ["tamil", "language", "change language", "தமிழ்", "மொழி"],
+      "question": { "en": "Can IRUSHY answer in Tamil?", "ta": "IRUSHY \u0ba4\u0bae\u0bbf\u0bb4\u0bbf\u0bb2\u0bcd \u0baa\u0ba4\u0bbf\u0bb2\u0bcd \u0b9a\u0bca\u0bb2\u0bcd\u0bb2 \u0bae\u0bc1\u0b9f\u0bbf\u0baf\u0bc1\u0bae\u0bbe?" },
+      "answer": {
+        "en": "Yes. Use the language selector in the IRUSHY panel to choose Tamil or English, or leave it on \u201cAuto\u201d and I will match the language you write in. Simple Tamil is fine \u2014 technical words may be kept in English where there is no common Tamil term.",
+        "ta": "\u0b86\u0bae\u0bcd. IRUSHY \u0baa\u0bb2\u0b95\u0bc8\u0baf\u0bbf\u0bb2\u0bcd \u0b89\u0bb3\u0bcd\u0bb3 \u0bae\u0bca\u0bb4\u0bbf \u0ba4\u0bc7\u0bb0\u0bcd\u0bb5\u0bbf\u0ba9\u0bcd \u0bae\u0bc2\u0bb2\u0bae\u0bcd \u0ba4\u0bae\u0bbf\u0bb4\u0bcd \u0b85\u0bb2\u0bcd\u0bb2\u0ba4\u0bc1 \u0b86\u0b99\u0bcd\u0b95\u0bbf\u0bb2\u0bae\u0bcd \u0ba4\u0bc7\u0bb0\u0bcd\u0bb5\u0bc1 \u0b9a\u0bc6\u0baf\u0bcd\u0baf\u0bb2\u0bbe\u0bae\u0bcd. \u201cAuto\u201d \u0b8e\u0ba9\u0bcd\u0bb1\u0bc1 \u0bb5\u0bc8\u0ba4\u0bcd\u0ba4\u0bbe\u0bb2\u0bcd \u0ba8\u0bc0\u0b99\u0bcd\u0b95\u0bb3\u0bcd \u0b8e\u0bb4\u0bc1\u0ba4\u0bc1\u0bae\u0bcd \u0bae\u0bca\u0bb4\u0bbf\u0b95\u0bcd\u0b95\u0bc1 \u0b8f\u0bb1\u0bcd\u0baa \u0baa\u0ba4\u0bbf\u0bb2\u0bcd \u0b9a\u0bca\u0bb2\u0bcd\u0bb5\u0bc7\u0ba9\u0bcd."
+      },
+      "links": [],
+      "provenance": "verified-site",
+      "audience": ["visitor", "teacher", "student"],
+      "modes": ["home", "student", "teacher"]
+    },
+    {
+      "id": "faq.what-is-irushy",
+      "topic": "about-irushy",
+      "keywords": ["who are you", "are you a teacher", "what is irushy", "ai", "robot", "நீங்கள் யார்", "ஆசிரியரா"],
+      "question": { "en": "Who are you, IRUSHY?", "ta": "IRUSHY, \u0ba8\u0bc0\u0b99\u0bcd\u0b95\u0bb3\u0bcd \u0baf\u0bbe\u0bb0\u0bcd?" },
+      "answer": {
+        "en": "I am IRUSHY, an AI assistant for this website. I am not a human teacher and not a member of staff. I help you find pages and services here, and I can explain topics from the materials published on the site. Please check anything important with your teacher.",
+        "ta": "\u0ba8\u0bbe\u0ba9\u0bcd IRUSHY \u2014 \u0b87\u0ba8\u0bcd\u0ba4 \u0b87\u0ba3\u0bc8\u0baf\u0ba4\u0bb3\u0ba4\u0bcd\u0ba4\u0bbf\u0bb1\u0bcd\u0b95\u0bbe\u0ba9 \u0b92\u0bb0\u0bc1 AI \u0b89\u0ba4\u0bb5\u0bbf\u0baf\u0bbe\u0bb3\u0bb0\u0bcd. \u0ba8\u0bbe\u0ba9\u0bcd \u0bae\u0ba9\u0bbf\u0ba4 \u0b86\u0b9a\u0bbf\u0bb0\u0bbf\u0baf\u0bb0\u0bcd \u0b85\u0bb2\u0bcd\u0bb2; \u0baa\u0bb3\u0bcd\u0bb3\u0bbf \u0b8a\u0bb4\u0bbf\u0baf\u0bb0\u0bcd\u0b95\u0bb3\u0bbf\u0bb2\u0bcd \u0b92\u0bb0\u0bc1\u0bb5\u0bb0\u0bc1\u0bae\u0bcd \u0b85\u0bb2\u0bcd\u0bb2. \u0b87\u0b99\u0bcd\u0b95\u0bc1 \u0b89\u0bb3\u0bcd\u0bb3 \u0baa\u0b95\u0bcd\u0b95\u0b99\u0bcd\u0b95\u0bb3\u0bc8\u0baf\u0bc1\u0bae\u0bcd \u0b9a\u0bc7\u0bb5\u0bc8\u0b95\u0bb3\u0bc8\u0baf\u0bc1\u0bae\u0bcd \u0b95\u0ba3\u0bcd\u0b9f\u0bc1\u0baa\u0bbf\u0b9f\u0bbf\u0b95\u0bcd\u0b95 \u0b89\u0ba4\u0bb5\u0bc1\u0b95\u0bbf\u0bb1\u0bc7\u0ba9\u0bcd. \u0bae\u0bc1\u0b95\u0bcd\u0b95\u0bbf\u0baf\u0bae\u0bbe\u0ba9 \u0bb5\u0bbf\u0b9a\u0baf\u0b99\u0bcd\u0b95\u0bb3\u0bc8 \u0b89\u0b99\u0bcd\u0b95\u0bb3\u0bcd \u0b86\u0b9a\u0bbf\u0bb0\u0bbf\u0baf\u0bb0\u0bbf\u0b9f\u0bae\u0bcd \u0b89\u0bb1\u0bc1\u0ba4\u0bbf\u0baa\u0bcd\u0baa\u0b9f\u0bc1\u0ba4\u0bcd\u0ba4\u0bbf\u0b95\u0bcd \u0b95\u0bca\u0bb3\u0bcd\u0bb3\u0bc1\u0b99\u0bcd\u0b95\u0bb3\u0bcd."
+      },
+      "links": [],
+      "provenance": "verified-site",
+      "audience": ["visitor", "teacher", "student"],
+      "modes": ["home", "student", "teacher"]
+    },
+    {
+      "id": "faq.privacy",
+      "topic": "privacy",
+      "keywords": ["privacy", "data", "do you store", "safe", "records", "தனியுரிமை"],
+      "question": { "en": "What can IRUSHY see about me?", "ta": "IRUSHY \u0b8e\u0ba9\u0bcd\u0ba9\u0bc8\u0baa\u0bcd \u0baa\u0bb1\u0bcd\u0bb1\u0bbf \u0b8e\u0ba9\u0bcd\u0ba9 \u0baa\u0bbe\u0bb0\u0bcd\u0b95\u0bcd\u0b95 \u0bae\u0bc1\u0b9f\u0bbf\u0baf\u0bc1\u0bae\u0bbe?" },
+      "answer": {
+        "en": "I cannot open student or teacher records, marks or logins, and I do not store your chat. Please do not type personal details such as your exam number, phone number or password. If you need a record changed, contact your teacher or the web admin.",
+        "ta": "\u0bae\u0bbe\u0ba3\u0bb5\u0bb0\u0bcd \u0b85\u0bb2\u0bcd\u0bb2\u0ba4\u0bc1 \u0b86\u0b9a\u0bbf\u0bb0\u0bbf\u0baf\u0bb0\u0bcd \u0baa\u0ba4\u0bbf\u0bb5\u0bc1\u0b95\u0bb3\u0bc8\u0baf\u0bcb, \u0bae\u0ba4\u0bbf\u0baa\u0bcd\u0baa\u0bc6\u0ba3\u0bcd\u0ba3\u0bc8\u0baf\u0bcb, \u0b89\u0bb3\u0bcd\u0ba8\u0bc1\u0bb4\u0bc8\u0bb5\u0bc1\u0b95\u0bb3\u0bc8\u0baf\u0bcb \u0ba8\u0bbe\u0ba9\u0bcd \u0ba4\u0bbf\u0bb1\u0b95\u0bcd\u0b95 \u0bae\u0bc1\u0b9f\u0bbf\u0baf\u0bbe\u0ba4\u0bc1. \u0b89\u0b99\u0bcd\u0b95\u0bb3\u0bcd \u0b89\u0bb0\u0bc8\u0baf\u0bbe\u0b9f\u0bb2\u0bc8\u0baf\u0bc1\u0bae\u0bcd \u0b9a\u0bc7\u0bae\u0bbf\u0baa\u0bcd\u0baa\u0ba4\u0bbf\u0bb2\u0bcd\u0bb2\u0bc8. \u0ba4\u0bc7\u0bb0\u0bcd\u0bb5\u0bc1 \u0b8e\u0ba3\u0bcd, \u0ba4\u0bca\u0bb2\u0bc8\u0baa\u0bc7\u0b9a\u0bbf \u0b8e\u0ba3\u0bcd, \u0b95\u0b9f\u0bb5\u0bc1\u0b9a\u0bcd\u0b9a\u0bca\u0bb2\u0bcd \u0baa\u0bcb\u0ba9\u0bcd\u0bb1\u0bb5\u0bb1\u0bcd\u0bb1\u0bc8 \u0b87\u0b99\u0bcd\u0b95\u0bc7 \u0b9f\u0bc8\u0baa\u0bcd \u0b9a\u0bc6\u0baf\u0bcd\u0baf \u0bb5\u0bc7\u0ba3\u0bcd\u0b9f\u0bbe\u0bae\u0bcd."
+      },
+      "links": [{ "id": "site.home", "label": { "en": "Home page", "ta": "\u0bae\u0bc1\u0b95\u0baa\u0bcd\u0baa\u0bc1\u0baa\u0bcd \u0baa\u0b95\u0bcd\u0b95\u0bae\u0bcd" } }],
+      "provenance": "verified-site",
+      "audience": ["visitor", "teacher", "student"],
+      "modes": ["home"]
+    }
+  ]
+}

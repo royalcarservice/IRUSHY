@@ -1,0 +1,112 @@
+{
+  "_meta": {
+    "purpose": "SAMPLE, clearly-labelled video links for IRUSHY. These are NOT approved school content.",
+    "provenance": "sample-unapproved",
+    "loadedWhen": "IRUSHY_ALLOW_SAMPLE_CONTENT=true (default true only outside production)",
+    "howTheseWereChecked": "Each link was resolved through YouTube's public oEmbed endpoint on 2026-10-15, which returned the exact title and channel recorded below. That proves the link is live and correctly named - it does NOT prove the video suits the Tamil Nadu syllabus.",
+    "mustBeReviewedBy": "A subject teacher. Watch the video, then move it into data/videos.json with status 'approved', approvedBy and approvedOn.",
+    "uiRule": "Sample videos are shown only after the visitor clicks 'Load video'. No video player, thumbnail request or third-party connection happens before that click.",
+    "channelNote": "Third-party channels. Their availability can change; IRUSHY must handle a link that stops working by saying so rather than substituting another link."
+  },
+  "items": [
+    {
+      "id": "vid.CS11.sample.numbersystems.001",
+      "kind": "video",
+      "status": "sample-unapproved",
+      "title": {
+        "en": "Number conversion (Binary, Octal, Decimal & Hexadecimal) in TAMIL",
+        "ta": "எண் மாற்றம் (இரும, எண்கோண, பதின்ம, பதினறும) - தமிழில்"
+      },
+      "url": "https://www.youtube.com/watch?v=29wl0iELN-U",
+      "provider": "youtube",
+      "channel": "CS Short Notes",
+      "topic": "Number systems",
+      "class": 11,
+      "subject": "Computer Science",
+      "language": "ta",
+      "reachabilityCheckedOn": "2026-10-15",
+      "contentReviewed": false,
+      "whyItMightHelp": {
+        "en": "A single walk-through of decimal, binary, octal and hexadecimal conversions, in Tamil.",
+        "ta": "பதின்ம, இரும, எண்கோண, பதினறும மாற்றங்களை ஒரே வீடியோவில் தமிழில் விளக்குகிறது."
+      },
+      "syllabusRef": null,
+      "keywords": [
+        "number system",
+        "video",
+        "youtube",
+        "binary",
+        "octal",
+        "hexadecimal",
+        "conversion",
+        "தமிழ்",
+        "வீடியோ"
+      ]
+    },
+    {
+      "id": "vid.CS11.sample.numbersystems.002",
+      "kind": "video",
+      "status": "sample-unapproved",
+      "title": {
+        "en": "Computer Number System | Binary / Decimal / Octal / Hexadecimal | All Conversion in One Shot",
+        "ta": "கணினி எண் முறைமை - அனைத்து மாற்றங்களும் ஒரே வீடியோவில்"
+      },
+      "url": "https://www.youtube.com/watch?v=MxjJqq3B6JU",
+      "provider": "youtube",
+      "channel": "Computer Tech Academy",
+      "topic": "Number systems",
+      "class": 11,
+      "subject": "Computer Science",
+      "language": "en",
+      "reachabilityCheckedOn": "2026-10-15",
+      "contentReviewed": false,
+      "whyItMightHelp": {
+        "en": "Covers all four number systems and their conversions together, useful for revision.",
+        "ta": "நான்கு எண் முறைமைகளையும் மாற்றங்களையும் ஒன்றாக விளக்குகிறது; மீள்பார்வைக்கு உதவும்."
+      },
+      "syllabusRef": null,
+      "keywords": [
+        "number system",
+        "video",
+        "binary",
+        "decimal",
+        "octal",
+        "hexadecimal",
+        "revision"
+      ]
+    },
+    {
+      "id": "vid.CS11.sample.boolean.001",
+      "kind": "video",
+      "status": "sample-unapproved",
+      "title": {
+        "en": "Logic Gate Combinations",
+        "ta": "தர்க்க வாயில் சேர்க்கைகள்"
+      },
+      "url": "https://www.youtube.com/watch?v=BnB2m1nXZ84",
+      "provider": "youtube",
+      "channel": "Computer Science Lessons",
+      "topic": "Boolean algebra",
+      "class": 11,
+      "subject": "Computer Science",
+      "language": "en",
+      "reachabilityCheckedOn": "2026-10-15",
+      "contentReviewed": false,
+      "whyItMightHelp": {
+        "en": "Builds truth tables for combinations of gates, which is the usual exam question shape.",
+        "ta": "வாயில்களின் சேர்க்கைக்கு உண்மை அட்டவணை அமைப்பதைக் காட்டுகிறது. இதுவே வழக்கமான தேர்வு வினா வடிவம்."
+      },
+      "syllabusRef": null,
+      "keywords": [
+        "logic gates",
+        "truth table",
+        "video",
+        "AND",
+        "OR",
+        "NOT",
+        "boolean",
+        "combinations"
+      ]
+    }
+  ]
+}

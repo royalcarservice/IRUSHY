@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "purpose": "APPROVED video links for IRUSHY. Nothing here is invented by the assistant; entries are added only after a person has watched, approved and recorded the link.",
+    "provenance": "approved",
+    "status": "EMPTY_ON_PURPOSE",
+    "whyEmpty": "No video links are published on the live TNHHSSCTA website and no video has been approved by the school for IRUSHY yet. IRUSHY must say 'no approved video for this topic' rather than guessing a link.",
+    "howToAdd": "Copy the entry shape from data/sample/videos.sample.json into items[] below, set approvedBy and approvedOn, then restart the server.",
+    "schema": {
+      "id": "vid.<subject><class>.<topic>.<n>",
+      "kind": "video",
+      "status": "\"approved\" (only this value is served as approved content)",
+      "title": { "en": "string", "ta": "string" },
+      "url": "https://... — must be the exact, human-checked link",
+      "provider": "youtube | vimeo | other",
+      "topic": "string",
+      "class": 11,
+      "subject": "Computer Science",
+      "language": "ta | en",
+      "durationMin": 0,
+      "approvedBy": "name/role",
+      "approvedOn": "YYYY-MM-DD",
+      "syllabusRef": "optional reference to a material entry id"
+    },
+    "items": []
+  },
+  "items": []
+}

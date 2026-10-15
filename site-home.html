@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+  LOCAL DEVELOPMENT COPY - not the live website.
+  Faithful copy of https://tnhhsscta.com/ (the home page frameset).
+  No markup from the live site has been changed or redesigned.
+
+  Live file : index (ASP frameset)
+  Frames    : ToppageHome.asp  +  IrushyFrameHome.asp
+  Changes   : 1) the two jQuery script tags of the live head are omitted here
+                 because none of the five frames on this page use jQuery, and
+                 the IRUSHY widget is dependency-free;
+              2) the IRUSHY <link>/<script> pair is NOT here - it is loaded by
+                 the shell page, because a frameset document cannot render an
+                 overlay of its own.
+
+  Kept exactly as on the live site: the two-row frameset (23% / 77%), the
+  Teacher and Students choices in the left frame, and the web-admin portrait.
+
+  NOTE: the IRUSHY <link>/<script> pair is deliberately NOT in this file.
+  A frameset document cannot render HTML of its own, so the widget is loaded by
+  the shell page (index.html) that shows this frameset in an iframe. If this
+  file is opened directly, the widget is still reachable: load index.html, or
+  add the two lines for /irushy/irushy.js here and the widget will detect the
+  frameset and mount itself inside the largest frame.
+-->
+<HTML>
+	<title> TNHHSSCTA - E-COMPUTER EDUCATION SERVICE </title>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE>Sree Irushyambiga - Admin Frame page </TITLE>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</HEAD>
+
+<FRAMESET ROWS="23%,77%" bordercolor="lightgray" FRAMEBORDER=0 FRAMESPACING=0>
+<FRAME SRC="ToppageHome.html" SCROLLING="No">
+<FRAME SRC="IrushyFrameHome.html" NAME="secondframe">
+<noframes>
+	<body>
+		<p>This page uses frames, which your browser does not support.</p>
+		<p><a href="https://tnhhsscta.com/">Open the TNHHSSCTA website</a></p>
+	</body>
+</noframes>
+</frameset>
+</HTML>

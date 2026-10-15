@@ -1,0 +1,118 @@
+{
+  "_meta": {
+    "purpose": "Verified public entry points of the live TNHHSSCTA website. Used as IRUSHY's outage fallback links.",
+    "origin": "https://tnhhsscta.com",
+    "checkedAt": "2026-10-15T11:37:49.781Z",
+    "generator": "tools/build-resources-from-live.mjs"
+  },
+  "items": [
+    {
+      "id": "site.home",
+      "path": "/",
+      "title": {
+        "en": "TNHHSSCTA home page",
+        "ta": "TNHHSSCTA முகப்புப் பக்கம்"
+      },
+      "role": "home",
+      "url": "https://tnhhsscta.com/",
+      "httpStatus": 200,
+      "reachable": true
+    },
+    {
+      "id": "nav.admin-login",
+      "path": "/LoginHome.html",
+      "title": {
+        "en": "Admin Login",
+        "ta": "நிர்வாக உள்நுழைவு"
+      },
+      "role": "home",
+      "url": "https://tnhhsscta.com/LoginHome.html",
+      "httpStatus": 200,
+      "reachable": true
+    },
+    {
+      "id": "nav.school-login",
+      "path": "/IrushySchool2020/loginhomeschool.html",
+      "title": {
+        "en": "School Login",
+        "ta": "பள்ளி உள்நுழைவு"
+      },
+      "role": "home",
+      "url": "https://tnhhsscta.com/IrushySchool2020/loginhomeschool.html",
+      "httpStatus": 200,
+      "reachable": true
+    },
+    {
+      "id": "nav.one-word-test",
+      "path": "/QuestionChangeIrushy.asp",
+      "title": {
+        "en": "Online One Word Test",
+        "ta": "ஆன்லைன் ஒரு வார்த்தைத் தேர்வு"
+      },
+      "role": "student",
+      "url": "https://tnhhsscta.com/QuestionChangeIrushy.asp",
+      "httpStatus": 200,
+      "reachable": true
+    },
+    {
+      "id": "nav.materials",
+      "path": "/AmmaURL.asp",
+      "title": {
+        "en": "Materials (Computer Science study materials)",
+        "ta": "பாடக்குறிப்புகள்"
+      },
+      "role": "home",
+      "url": "https://tnhhsscta.com/AmmaURL.asp",
+      "httpStatus": 200,
+      "reachable": true
+    },
+    {
+      "id": "nav.teacher-registration",
+      "path": "/TeacherRegFormIrushy.asp",
+      "title": {
+        "en": "Teacher Registration",
+        "ta": "ஆசிரியர் பதிவு"
+      },
+      "role": "teacher",
+      "url": "https://tnhhsscta.com/TeacherRegFormIrushy.asp",
+      "httpStatus": 200,
+      "reachable": true
+    },
+    {
+      "id": "nav.student-registration",
+      "path": "/LYMCPGOLD600523KB.asp",
+      "title": {
+        "en": "Student Registration",
+        "ta": "மாணவர் பதிவு"
+      },
+      "role": "student",
+      "url": "https://tnhhsscta.com/LYMCPGOLD600523KB.asp",
+      "httpStatus": 200,
+      "reachable": true
+    },
+    {
+      "id": "nav.neet-coordinator-login",
+      "path": "/IrushyNeet2020/ULIS10090KB.asp",
+      "title": {
+        "en": "NEET Co-Ordinator Login",
+        "ta": "நீட் ஒருங்கிணைப்பாளர் உள்நுழைவு"
+      },
+      "role": "teacher",
+      "url": "https://tnhhsscta.com/IrushyNeet2020/ULIS10090KB.asp",
+      "httpStatus": 200,
+      "reachable": true
+    },
+    {
+      "id": "nav.neet-student-login",
+      "path": "/IrushyNeet2020/IrushyRFD2021.asp",
+      "title": {
+        "en": "NEET Student Login",
+        "ta": "நீட் மாணவர் உள்நுழைவு"
+      },
+      "role": "student",
+      "url": "https://tnhhsscta.com/IrushyNeet2020/IrushyRFD2021.asp",
+      "httpStatus": 200,
+      "reachable": true
+    }
+  ]
+}

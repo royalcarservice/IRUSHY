@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "purpose": "APPROVED diagrams and interactive examples for IRUSHY. Diagrams are inline SVG owned by this project (no third-party assets), so they can be shown instantly and safely.",
+    "provenance": "approved",
+    "status": "EMPTY_ON_PURPOSE",
+    "whyEmpty": "No diagram has been approved for IRUSHY yet. IRUSHY must not draw or describe a diagram as if it were an official textbook figure.",
+    "howToAdd": "Add a validated SVG string in `svg` (no <script>, no external refs), plus topic/class/subject/language. The server re-validates the SVG at load time and drops anything unsafe.",
+    "rules": [
+      "SVG only. No <script>, no <foreignObject>, no on* attributes, no external href/src.",
+      "Set approvedBy + approvedOn before removing sample-unapproved status."
+    ]
+  },
+  "items": []
+}

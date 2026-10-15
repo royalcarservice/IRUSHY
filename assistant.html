@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+  IRUSHY - full-screen assistant page.
+  ---------------------------------------------------------------------------
+  Used in two situations:
+    1. the visitor is on a phone and the site is being viewed directly as a
+       frameset (a 65%-wide frame is too narrow for a comfortable panel), or
+    2. someone wants a direct link to the assistant.
+
+  It is the same widget, docked inline: same language selector, clear-chat,
+  retry, keyboard handling and safe rendering. Nothing is loaded from a
+  video host until the visitor asks for it.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IRUSHY - assistant for TNHHSSCTA</title>
+<link rel="stylesheet" href="/irushy/irushy.css">
+<style>
+  html, body { margin: 0; height: 100%; background: #f3f2e8; }
+  body { font: 15px/1.5 system-ui, -apple-system, "Segoe UI", "Noto Sans Tamil", sans-serif; color: #16233a; }
+  .page { max-width: 720px; margin: 0 auto; height: 100dvh; display: flex; flex-direction: column; }
+  .page-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 10px 14px; background: #0d2140; color: #fbfbf4;
+  }
+  .page-head strong { font-size: 15px; letter-spacing: .3px; }
+  .page-head a { color: #fbfbf4; font-size: 13.5px; text-decoration: underline; }
+  .page-head a:hover { color: #9fe8de; }
+  .page-body { flex: 1 1 auto; min-height: 0; padding: 10px; display: flex; }
+  /* docked panel fills the available space instead of floating */
+  .ir-docked { flex: 1 1 auto; display: flex; min-height: 0; }
+  .ir-panel-docked {
+    position: static; width: 100%; height: 100%; max-width: none; max-height: none;
+    border-radius: 12px; box-shadow: none;
+  }
+  .page-foot { padding: 8px 14px calc(10px + env(safe-area-inset-bottom)); font-size: 12px; color: #53627a; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header class="page-head">
+      <strong>IRUSHY &middot; AI assistant</strong>
+      <!-- returns to the website that sent the visitor here, or the home page -->
+      <a id="back-link" href="https://tnhhsscta.com/">Back to the website</a>
+    </header>
+
+    <div class="page-body" data-irushy-dock-target>
+      <!-- The widget mounts here (data-irushy-dock="inline"). -->
+    </div>
+
+    <p class="page-foot">
+      IRUSHY is an AI assistant. It is not a human teacher and it does not see
+      student or teacher records. Nothing you type is stored.
+    </p>
+  </div>
+
+  <script>
+    // Respect ?mode= and ?lang=, and make "Back" return to the referring page
+    // when we came from the same site.
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var mode = q.get('mode');
+      var lang = q.get('lang');
+      var script = document.createElement('script');
+      script.defer = true;
+      script.src = '/irushy/irushy.js';
+      script.setAttribute('data-irushy-dock', 'inline');
+      script.setAttribute('data-irushy-mode', mode === 'student' || mode === 'teacher' ? mode : 'home');
+      if (lang === 'ta' || lang === 'en') script.setAttribute('data-irushy-lang', lang);
+      document.body.appendChild(script);
+
+      var back = document.getElementById('back-link');
+      try {
+        if (document.referrer && new URL(document.referrer).host === location.host) back.href = document.referrer;
+      } catch (e) { /* keep the default */ }
+    })();
+  </script>
+</body>
+</html>

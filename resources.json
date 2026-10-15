@@ -1,0 +1,1288 @@
+{
+  "_meta": {
+    "purpose": "Approved, PUBLISHED study materials linked from the live TNHHSSCTA website.",
+    "generatedFrom": "https://tnhhsscta.com/AmmaURL.asp",
+    "generatedAt": "2026-10-15T11:37:48.583Z",
+    "generator": "tools/build-resources-from-live.mjs",
+    "note": "Every entry is a real link found on the live site. IRUSHY must not add entries that are not published here.",
+    "count": 58
+  },
+  "items": [
+    {
+      "id": "mat.CA-1-TM-1",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 th Computer Application Lesson 6",
+        "ta": "11 th Computer Application Lesson 6"
+      },
+      "topic": "Lesson",
+      "class": 11,
+      "subject": "Computer Applications",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-1-TM-Mat1.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-1-TM-Mat1.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-1-TM-10",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 Computer Applications 5 marks questions for slow learners by Mohmed Ali",
+        "ta": "11 Computer Applications 5 marks questions for slow learners by Mohmed Ali"
+      },
+      "topic": "5 mark questions",
+      "class": 11,
+      "subject": "Computer Applications",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-1-TM-Mat10.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-1-TM-Mat10.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-1-TM-2",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 th Computer Application Lesson 4 to 5",
+        "ta": "11 th Computer Application Lesson 4 to 5"
+      },
+      "topic": "Lesson",
+      "class": 11,
+      "subject": "Computer Applications",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-1-TM-Mat2.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-1-TM-Mat2.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-1-TM-3",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 th Computer Application Lesson 10-13",
+        "ta": "11 th Computer Application Lesson 10-13"
+      },
+      "topic": "Lesson",
+      "class": 11,
+      "subject": "Computer Applications",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-1-TM-Mat3.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-1-TM-Mat3.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-1-TM-59",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11CA_ Tamil Medium Question Paper",
+        "ta": "11CA_ Tamil Medium Question Paper"
+      },
+      "topic": null,
+      "class": 11,
+      "subject": "Computer Applications",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-1-TM-Mat59.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-1-TM-Mat59.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-1-TM-60",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11CA TAMIL MEDIUM TECH EASY by PRABHAKAR minimum material for slow learners",
+        "ta": "11CA TAMIL MEDIUM TECH EASY by PRABHAKAR minimum material for slow learners"
+      },
+      "topic": "Minimum material / slow learners",
+      "class": 11,
+      "subject": "Computer Applications",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-1-TM-Mat60.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-1-TM-Mat60.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-1-TM-63",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 Computer Application Tamil Medium Book Back Questions & Answers with Practical - 2025 - 26 by J.KAVITHA",
+        "ta": "11 Computer Application Tamil Medium Book Back Questions & Answers with Practical - 2025 - 26 by J.KAVITHA"
+      },
+      "topic": "Practical",
+      "class": 11,
+      "subject": "Computer Applications",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-1-TM-Mat63.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-1-TM-Mat63.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-1-TM-65",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 Computer Applications Tamil Medium Question Paper TECH EASY by Prabhagar",
+        "ta": "11 Computer Applications Tamil Medium Question Paper TECH EASY by Prabhagar"
+      },
+      "topic": null,
+      "class": 11,
+      "subject": "Computer Applications",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-1-TM-Mat65.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-1-TM-Mat65.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-1-TM-9",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 Computer Applications book back one word questions and answers by Mohmed Ali",
+        "ta": "11 Computer Applications book back one word questions and answers by Mohmed Ali"
+      },
+      "topic": "One word / objective",
+      "class": 11,
+      "subject": "Computer Applications",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-1-TM-Mat9.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-1-TM-Mat9.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-EM-1",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "+2 Computer Application one word EM",
+        "ta": "+2 Computer Application one word EM"
+      },
+      "topic": "One word / objective",
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "English Medium",
+      "language": "en",
+      "file": "TNHHSSCTA-CA-2-EM-Mat1.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-EM-Mat1.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-EM-2",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12th CA Evaluation Question One Marks",
+        "ta": "12th CA Evaluation Question One Marks"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "English Medium",
+      "language": "en",
+      "file": "TNHHSSCTA-CA-2-EM-Mat2.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-EM-Mat2.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-EM-3",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12th CA Evaluation two three five Marks",
+        "ta": "12th CA Evaluation two three five Marks"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "English Medium",
+      "language": "en",
+      "file": "TNHHSSCTA-CA-2-EM-Mat3.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-EM-Mat3.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-EM-35",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "Computer Networks - Lesson 10",
+        "ta": "Computer Networks - Lesson 10"
+      },
+      "topic": "Lesson",
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "English Medium",
+      "language": "en",
+      "file": "TNHHSSCTA-CA-2-EM-Mat35.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-EM-Mat35.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-EM-36",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "Computer Networks Power Point Presentation Chapter 10",
+        "ta": "Computer Networks Power Point Presentation Chapter 10"
+      },
+      "topic": "Computer networks",
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "English Medium",
+      "language": "en",
+      "file": "TNHHSSCTA-CA-2-EM-Mat36.ppt",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-EM-Mat36.ppt",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-EM-37",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "Network Examples Chapter 11 by Sundar",
+        "ta": "Network Examples Chapter 11 by Sundar"
+      },
+      "topic": "Computer networks",
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "English Medium",
+      "language": "en",
+      "file": "TNHHSSCTA-CA-2-EM-Mat37.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-EM-Mat37.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-TM-28",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "+2-Computer-Application-Chapter-9",
+        "ta": "+2-Computer-Application-Chapter-9"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-2-TM-Mat28.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-TM-Mat28.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-TM-31",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "+2-Computer-Application-Chapter-8",
+        "ta": "+2-Computer-Application-Chapter-8"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-2-TM-Mat31.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-TM-Mat31.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-TM-32",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "+2-Computer-Application-Chapter-10",
+        "ta": "+2-Computer-Application-Chapter-10"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-2-TM-Mat32.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-TM-Mat32.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-TM-66",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 Computer Applications Tamil Medium Question Paper TECH EASY by Prabhagar",
+        "ta": "11 Computer Applications Tamil Medium Question Paper TECH EASY by Prabhagar"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-2-TM-Mat66.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-TM-Mat66.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-TM-67",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12 Computer Applicatons Tamil Medium MLM by TECH EASY by Prabhakar",
+        "ta": "12 Computer Applicatons Tamil Medium MLM by TECH EASY by Prabhakar"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-2-TM-Mat67.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-TM-Mat67.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-TM-69",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12 Computer Applications Tamil Medium MLM by TECH EASY Prabhakar",
+        "ta": "12 Computer Applications Tamil Medium MLM by TECH EASY Prabhakar"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-2-TM-Mat69.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-TM-Mat69.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-TM-7",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "+2-Computer-Application-Chapter-5",
+        "ta": "+2-Computer-Application-Chapter-5"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-2-TM-Mat7.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-TM-Mat7.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-TM-8",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12th ca lesson 5",
+        "ta": "12th ca lesson 5"
+      },
+      "topic": "Lesson",
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-2-TM-Mat8.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-TM-Mat8.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CA-2-TM-9",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12th ca lesson 6",
+        "ta": "12th ca lesson 6"
+      },
+      "topic": "Lesson",
+      "class": 12,
+      "subject": "Computer Applications",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CA-2-TM-Mat9.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CA-2-TM-Mat9.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-1",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "+1 Computer Science Practical",
+        "ta": "+1 Computer Science Practical"
+      },
+      "topic": "Practical",
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat1.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat1.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-12",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 Computer Science Practical Question and answer Tamil Medium",
+        "ta": "11 Computer Science Practical Question and answer Tamil Medium"
+      },
+      "topic": "Practical",
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat12.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat12.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-30",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "+1 Computer Science Practical Format and Question",
+        "ta": "+1 Computer Science Practical Format and Question"
+      },
+      "topic": "Practical",
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat30.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat30.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-38",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 - CS Practical Book 2018-19",
+        "ta": "11 - CS Practical Book 2018-19"
+      },
+      "topic": "Practical",
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat38.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat38.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-39",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 computer Science practical D G E",
+        "ta": "11 computer Science practical D G E"
+      },
+      "topic": "Practical",
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat39.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat39.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-4",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 th Computer Science Lesson-3",
+        "ta": "11 th Computer Science Lesson-3"
+      },
+      "topic": "Lesson",
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat4.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat4.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-5",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 th Computer Science Lesson 4",
+        "ta": "11 th Computer Science Lesson 4"
+      },
+      "topic": "Lesson",
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat5.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat5.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-52",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "SHYAM JPG",
+        "ta": "SHYAM JPG"
+      },
+      "topic": null,
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat52.jpg",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat52.jpg",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-53",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "AMMA TEST TEST",
+        "ta": "AMMA TEST TEST"
+      },
+      "topic": null,
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat53.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat53.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-55",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "AMMA",
+        "ta": "AMMA"
+      },
+      "topic": null,
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat55.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat55.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-56",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "AMMA",
+        "ta": "AMMA"
+      },
+      "topic": null,
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat56.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat56.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-57",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "+1 CS Book Back question and answers",
+        "ta": "+1 CS Book Back question and answers"
+      },
+      "topic": "Book back questions",
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat57.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat57.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-61",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 Computer Science Tamil Medium TECH EASY by Kiruba with question bank",
+        "ta": "11 Computer Science Tamil Medium TECH EASY by Kiruba with question bank"
+      },
+      "topic": "Question bank",
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat61.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat61.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-62",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 Computer Science Tamil Medium minimum material TECH EASY by Prabhgar",
+        "ta": "11 Computer Science Tamil Medium minimum material TECH EASY by Prabhgar"
+      },
+      "topic": "Minimum material / slow learners",
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat62.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat62.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-64",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11th Computer Science Tamil Medium Book Back Q & A with Prac - by J.Kavitha",
+        "ta": "11th Computer Science Tamil Medium Book Back Q & A with Prac - by J.Kavitha"
+      },
+      "topic": "Book back questions",
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat64.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat64.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-72",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "SAMPLE TEST",
+        "ta": "SAMPLE TEST"
+      },
+      "topic": null,
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat72.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat72.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-1-TM-8",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "11 answerkey Computer Science",
+        "ta": "11 answerkey Computer Science"
+      },
+      "topic": "Answer key",
+      "class": 11,
+      "subject": "Computer Science",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-1-TM-Mat8.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-1-TM-Mat8.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-EM-1",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12TH CS Evaluvation two three five marks",
+        "ta": "12TH CS Evaluvation two three five marks"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "English Medium",
+      "language": "en",
+      "file": "TNHHSSCTA-CS-2-EM-Mat1.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-EM-Mat1.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-EM-13",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "Python Sample Programming -1",
+        "ta": "Python Sample Programming -1"
+      },
+      "topic": "Python",
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "English Medium",
+      "language": "en",
+      "file": "TNHHSSCTA-CS-2-EM-Mat13.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-EM-Mat13.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-EM-3",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12th CS Evaluation Question One Marks",
+        "ta": "12th CS Evaluation Question One Marks"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "English Medium",
+      "language": "en",
+      "file": "TNHHSSCTA-CS-2-EM-Mat3.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-EM-Mat3.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-EM-41",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12 Practical CS - II EM",
+        "ta": "12 Practical CS - II EM"
+      },
+      "topic": "Practical",
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "English Medium",
+      "language": "en",
+      "file": "TNHHSSCTA-CS-2-EM-Mat41.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-EM-Mat41.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-TM-14",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "Python Sample Programming -2",
+        "ta": "Python Sample Programming -2"
+      },
+      "topic": "Python",
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-2-TM-Mat14.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-TM-Mat14.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-TM-33",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "XII CS - Material - 2019 QUESTION AND ANSWERS",
+        "ta": "XII CS - Material - 2019 QUESTION AND ANSWERS"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-2-TM-Mat33.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-TM-Mat33.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-TM-34",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "XII CS(1-5) Practical Programs 2019",
+        "ta": "XII CS(1-5) Practical Programs 2019"
+      },
+      "topic": "Practical",
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-2-TM-Mat34.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-TM-Mat34.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-TM-42",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12 Practical CS -II TM",
+        "ta": "12 Practical CS -II TM"
+      },
+      "topic": "Practical",
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-2-TM-Mat42.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-TM-Mat42.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-TM-43",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12 Practical TM PRACTICAL BOOK OLD",
+        "ta": "12 Practical TM PRACTICAL BOOK OLD"
+      },
+      "topic": "Practical",
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-2-TM-Mat43.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-TM-Mat43.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-TM-44",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "Python Classes and Object",
+        "ta": "Python Classes and Object"
+      },
+      "topic": "Python",
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-2-TM-Mat44.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-TM-Mat44.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-TM-58",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "+2 CS Book Back Question Paper by Parthiban",
+        "ta": "+2 CS Book Back Question Paper by Parthiban"
+      },
+      "topic": "Book back questions",
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-2-TM-Mat58.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-TM-Mat58.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-TM-68",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12 Computer Science Tamil Medium TECH EASY by Prabhakar",
+        "ta": "12 Computer Science Tamil Medium TECH EASY by Prabhakar"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-2-TM-Mat68.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-TM-Mat68.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-TM-70",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12 th computer science question Key answer - 2024",
+        "ta": "12 th computer science question Key answer - 2024"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-2-TM-Mat70.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-TM-Mat70.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CS-2-TM-71",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12 CS FUNCTION PPT",
+        "ta": "12 CS FUNCTION PPT"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "Computer Science",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CS-2-TM-Mat71.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CS-2-TM-Mat71.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.CT-2-TM-10",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "12th-computer-technology-lesson-1-2-study-materials-tamil-medium",
+        "ta": "12th-computer-technology-lesson-1-2-study-materials-tamil-medium"
+      },
+      "topic": "Lesson",
+      "class": 12,
+      "subject": "Computer Technology",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-CT-2-TM-Mat10.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-CT-2-TM-Mat10.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.GI-1-TM-1",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "Syllabus XI 2019",
+        "ta": "Syllabus XI 2019"
+      },
+      "topic": null,
+      "class": 11,
+      "subject": "General Instructions",
+      "year": "1st year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-GI-1-TM-Mat1.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-GI-1-TM-Mat1.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    },
+    {
+      "id": "mat.GI-2-TM-2",
+      "kind": "material",
+      "status": "approved-published",
+      "title": {
+        "en": "Syllabus XII 2019",
+        "ta": "Syllabus XII 2019"
+      },
+      "topic": null,
+      "class": 12,
+      "subject": "General Instructions",
+      "year": "2nd year",
+      "medium": "Tamil Medium",
+      "language": "ta",
+      "file": "TNHHSSCTA-GI-2-TM-Mat2.pdf",
+      "url": "https://tnhhsscta.com/Material/TNHHSSCTA-GI-2-TM-Mat2.pdf",
+      "source": {
+        "page": "https://tnhhsscta.com/AmmaURL.asp",
+        "selector": "AmmaURL.asp > materials table"
+      },
+      "verified": "2026-10-15"
+    }
+  ]
+}

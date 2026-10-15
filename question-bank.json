@@ -1,0 +1,42 @@
+{
+  "_meta": {
+    "purpose": "APPROVED question bank for the TEACHER assistant's paper builder. Papers may ONLY be assembled from entries in this file.",
+    "provenance": "approved",
+    "status": "EMPTY_ON_PURPOSE",
+    "whyEmpty": "No question has been approved by the school yet. Because the bank is empty, the paper builder will honestly report 'insufficient question coverage' instead of inventing questions. That is the intended behaviour.",
+    "howToImport": [
+      "1. Ask the school to approve questions (existing TNHHSSCTA question papers and one-word tests are a good source).",
+      "2. Add each question below with a stable id, class, subject, medium, topic, type, marks and answer.",
+      "3. Restart the server. GET /api/teacher/coverage shows what the bank can currently produce.",
+      "Optional: a helper script tools/import-question-bank.mjs can be extended to parse an approved CSV."
+    ],
+    "questionTypes": {
+      "one_word": { "label": { "en": "One word", "ta": "ஒரு வார்த்தை" }, "defaultMarks": 1 },
+      "mcq": { "label": { "en": "Multiple choice", "ta": "பலவுள் தெரிவு" }, "defaultMarks": 1 },
+      "two_mark": { "label": { "en": "2 marks", "ta": "2 மதிப்பெண்" }, "defaultMarks": 2 },
+      "three_mark": { "label": { "en": "3 marks", "ta": "3 மதிப்பெண்" }, "defaultMarks": 3 },
+      "five_mark": { "label": { "en": "5 marks", "ta": "5 மதிப்பெண்" }, "defaultMarks": 5 }
+    },
+    "schema": {
+      "id": "qb.<SUBJECT><CLASS>.<MEDIUM>.<topic-slug>.<n>",
+      "kind": "question",
+      "status": "\"approved\" (only this value counts as approved)",
+      "class": 11,
+      "subject": "Computer Science | Computer Applications | Computer Technology",
+      "medium": "Tamil Medium | English Medium",
+      "language": "ta | en",
+      "topic": "string",
+      "type": "one_word | mcq | two_mark | three_mark | five_mark",
+      "marks": 1,
+      "question": { "en": "string", "ta": "string" },
+      "options": [{ "key": "A", "text": { "en": "string", "ta": "string" } }],
+      "answer": "string",
+      "explanation": { "en": "string", "ta": "string" },
+      "conceptRef": "material entry id from data/resources.json, or null",
+      "difficulty": "easy | medium | hard",
+      "approvedBy": "name/role",
+      "approvedOn": "YYYY-MM-DD"
+    }
+  },
+  "items": []
+}

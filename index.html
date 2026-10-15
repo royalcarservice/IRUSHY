@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+  LOCAL DEVELOPMENT COPY - not the live website.
+  ---------------------------------------------------------------------------
+  This is the IRUSHY integration point. Everything visual is the untouched
+  TNHHSSCTA home page, shown in an iframe:
+
+      site-home.html   = faithful copy of the live frameset home page
+                         (23% / 77% rows, then 20% / 65% / 20% columns)
+
+  WHY THE EXTRA LAYER, AND WHY IT IS REQUIRED
+  A frameset document cannot render any HTML of its own. In a frameset page the
+  <body> *is* the <frameset>, so a floating button or panel placed there gets a
+  zero-size box and is never painted - verified in Chromium: the launcher
+  existed in the DOM with position:fixed and was still 0x0 px.
+  Wrapping the frameset in a plain page gives IRUSHY a real top-level document
+  to render its launcher and panel in, while the site itself is byte-for-byte
+  the same frameset it always was.
+
+  Nothing in the site copy is redesigned: same frames, same left-hand Teacher
+  Registration / Student Registration choices, same top-right (top-left frame)
+  web-admin portrait, same slide show, same NEET logins.
+
+  If the frameset is ever loaded directly (site-home.html) the widget detects
+  it and mounts itself inside the largest frame instead, so integration still
+  works without this shell.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TNHHSSCTA - E-COMPUTER EDUCATION SERVICE</title>
+<style>
+  /* min-height keeps older browsers happy; dvh tracks mobile browser chrome */
+  html, body { height: 100%; margin: 0; padding: 0; background: #ffffff; }
+  #site-frame { display: block; width: 100%; height: 100vh; height: 100dvh; border: 0; }
+  .ir-noframe { padding: 16px; font: 16px system-ui, sans-serif; }
+  /* IRUSHY: widget styles (navy / teal / ivory) */
+</style>
+<link rel="stylesheet" href="/irushy/irushy.css">
+</head>
+<body>
+  <iframe id="site-frame" src="site-home.html" title="TNHHSSCTA website"
+          allow="clipboard-write" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+
+  <noscript>
+    <p class="ir-noframe">
+      <a href="site-home.html">Open the TNHHSSCTA home page</a> -
+      IRUSHY needs JavaScript, so the assistant is unavailable with scripting off.
+    </p>
+  </noscript>
+
+  <!-- IRUSHY loader: the API key is never present here; all provider traffic
+       goes through the server at /api/chat. -->
+  <script defer src="/irushy/irushy.js" data-irushy-mode="home" data-irushy-host="top"></script>
+</body>
+</html>
