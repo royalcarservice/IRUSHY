@@ -4,8 +4,10 @@
 // Every local-engine server below runs with ALL outbound network access
 // blocked (tools/lib/deny-network.mjs preloaded): fetch, sockets, TLS, DNS
 // and http(s) requests throw. The suite also runs the engine in-process with
-// the same block. The optional APInex backend is exercised separately against
-// tools/mock-provider.mjs on 127.0.0.1 (never a real provider).
+// the same block. The optional backends are exercised separately against
+// tools/mock-provider.mjs on 127.0.0.1, never a real provider or a real
+// Ollama: APInex without the block, Ollama WITH the block and an exact
+// allow-list holding only the mock's port.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -16,9 +18,12 @@ import nodeHttp from 'node:http';
 import nodeHttps from 'node:https';
 import { spawnSync } from 'node:child_process';
 import { syncBuiltinESMExports } from 'node:module';
-import { ROOT, DENY_NETWORK, createReporter, startServer, http, chat, turn, rid } from './lib/harness.mjs';
-import { startMockProvider } from './mock-provider.mjs';
-import { buildConfig, parseEnvText } from '../server/config.js';
+import { ROOT, DENY_NETWORK, createReporter, startServer, runNode, http, chat, turn, rid } from './lib/harness.mjs';
+import { startMockProvider, REASONING_MARKER } from './mock-provider.mjs';
+import { buildConfig, parseEnvText, ENGINES, isLoopbackHost, isOllamaCloudModel } from '../server/config.js';
+import { findListedModel, dropUnfinishedSentence, seedNumber, mapOllamaStatus, OLLAMA_CLIENT_VERSION } from '../server/lib/engine/ollama.js';
+import { buildReferences } from '../server/lib/prompts.js';
+import { stripMarkup } from '../server/lib/sanitize.js';
 import { loadKnowledge, conceptProblems } from '../server/lib/data.js';
 import { classify } from '../server/lib/engine/intent.js';
 import { matchTopic } from '../server/lib/engine/match.js';
@@ -141,6 +146,23 @@ async function main() {
     check('fetch from a blocked process throws ENETBLOCKED', /BLOCKED ENETBLOCKED/.test(p.stdout) && !/REACHED/.test(p.stdout), p.stdout + p.stderr);
     check('net.connect from a blocked process is reported', /NET ENETBLOCKED/.test(p.stdout) && /NETWORK_BLOCKED net\.connect/.test(p.stderr), p.stderr.slice(0, 300));
     check('DNS lookup of a remote name from a blocked process is refused', /DNS ENETBLOCKED/.test(p.stdout) && /NETWORK_BLOCKED dns\.lookup example\.com/.test(p.stderr), p.stdout);
+
+    // The allow-list used by the Ollama tests opens exactly one loopback port.
+    const mk = (body) => nodeHttp.createServer((q, s2) => s2.end(body)).listen(0, '127.0.0.1');
+    const a = mk('allowed');
+    const b = mk('other');
+    await Promise.all([a, b].map((x) => new Promise((r) => (x.listening ? r() : x.on('listening', r)))));
+    const pa = a.address().port;
+    const pb = b.address().port;
+    const probe =
+      `const r=(u)=>fetch(u).then(x=>x.text()).then(t=>'GOT '+t,e=>'BLOCKED '+e.code);` +
+      `console.log([await r('http://127.0.0.1:${pa}/'),await r('http://127.0.0.1:${pb}/'),await r('https://example.com/')].join(' | '));`;
+    const q = await runNode(['--import', DENY_NETWORK, '--input-type=module', '-e', probe], { env: { IRUSHY_TEST_NET_ALLOW: `127.0.0.1:${pa},example.com:443` } });
+    check('allow-list: the one listed loopback port is reachable', /^GOT allowed/.test(q.stdout), q.stdout + q.stderr);
+    check('allow-list: another loopback port stays blocked', /GOT allowed \| BLOCKED ENETBLOCKED/.test(q.stdout), q.stdout);
+    check('allow-list: a non-loopback entry is ignored (example.com stays blocked)', /\| BLOCKED ENETBLOCKED \| BLOCKED ENETBLOCKED/.test(q.stdout) && /NETWORK_ATTEMPTS 2/.test(q.stderr) && /NETWORK_ALLOWED 1/.test(q.stderr), q.stderr);
+    a.close();
+    b.close();
   }
 
   // ===== 1. config and knowledge (no server) =================================
@@ -165,6 +187,62 @@ async function main() {
     const example = parseEnvText(fs.readFileSync(path.join(ROOT, '.env.example'), 'utf8'));
     check('.env.example selects the local engine', example.IRUSHY_ENGINE === 'local');
     check('.env.example carries no real key', !example.APINEX_API_KEY || example.APINEX_API_KEY === 'sk-apx-REPLACE_ME');
+  }
+
+  R.section('Config: optional Ollama backend (off by default, this machine only)');
+  {
+    const cfgError = (env) => {
+      try {
+        buildConfig(env);
+        return null;
+      } catch (err) {
+        return err.name === 'ConfigError' ? err.message : `unexpected ${err.name}`;
+      }
+    };
+    check('the engines are exactly local, apinex and ollama', ENGINES.join(',') === 'local,apinex,ollama');
+    const d = buildConfig({ IRUSHY_ENGINE: 'ollama', OLLAMA_MODEL: 'llama3.2' });
+    check('IRUSHY_ENGINE=ollama + OLLAMA_MODEL: default address is 127.0.0.1:11434, on this machine', d.engine === 'ollama' && d.ollama.baseUrl === 'http://127.0.0.1:11434' && d.ollama.remote === false && d.ollama.cloud === false);
+    check('ollama: chat budget 30 per window by default (local 60, apinex 20)', d.limits.rateLimitMax === 30 && buildConfig({}).limits.rateLimitMax === 60 && buildConfig({ IRUSHY_ENGINE: 'apinex' }).limits.rateLimitMax === 20);
+    check('ollama: num_ctx left to the Ollama server unless OLLAMA_NUM_CTX is set', d.ollama.numCtx === 0 && buildConfig({ IRUSHY_ENGINE: 'ollama', OLLAMA_MODEL: 'x', OLLAMA_NUM_CTX: '8192' }).ollama.numCtx === 8192);
+    const stray = buildConfig({ OLLAMA_BASE_URL: 'ftp://nope', OLLAMA_MODEL: 'gemma4:cloud', IRUSHY_OLLAMA_ALLOW_REMOTE: 'maybe' });
+    check('stray OLLAMA_* settings are not even read by the default local engine', stray.engine === 'local' && stray.ollama.configured === false);
+    const noModel = cfgError({ IRUSHY_ENGINE: 'ollama' });
+    check('no OLLAMA_MODEL: refuses to start, names the setting, does not guess a model', /OLLAMA_MODEL/.test(noModel || '') && /does not guess/.test(noModel || ''), noModel);
+    for (const url of ['http://192.168.1.20:11434', 'http://ollama:11434', 'https://ollama.example.org', 'http://0.0.0.0:11434']) {
+      const e = cfgError({ IRUSHY_ENGINE: 'ollama', OLLAMA_MODEL: 'llama3.2', OLLAMA_BASE_URL: url });
+      check(`another machine (${url}) needs IRUSHY_OLLAMA_ALLOW_REMOTE=true`, /IRUSHY_OLLAMA_ALLOW_REMOTE=true/.test(e || ''), e);
+    }
+    const lan = buildConfig({ IRUSHY_ENGINE: 'ollama', OLLAMA_MODEL: 'llama3.2', OLLAMA_BASE_URL: 'http://192.168.1.20:11434/', IRUSHY_OLLAMA_ALLOW_REMOTE: 'true' });
+    check('with the opt-in, another machine is allowed and reported as remote', lan.ollama.remote === true && lan.ollama.baseUrl === 'http://192.168.1.20:11434');
+    for (const url of ['http://localhost:11434', 'http://[::1]:11434', 'http://127.0.0.2:8080', 'http://127.1:11434']) {
+      check(`loopback address ${url} counts as this machine`, cfgError({ IRUSHY_ENGINE: 'ollama', OLLAMA_MODEL: 'llama3.2', OLLAMA_BASE_URL: url }) === null);
+    }
+    for (const m of ['gemma4:cloud', 'gpt-oss:120b-cloud', 'library/qwen3-coder:480b-cloud']) {
+      const e = cfgError({ IRUSHY_ENGINE: 'ollama', OLLAMA_MODEL: m });
+      check(`Ollama cloud model ${m} is refused without the opt-in (runs on ollama.com, may be paid)`, /cloud model/.test(e || '') && /IRUSHY_OLLAMA_ALLOW_REMOTE=true/.test(e || ''), e);
+    }
+    check('with the opt-in a cloud model is allowed and reported as one', buildConfig({ IRUSHY_ENGINE: 'ollama', OLLAMA_MODEL: 'gemma4:cloud', IRUSHY_OLLAMA_ALLOW_REMOTE: 'true' }).ollama.cloud === true);
+    check('local model names are not mistaken for cloud models', !isOllamaCloudModel('llama3.2') && !isOllamaCloudModel('cloudy:latest') && !isOllamaCloudModel('registry.local:5000/team/cloud') && isOllamaCloudModel('x:cloud'));
+    check('loopback test: 127.x, ::1 and localhost only', isLoopbackHost('127.0.0.1') && isLoopbackHost('[::1]') && isLoopbackHost('localhost') && !isLoopbackHost('10.0.0.5') && !isLoopbackHost('ollama') && !isLoopbackHost('localhost.example.com'));
+    const userPass = cfgError({ IRUSHY_ENGINE: 'ollama', OLLAMA_MODEL: 'x', OLLAMA_BASE_URL: 'http://admin:secret-pass-1@127.0.0.1:11434' });
+    check('a user name or password in OLLAMA_BASE_URL is refused, and not echoed', /user name or password/.test(userPass || '') && !/secret-pass-1/.test(userPass || ''), userPass);
+    check('only http(s) addresses are accepted', /http:\/\/ or https:\/\//.test(cfgError({ IRUSHY_ENGINE: 'ollama', OLLAMA_MODEL: 'x', OLLAMA_BASE_URL: 'file:///etc/passwd' }) || ''));
+    check('an unparseable address is refused without echoing it', /not a valid URL/.test(cfgError({ IRUSHY_ENGINE: 'ollama', OLLAMA_MODEL: 'x', OLLAMA_BASE_URL: 'not a url' }) || ''));
+    check('a malformed model name is refused', /not a valid Ollama model name/.test(cfgError({ IRUSHY_ENGINE: 'ollama', OLLAMA_MODEL: 'x y\nz' }) || ''));
+    check('Ollama helpers: "llama3.2" matches the listed "llama3.2:latest", exact tags only', !!findListedModel([{ name: 'llama3.2:latest' }], 'llama3.2') && !findListedModel([{ name: 'llama3.2:1b' }], 'llama3.2') && !!findListedModel([{ name: 'qwen2.5:7b' }], 'qwen2.5:7b'));
+    check('Ollama helpers: a reply cut at the token limit keeps whole sentences only', dropUnfinishedSentence('One. Two is longer. Three is cut') === 'One. Two is longer. …' && dropUnfinishedSentence('Complete.') === 'Complete.');
+    check('Ollama helpers: the request seed is a non-negative 31-bit integer', seedNumber('ffffffffffffffff') === 0x7fffffff && Number.isInteger(seedNumber('10fa6cc3765f4663')));
+    check('Ollama status mapping: 404 model, 503 overloaded, 401 from a proxy', mapOllamaStatus(404, '{"error":"model \\"x\\" not found"}').code === 'model_unavailable' && mapOllamaStatus(503, '').code === 'provider_unavailable' && mapOllamaStatus(401, '').code === 'invalid_request');
+    check('model output: a reasoning trace is removed (closed, unopened, or cut off)', stripMarkup('<think>plan</think>Answer.') === 'Answer.' && stripMarkup('plan</think>\nAnswer.') === 'Answer.' && stripMarkup('Answer. <think>cut') === 'Answer.');
+    const refsWeb = buildReferences({ hits: [{ id: 'faq.one-word-test', score: 11.2 }, { id: 'concept.internet-safety', score: 3.75 }], knowledge: KNOW, lang: 'en' });
+    check('model references: entries far below the best hit are not sent', refsWeb.map((r) => r.id).join(',') === 'faq.one-word-test');
+    const clsFollow = classify({ message: 'Explain more simply', mode: 'student', history: [{ role: 'user', content: 'What is RAM?' }, { role: 'assistant', content: 'RAM is volatile. [concept.computer-memory]' }], context: {}, knowledge: KNOW });
+    const refsFollow = buildReferences({ hits: [], knowledge: KNOW, lang: 'en', classification: clsFollow });
+    check('model references: a follow-up gets the full concept note of the topic in history', refsFollow[0] && refsFollow[0].id === 'concept.computer-memory' && /Worked example:/.test(refsFollow[0].text) && /Common mistake:/.test(refsFollow[0].text), refsFollow.map((r) => r.id));
+    const clsForged = classify({ message: 'Explain more simply', mode: 'student', history: [{ role: 'assistant', content: 'See [concept.not-real] and [faq.invented]' }], context: {}, knowledge: KNOW });
+    check('model references: forged ids in history are never sent', buildReferences({ hits: [], knowledge: KNOW, lang: 'en', classification: clsForged }).length === 0);
+    const example2 = parseEnvText(fs.readFileSync(path.join(ROOT, '.env.example'), 'utf8'));
+    check('.env.example keeps local selected and documents the Ollama settings (off)', example2.IRUSHY_ENGINE === 'local' && !('OLLAMA_MODEL' in example2) && /OLLAMA_MODEL=/.test(fs.readFileSync(path.join(ROOT, '.env.example'), 'utf8')));
   }
 
   R.section('Knowledge: concept notes, phrasebooks, ids');
@@ -228,11 +306,15 @@ async function main() {
     })());
   }
 
-  R.section('Tools: optional APInex check and the read-only resource check');
+  R.section('Tools: optional APInex and Ollama checks, and the read-only resource check');
   {
     const v = spawnSync(process.execPath, ['--import', DENY_NETWORK, 'tools/verify-apinex.mjs'], { cwd: ROOT, encoding: 'utf8', timeout: 15000, env: { PATH: process.env.PATH, HOME: process.env.HOME, IRUSHY_ENV_FILE: 'none' } });
     check('verify-apinex without a key: refuses with exit code 2', v.status === 2, { status: v.status, err: v.stderr.slice(0, 200) });
     check('verify-apinex without a key: sends nothing (no connection attempted)', /nothing was sent/i.test(v.stderr) && !/NETWORK_BLOCKED/.test(v.stderr));
+    const vo = spawnSync(process.execPath, ['--import', DENY_NETWORK, 'tools/verify-ollama.mjs'], { cwd: ROOT, encoding: 'utf8', timeout: 15000, env: { PATH: process.env.PATH, HOME: process.env.HOME, IRUSHY_ENV_FILE: 'none' } });
+    check('verify-ollama without OLLAMA_MODEL: refuses with exit code 2 and sends nothing', vo.status === 2 && /Nothing was sent/.test(vo.stderr) && /OLLAMA_MODEL/.test(vo.stderr) && /NETWORK_ATTEMPTS 0/.test(vo.stderr), { status: vo.status, err: vo.stderr.slice(0, 300) });
+    const vr = spawnSync(process.execPath, ['--import', DENY_NETWORK, 'tools/verify-ollama.mjs'], { cwd: ROOT, encoding: 'utf8', timeout: 15000, env: { PATH: process.env.PATH, HOME: process.env.HOME, IRUSHY_ENV_FILE: 'none', OLLAMA_MODEL: 'llama3.2', OLLAMA_BASE_URL: 'http://203.0.113.7:11434' } });
+    check('verify-ollama for another machine without the opt-in: exit 2, nothing sent', vr.status === 2 && /IRUSHY_OLLAMA_ALLOW_REMOTE/.test(vr.stderr) && /NETWORK_ATTEMPTS 0/.test(vr.stderr), vr.stderr.slice(0, 300));
     const fixture =
       '<html><body><table>' +
       KNOW.resources.map((r) => `<tr><td>${r.class}</td><td>${r.title.en.replace(/&/g, '&amp;')}</td><td><a href="Material/${r.file}">View</a></td><td><a href="/Material/${r.file}" download>Download</a></td></tr>`).join('') +
@@ -854,6 +936,19 @@ async function main() {
     mock.reset();
     await Promise.all([chat(A, 'What is RAM?', { lang: 'en', request_id: id2 }), chat(A, 'What is RAM?', { lang: 'en', request_id: id2 })]);
     check('duplicate request_id reaches the provider once', mock.state.calls.length === 1, mock.state.calls.length);
+    // Guarantees shared by every model backend (server/lib/respond.js).
+    mock.setMode('sample');
+    const sa = await chat(A, 'Where are the materials?', { lang: 'en' });
+    check('apinex: citing a sample note -> sampleContentUsed, bilingual notice and the visible label as last line', sa.json.sampleContentUsed === true && sa.json.sampleNotice && sa.json.sampleNotice.ta && FR('en', 'sample.label').includes(sa.json.answer.split('\n').pop()));
+    mock.setMode('long');
+    const lo = await chat(A, 'Where are the materials?', { lang: 'en' });
+    check('apinex: a very long answer is capped at IRUSHY_MAX_ANSWER_CHARS, label kept', lo.json.answer.length <= 2400 && /…/.test(lo.json.answer) && FR('en', 'sample.label').includes(lo.json.answer.split('\n').pop()), lo.json.answer.length);
+    mock.setMode('onlyurl');
+    const ou = await chat(A, 'Where are the materials?', { lang: 'en' });
+    check('apinex: nothing left after cleaning -> bad_provider_response, not an empty answer', ou.status === 502 && ou.json.error.code === 'bad_provider_response' && ou.json.answer === null);
+    mock.setMode('ok');
+    const ram = await chat(A, 'What is RAM?', { lang: 'en' });
+    check('apinex: shown a sample note but citing none -> still labelled as sample content', ram.json.sampleContentUsed === true && FR('en', 'sample.label').includes(ram.json.answer.split('\n').pop()));
   }
   const A1 = await startServer({ name: 'apinex-rpm1', denyNetwork: false, env: { IRUSHY_ENGINE: 'apinex', APINEX_API_KEY: TEST_KEY, APINEX_BASE_URL: mock.baseUrl, IRUSHY_RATE_LIMIT_MAX: '100000', IRUSHY_PROVIDER_RPM: '1' } });
   servers.push(A1);
@@ -876,6 +971,153 @@ async function main() {
   }
   await mock.close();
 
+  // ===== 11b. optional Ollama backend (mock Ollama on 127.0.0.1) ===============
+  R.section('Optional Ollama backend: off by default, this machine only, no fallback');
+  {
+    const bad = spawnSync(process.execPath, ['--import', DENY_NETWORK, 'server/index.js'], { cwd: ROOT, encoding: 'utf8', timeout: 15000, env: { PATH: process.env.PATH, HOME: process.env.HOME, IRUSHY_ENV_FILE: 'none', PORT: '0', HOST: '127.0.0.1', IRUSHY_ENGINE: 'ollama' } });
+    check('IRUSHY_ENGINE=ollama without OLLAMA_MODEL: the server refuses to start (exit 1), names the setting, sends nothing', bad.status === 1 && /IRUSHY configuration error: .*OLLAMA_MODEL/.test(bad.stderr) && /NETWORK_ATTEMPTS 0/.test(bad.stderr), bad.stderr.slice(0, 300));
+    const cloud = spawnSync(process.execPath, ['--import', DENY_NETWORK, 'server/index.js'], { cwd: ROOT, encoding: 'utf8', timeout: 15000, env: { PATH: process.env.PATH, HOME: process.env.HOME, IRUSHY_ENV_FILE: 'none', PORT: '0', HOST: '127.0.0.1', IRUSHY_ENGINE: 'ollama', OLLAMA_MODEL: 'gpt-oss:120b-cloud' } });
+    check('an Ollama cloud model: the server refuses to start unless IRUSHY_OLLAMA_ALLOW_REMOTE=true', cloud.status === 1 && /cloud model/.test(cloud.stderr) && /NETWORK_ATTEMPTS 0/.test(cloud.stderr), cloud.stderr.slice(0, 300));
+  }
+  const om = await startMockProvider({});
+  const closed = nodeHttp.createServer().listen(0, '127.0.0.1');
+  await new Promise((r) => (closed.listening ? r() : closed.on('listening', r)));
+  const closedPort = closed.address().port;
+  await new Promise((r) => closed.close(r)); // nothing listens there now
+  const ollamaEnv = (extra = {}) => ({
+    IRUSHY_ENGINE: 'ollama',
+    OLLAMA_BASE_URL: om.ollamaUrl,
+    OLLAMA_MODEL: 'irushy-test',
+    IRUSHY_RATE_LIMIT_MAX: '100000',
+    IRUSHY_REQUEST_TIMEOUT_MS: '1500',
+    IRUSHY_MAX_PROVIDER_RETRIES: '0',
+    IRUSHY_PROVIDER_RPM: '1',
+    IRUSHY_ASSESSMENT_SECRET: ASSESS_SECRET,
+    IRUSHY_TEST_NET_ALLOW: `127.0.0.1:${om.port},127.0.0.1:${closedPort}`,
+    ...extra
+  });
+  // denyNetwork stays ON: the only reachable ports are the mock and a closed one.
+  const O = await startServer({ name: 'ollama', env: ollamaEnv() });
+  const OU = await startServer({ name: 'ollama-unreachable', env: ollamaEnv({ OLLAMA_BASE_URL: `http://127.0.0.1:${closedPort}` }) });
+  const OM = await startServer({ name: 'ollama-model-missing', env: ollamaEnv({ OLLAMA_MODEL: 'not-pulled-yet' }) });
+  const OA = await startServer({ name: 'ollama-cloud-alias', env: ollamaEnv({ OLLAMA_MODEL: 'irushy-alias' }) });
+  servers.push(O, OU, OM, OA);
+  // info lines go to stdout, warnings to stderr
+  const waitLog = async (srv, re) => {
+    const logs = () => srv.stdout() + srv.stderr();
+    for (let i = 0; i < 60 && !re.test(logs()); i += 1) await new Promise((r) => setTimeout(r, 50));
+    return re.test(logs());
+  };
+  {
+    check('startup: the server checks Ollama and the model once, and logs it', await waitLog(O, /"msg":"engine_probe"[^\n]*"ok":true[^\n]*"model_listed":true/));
+    check('startup: Ollama not running -> a warning naming OLLAMA_BASE_URL', await waitLog(OU, /"level":"warn","msg":"engine_probe"[^\n]*"reachable":false[^\n]*OLLAMA_BASE_URL/));
+    check('startup: model not installed -> a warning with "ollama pull"', await waitLog(OM, /"level":"warn","msg":"engine_probe"[^\n]*"model_listed":false[^\n]*ollama pull/));
+    check('startup: a local name pointing at a cloud model -> a warning', await waitLog(OA, /"level":"warn","msg":"engine_probe"[^\n]*"remote_model":true/));
+
+    const c = await http(O, 'GET', '/api/config');
+    check('config: engine ollama, connected, requires_key false, model shown, address not shown', c.json.config.engine === 'ollama' && c.json.config.engine_version === OLLAMA_CLIENT_VERSION && c.json.config.connected === true && c.json.config.requires_key === false && c.json.config.key_on_server_only === true && c.json.config.model === 'irushy-test' && !c.text.includes(String(om.port)));
+    const h = await http(O, 'GET', '/api/health?deep=1');
+    check('health: uses_network true (talks to Ollama); deep probe: reachable, model installed, local', h.json.engine === 'ollama' && h.json.uses_network === true && h.json.probe.ok === true && h.json.probe.reachable === true && h.json.probe.modelListed === true && h.json.probe.remoteModel === false);
+    const hu = await http(OU, 'GET', '/api/health?deep=1');
+    check('health: Ollama not running -> probe not ok, unreachable', hu.json.probe.ok === false && hu.json.probe.reachable === false);
+    const ha = await http(OA, 'GET', '/api/health?deep=1');
+    check('health: cloud alias -> probe not ok (remote model, no opt-in)', ha.json.probe.ok === false && ha.json.probe.remoteModel === true);
+    const dg = await http(O, 'GET', '/api/diagnostics');
+    check('diagnostics: Ollama variables as set/unset only, no address', dg.json.variables.OLLAMA_MODEL === 'set' && dg.json.variables.OLLAMA_BASE_URL === 'set' && dg.json.variables.IRUSHY_OLLAMA_ALLOW_REMOTE === 'unset' && !dg.text.includes(om.ollamaUrl));
+
+    om.reset();
+    const r = await chat(O, 'Where are the materials?', { lang: 'en' });
+    const j = r.json;
+    check('answer: HTTP 200, ok, every response-contract field present', r.status === 200 && j.ok === true && CONTRACT_KEYS.every((k) => k in j), CONTRACT_KEYS.filter((k) => !(k in j)));
+    check('answer: meta.engine "ollama" + engine_version + provider_model, requires_key false', j.meta.engine === 'ollama' && j.meta.engine_version === OLLAMA_CLIENT_VERSION && j.meta.provider_model === 'irushy-test' && j.meta.requires_key === false && !('model_fallback_used' in j.meta));
+    check('answer: transcript_stored false, key_on_server_only true, results unavailable', j.meta.transcript_stored === false && j.meta.key_on_server_only === true && j.results_access.available === false && j.results_access.neverSimulated === true);
+    check('answer: meta.intent from the same classifier as the local engine', j.meta.intent === 'website_help');
+    check('answer: script and markup stripped', !/<script|\*\*|alert\(/.test(j.answer));
+    check('answer: unverified URL removed and reported, verified URL kept', j.urlsRemoved.includes('https://evil.example.com/steal') && j.answer.includes('https://tnhhsscta.com/AmmaURL.asp'));
+    check('answer: invented citation dropped, real one kept and linked', !j.answer.includes('faq.invented-entry') && j.citations.some((x) => x.id === 'faq.find-materials') && j.links.every((l) => SITE_URLS.has(l.url)));
+    check('answer: approved sources only -> no sample label', j.sampleContentUsed === false && j.sampleNotice === null);
+    check('answer: debug explains it (model, references, seed, options) without message text', j.meta.debug.engine === 'ollama' && j.meta.debug.references.includes('faq.find-materials') && Number.isInteger(j.meta.debug.options.seed) && !JSON.stringify(j.meta.debug).includes('Where are the materials'));
+    const call = om.state.calls[0];
+    check('wire: POST /api/chat, configured model, stream false', call && call.api === 'ollama' && call.body.model === 'irushy-test' && call.body.stream === false);
+    check('wire: temperature 0, an integer seed, num_predict 700; nothing else set', call.body.options.temperature === 0 && Number.isInteger(call.body.options.seed) && call.body.options.num_predict === 700 && Object.keys(call.body.options).sort().join(',') === 'num_predict,seed,temperature' && !('think' in call.body) && !('keep_alive' in call.body));
+    check('wire: no Authorization header or key of any kind', call.authorization === null && !JSON.stringify(call.body).includes('sk-'));
+    check('wire: system prompt first, with citation and no-URL rules', call.body.messages[0].role === 'system' && /square brackets/.test(call.body.messages[0].content) && /Never write URLs/.test(call.body.messages[0].content));
+    check('wire: only retrieved entries are sent, not the whole knowledge base', call.body.messages[0].content.includes('[faq.find-materials]') && !call.body.messages[0].content.includes('Practical Book 2018-19') && !call.body.messages[0].content.includes('concept.python-basics'));
+    check('wire: verified page ids are listed, never their URLs', call.body.messages[0].content.includes('nav.materials') && !/https?:\/\//.test(call.body.messages[0].content));
+
+    om.reset();
+    const hist = [{ role: 'user', content: 'What is RAM?' }, { role: 'assistant', content: 'RAM is volatile memory. [concept.computer-memory]' }];
+    await chat(O, 'Explain more simply', { lang: 'en', history: hist });
+    await chat(O, 'Explain more simply', { lang: 'en', history: hist });
+    await chat(O, 'Explain it in another way please', { lang: 'en', history: hist });
+    const [w1, w2, w3] = om.state.calls;
+    check('determinism (IRUSHY side): the same request twice sends an identical body, seed included', w1 && w2 && JSON.stringify(w1.body) === JSON.stringify(w2.body));
+    check('a different question sends a different seed', w3 && w3.body.options.seed !== w1.body.options.seed);
+    check('follow-up: the topic from history is sent as the full concept note', /\[concept\.computer-memory\][^\n]*Worked example:/.test(w1.body.messages[0].content));
+    check('follow-up: the history is sent as chat turns, then the message', w1.body.messages.length === 4 && w1.body.messages[1].role === 'user' && w1.body.messages[2].role === 'assistant' && w1.body.messages[3].content === 'Explain more simply');
+
+    om.reset();
+    const ta = await chat(O, 'RAM என்றால் என்ன?', { lang: 'auto' });
+    check('Tamil: Auto picks Tamil, the model is asked for Tamil with English terms kept', ta.json.lang === 'ta' && /Answer in Tamil/.test(om.state.calls[0].body.messages[0].content) && /English technical terms/.test(om.state.calls[0].body.messages[0].content));
+    check('Tamil: the reference note is sent in Tamil', om.state.calls[0].body.messages[0].content.includes('கணினி நினைவகம்'));
+    check('Tamil: shown a sample note -> labelled, with the Tamil label as last line', ta.json.sampleContentUsed === true && FR('ta', 'sample.label').includes(ta.json.answer.split('\n').pop()));
+
+    for (const [mode, label, test] of [
+      ['sample', 'citing a sample note -> sampleContentUsed, notice and visible label', (x) => x.json.sampleContentUsed && x.json.provenance.includes('sample-unapproved') && x.json.sampleNotice.en && FR('en', 'sample.label').includes(x.json.answer.split('\n').pop())],
+      ['long', 'a very long answer is capped at IRUSHY_MAX_ANSWER_CHARS at a sentence end', (x) => x.json.answer.length <= 2400 && x.json.answer.includes('…')],
+      ['think', 'a reasoning trace (<think> and message.thinking) is never shown', (x) => x.json.ok && !x.text.includes(REASONING_MARKER) && x.json.answer.startsWith('The study materials')],
+      ['length', 'stopped at num_predict: the unfinished sentence is dropped', (x) => x.json.ok && /running\. …/.test(x.json.answer) && !/data in RAM is/.test(x.json.answer)]
+    ]) {
+      om.setMode(mode);
+      const x = await chat(O, 'Where are the materials?', { lang: 'en' });
+      check(`model output: ${label}`, x.status === 200 && test(x), String(x.json.answer || x.json.error && x.json.error.code).slice(0, 200));
+    }
+    om.setMode('ok');
+
+    const done = mintAssessmentToken({ studentRef: 'STU-9', testId: 'T-42', status: 'completed', completedAt: '2026-10-10T10:00:00Z', anonymousPermitted: true }, ASSESS_SECRET);
+    const testCtx = (token) => ({ assessmentToken: token, question: 'Which function displays output in Python?', selectedAnswer: 'input()', correctAnswer: 'print()', conceptRef: 'mat.CS-2-EM-13' });
+    om.reset();
+    const me = await chat(O, 'Why was my answer wrong?', { lang: 'en', context: testCtx(done) });
+    const sys = om.state.calls[0] && om.state.calls[0].body.messages[0].content;
+    check('completed test (server-verified token): the returned question and both answers are sent', me.status === 200 && me.json.assessment.status === 'completed' && /COMPLETED TEST QUESTION \(/.test(sys || '') && /Student's answer: input\(\)/.test(sys || '') && /Correct answer: print\(\)/.test(sys || ''));
+    check('completed test: the lesson reference is sent as a real entry', /\[mat\.CS-2-EM-13\]/.test(sys || ''));
+    om.reset();
+    const active = mintAssessmentToken({ studentRef: 'STU-9', testId: 'T-43', status: 'active', completedAt: null, anonymousPermitted: true }, ASSESS_SECRET);
+    const ga = await chat(O, 'Why was my answer wrong?', { lang: 'en', context: testCtx(active) });
+    const gb = await chat(O, 'Tell me the answers for the online test', { lang: 'en' });
+    const gc = await chat(O, 'Why was my answer wrong?', { lang: 'en', context: { question: 'Q', selectedAnswer: 'A', correctAnswer: 'B', assessmentStatus: 'completed' } });
+    check('assessment guard: active test, test answers, client claim -> refused, Ollama NOT called', ga.json.blocked && gb.json.blocked && gc.json.blocked && ga.json.blocked.engine_called === false && om.state.calls.length === 0, om.state.calls.length);
+    om.reset();
+    await chat(O, 'What is RAM?', { lang: 'en', context: { question: 'Which is volatile?' } });
+    check('a question in the context without a verified completed token is never sent to the model', om.state.calls.length === 1 && !/COMPLETED TEST QUESTION \(|Which is volatile/.test(om.state.calls[0].body.messages[0].content), om.state.calls.length);
+
+    const id3 = rid();
+    om.reset();
+    await Promise.all([chat(O, 'What is RAM?', { lang: 'en', request_id: id3 }), chat(O, 'What is RAM?', { lang: 'en', request_id: id3 })]);
+    check('duplicate request_id reaches Ollama once', om.state.calls.length === 1, om.state.calls.length);
+    const q1 = await chat(O, 'What is RAM?', { lang: 'en' });
+    const q2 = await chat(O, 'What is an operating system?', { lang: 'en' });
+    check('no provider RPM bucket for Ollama (IRUSHY_PROVIDER_RPM=1 does not apply)', q1.status === 200 && q2.status === 200);
+
+    for (const [mode, code, status, hint] of [['404', 'model_unavailable', 502, /ollama pull/], ['400', 'invalid_request', 502, /no credentials/], ['401', 'invalid_request', 502, /no credentials/], ['429', 'rate_limited', 429, null], ['500', 'provider_unavailable', 503, /memory/], ['503', 'provider_unavailable', 503, /overloaded/], ['badjson', 'bad_provider_response', 502, /instruction model/], ['empty', 'bad_provider_response', 502, /instruction model/], ['onlyurl', 'bad_provider_response', 502, /instruction model/], ['slow', 'timeout', 504, /IRUSHY_REQUEST_TIMEOUT_MS/]]) {
+      om.setMode(mode);
+      const x = await chat(O, 'What is RAM?', { lang: 'en' });
+      om.setMode('ok');
+      check(`Ollama ${mode} -> ${code} (${status}), bilingual, links${hint ? ', adminHint' : ''}`, x.status === status && x.json.error && x.json.error.code === code && x.json.error.message.ta && x.json.links.length > 0 && x.json.answer === null && (!hint || hint.test(x.json.error.adminHint || '')), { status: x.status, code: x.json.error && x.json.error.code, hint: x.json.error && x.json.error.adminHint });
+    }
+    om.reset();
+    om.setMode('404');
+    const nf = await chat(O, 'What is RAM?', { lang: 'en' });
+    om.setMode('ok');
+    check('model unavailable: exactly one call, same model, no other model and no local fallback', om.state.calls.length === 1 && om.state.calls[0].body.model === 'irushy-test' && nf.json.answer === null && nf.json.meta.engine === 'ollama');
+    const mm = await chat(OM, 'What is RAM?', { lang: 'en' });
+    check('model not installed: model_unavailable with the "ollama pull" hint', mm.status === 502 && mm.json.error.code === 'model_unavailable' && /ollama pull/.test(mm.json.error.adminHint));
+    const un = await chat(OU, 'What is RAM?', { lang: 'en' });
+    check('Ollama not running: network_error (503) with a hint naming OLLAMA_BASE_URL, never "not connected"', un.status === 503 && un.json.error.code === 'network_error' && /OLLAMA_BASE_URL/.test(un.json.error.adminHint) && !/not connected/i.test(un.text));
+    check('Ollama not running: the verified website links are still returned', un.json.links.length >= 4 && un.json.links.every((l) => SITE_URLS.has(l.url)));
+  }
+  await om.close();
+
   // ===== 12. logs, shutdown, server-level network check =======================
   R.section('Logs and the server-level network block');
   {
@@ -891,6 +1133,10 @@ async function main() {
     check('message bodies are not logged by default', !S.logs().includes(marker));
     for (const srv of servers.filter((x) => !x.name.startsWith('apinex'))) {
       check(`${srv.name} server: zero outbound network attempts (preload reported NETWORK_ATTEMPTS 0)`, /NETWORK_ATTEMPTS 0/.test(srv.stderr()) && !/NETWORK_BLOCKED/.test(srv.stderr()), srv.stderr().split('\n').filter((l) => /NETWORK/.test(l)).slice(0, 3));
+    }
+    for (const srv of servers.filter((x) => x.name.startsWith('ollama'))) {
+      const m = srv.stderr().match(/NETWORK_ALLOWED (\d+)/);
+      check(`${srv.name} server: contacted only the configured Ollama port (${m ? m[1] : 0} allowed calls, nothing else)`, m && Number(m[1]) > 0 && /NETWORK_ATTEMPTS 0/.test(srv.stderr()));
     }
   }
 

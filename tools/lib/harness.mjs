@@ -103,6 +103,27 @@ export async function startServer({ name, env = {}, denyNetwork = true, timeoutM
   return srv;
 }
 
+// Runs `node <args>` without blocking this process (spawnSync would freeze
+// an in-process mock server the child needs to reach). Hermetic env, as above.
+export function runNode(args, { env = {}, timeoutMs = 20000 } = {}) {
+  return new Promise((resolve) => {
+    const child = spawn(process.execPath, args, {
+      cwd: ROOT,
+      env: { PATH: process.env.PATH, HOME: process.env.HOME, IRUSHY_ENV_FILE: 'none', ...env },
+      stdio: ['ignore', 'pipe', 'pipe']
+    });
+    let stdout = '';
+    let stderr = '';
+    child.stdout.on('data', (d) => (stdout += d));
+    child.stderr.on('data', (d) => (stderr += d));
+    const t = setTimeout(() => child.kill('SIGKILL'), timeoutMs);
+    child.on('exit', (status) => {
+      clearTimeout(t);
+      resolve({ status, stdout, stderr });
+    });
+  });
+}
+
 export async function http(srv, method, p, { body, headers = {}, cookie, raw = false } = {}) {
   const h = { Accept: 'application/json', ...headers };
   if (body !== undefined && !h['Content-Type']) h['Content-Type'] = 'application/json';
