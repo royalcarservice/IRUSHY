@@ -1,0 +1,77 @@
+{
+  "_meta": {
+    "purpose": "Word lists the local engine uses to recognise abuse, probing, questions about things the site does not publish, off-topic questions, other school subjects, and computing topics IRUSHY has no notes on.",
+    "provenance": "engine-configuration",
+    "status": "sample-unapproved (engine wording, awaiting review)",
+    "howToEdit": [
+      "Add a phrase to the right list and restart the server. Phrases are matched as whole words.",
+      "Tamil words match by stem prefix (தேர்வு also matches தேர்வை, தேர்வில்). End a Tamil word with ! to require the whole word.",
+      "End an English word with * to match any word starting with it (regist* matches register, registration).",
+      "Avoid words that also appear in lessons. For example, use 'exam rules', not 'rules' (Boolean algebra has rules), and 'கால அட்டவணை', not 'அட்டவணை' (a truth table is an அட்டவணை).",
+      "Run npm test afterwards; the suite checks every topic note still classifies correctly."
+    ]
+  },
+  "abuseStrong": [
+    "fuck", "fucking", "fucker", "motherfucker", "fck", "shit", "bullshit", "bitch", "bastard", "asshole", "dick", "slut", "whore", "wtf", "stfu"
+  ],
+  "abuseInsults": [
+    "idiot", "stupid", "dumb", "useless", "moron", "fool", "nonsense", "rubbish", "worst", "shut up", "loser", "get lost"
+  ],
+  "abuseTamil": [
+    "முட்டாள்!", "மடையன்!", "மடையா!", "லூசு!", "போடா!", "போடி!", "நாயே!", "பைத்தியக்கார", "கழுதை!"
+  ],
+  "probes": [
+    "ignore previous", "ignore all previous", "ignore the above", "ignore your instructions", "ignore your rules", "system prompt",
+    "your prompt", "your instructions", "hidden instructions", "developer mode", "jailbreak", "dan mode", "api key", "your key",
+    "secret key", "openai key", "apinex key", "admin password", "teacher password", "password of", "reveal your", "bypass",
+    "ரகசியக் குறியீடு", "கடவுச்சொல்லைச் சொல்", "நிர்வாகி கடவுச்சொல்"
+  ],
+  "notPublished": {
+    "en": [
+      "fee", "fees", "cost", "price", "charges", "payment", "refund", "salary", "admission", "admissions", "certificate",
+      "timetable", "time table", "exam schedule", "class schedule", "exam date", "exam dates", "result date", "holiday", "holidays",
+      "staff list", "staff details", "principal", "exam rules", "school rules", "rules for the exam", "pass mark", "cut off", "cutoff"
+    ],
+    "ta": [
+      "கட்டண", "பணம் செலுத்த", "திருப்பித் தர", "சம்பளம்", "மாணவர் சேர்க்கை", "பள்ளி சேர்க்கை", "சான்றிதழ்", "கால அட்டவணை",
+      "தேர்வு அட்டவணை", "தேர்வு தேதி", "விடுமுறை", "ஊழியர்", "தலைமை ஆசிரியர்", "தேர்வு விதிமுறை", "தேர்ச்சி மதிப்பெண்"
+    ]
+  },
+  "offTopic": {
+    "en": [
+      "cricket", "ipl", "football", "kabaddi", "movie", "movies", "film", "films", "cinema", "actor", "actress", "song", "songs", "music",
+      "lyrics", "dance", "weather", "rain", "politics", "election", "minister", "vote", "recipe", "cooking", "biryani", "restaurant",
+      "horoscope", "astrology", "rasi", "love", "girlfriend", "boyfriend", "crush", "marriage", "dating", "stock market", "share price",
+      "bitcoin", "crypto", "lottery", "joke", "jokes", "riddle", "pubg", "free fire", "bgmi", "instagram followers", "celebrity",
+      "gossip", "news", "train ticket", "bus timing", "shopping", "mobile price", "phone price"
+    ],
+    "ta": [
+      "கிரிக்கெட்", "ஐபிஎல்", "கால்பந்து", "கபடி", "திரைப்படம்", "சினிமா", "நடிகர்", "நடிகை", "பாடல்", "இசை!", "நடனம்", "வானிலை",
+      "மழை!", "அரசியல்", "தேர்தல்", "அமைச்சர்", "சமையல்", "பிரியாணி", "ஜோதிடம்", "ராசி!", "காதல்", "திருமணம்", "பங்குச் சந்தை",
+      "லாட்டரி", "நகைச்சுவை", "செய்தி!"
+    ]
+  },
+  "otherSubjects": {
+    "en": [
+      "physics", "chemistry", "biology", "botany", "zoology", "maths", "mathematics", "trigonometry", "calculus", "geometry",
+      "accountancy", "economics", "commerce", "history", "geography", "political science", "photosynthesis", "cell biology",
+      "periodic table", "tamil grammar", "english grammar", "grammar"
+    ],
+    "ta": [
+      "இயற்பியல்", "வேதியியல்", "உயிரியல்", "தாவரவியல்", "விலங்கியல்", "கணிதம்", "வரலாறு", "புவியியல்", "பொருளியல்",
+      "வணிகவியல்", "கணக்குப்பதிவியல்", "இலக்கணம்", "ஒளிச்சேர்க்கை"
+    ]
+  },
+  "computingNotCovered": {
+    "en": [
+      "machine learning", "artificial intelligence", "deep learning", "neural network", "blockchain", "cloud computing", "quantum",
+      "java", "javascript", "c programming", "c++", "php", "kotlin", "swift", "data structure", "data structures", "linked list",
+      "stack", "queue", "recursion", "algorithm", "algorithms", "flowchart", "pseudocode", "compiler", "object oriented", "oop",
+      "inheritance", "polymorphism", "binary search", "binary tree", "sorting", "bubble sort", "virtual reality", "augmented reality",
+      "robotics", "iot", "internet of things", "big data", "data science"
+    ],
+    "ta": [
+      "செயற்கை நுண்ணறிவு", "இயந்திரக் கற்றல்", "ஜாவா", "தரவுக் கட்டமைப்பு", "படிமுறை", "பாய்வுப்படம்"
+    ]
+  }
+}

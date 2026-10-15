@@ -1,0 +1,3001 @@
+{
+  "_meta": {
+    "purpose": "Concept notes for IRUSHY's local engine: one short, bilingual note per topic in the question bank. The engine explains, simplifies, gives examples, generates practice questions and explains mistakes from these notes only.",
+    "provenance": "sample-unapproved",
+    "status": "Every note below was written for this project and is NOT approved by the school. IRUSHY labels every answer that uses them as sample content until a teacher signs a note off.",
+    "howToApprove": [
+      "A subject teacher reads the note (English and Tamil) and corrects anything wrong.",
+      "Set \"provenance\": \"approved\", \"approvedBy\": \"<name, role>\" and \"approvedOn\": \"YYYY-MM-DD\" on that note.",
+      "Restart the server and run npm test. Approved notes are used without the sample label, and in production even when sample content is switched off."
+    ],
+    "schema": {
+      "id": "concept.<slug>",
+      "topic": "exactly the topic string used in the question bank",
+      "title": "{en, ta}",
+      "class / subject / medium": "where the topic is taught (class and subject follow the question bank)",
+      "definition": "{en, ta}: one or two sentences",
+      "keyPoints": "2 to 4 items of {en, ta}",
+      "example": "{prompt{en,ta}, code[] optional, steps{en[],ta[]} (same length), answer{en,ta}}",
+      "mistake": "{claim{en,ta}: the wrong idea stated as a sentence, correction{en,ta}}",
+      "simple": "{en, ta}: an everyday analogy, used for 'explain more simply'",
+      "terms": "[{term, aliases[], ta, definition{en,ta}}]: named terms the engine can define on their own",
+      "keywords": "{en[], ta[]}: phrases that identify the topic in a question (see data/knowledge/lexicon.json for the matching rules)",
+      "excludePhrases": "phrases that must NOT select this topic (e.g. 'binary search' is not Number systems)",
+      "conceptRef": "id of a published material in data/resources.json whose title names this topic, or null",
+      "relatedMaterials": "more material ids that name the topic",
+      "provenance": "sample-unapproved | approved (approved also needs approvedBy and approvedOn)"
+    },
+    "conceptRefPolicy": "conceptRef is set only where a published material's title names the topic (Python, Computer networks). Every other topic is null and IRUSHY says so; a teacher should map the right lesson. Lesson numbers are never guessed.",
+    "count": 13
+  },
+  "items": [
+    {
+      "id": "concept.number-systems",
+      "topic": "Number systems",
+      "title": {
+        "en": "Number systems",
+        "ta": "எண் முறைமைகள் (Number systems)"
+      },
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": [
+        "Tamil Medium",
+        "English Medium"
+      ],
+      "language": [
+        "en",
+        "ta"
+      ],
+      "provenance": "sample-unapproved",
+      "approvedBy": null,
+      "approvedOn": null,
+      "source": {
+        "writtenBy": "IRUSHY project (AI-assisted draft written for this repository)",
+        "writtenOn": "2026-10-15",
+        "basis": "General school computing knowledge. Not copied from any textbook or from the TNHHSSCTA materials.",
+        "reviewNeeded": "A subject teacher for the content and a Tamil-medium teacher for the Tamil wording."
+      },
+      "definition": {
+        "en": "A number system is a way of writing numbers using a fixed set of digits. Its base (radix) is the number of digits it uses: binary is base 2, octal is base 8, decimal is base 10 and hexadecimal is base 16.",
+        "ta": "எண் முறைமை என்பது, குறிப்பிட்ட இலக்கங்களைக் கொண்டு எண்களை எழுதும் ஒரு முறையாகும். அது பயன்படுத்தும் இலக்கங்களின் எண்ணிக்கையே அதன் அடிமானம் (base / radix): இரும (binary) முறைக்கு 2, எண்கோண (octal) முறைக்கு 8, பதின்ம (decimal) முறைக்கு 10, பதினறும (hexadecimal) முறைக்கு 16."
+      },
+      "keyPoints": [
+        {
+          "en": "Computers store everything in binary, using only the digits 0 and 1. Each binary digit is called a bit.",
+          "ta": "கணினி எல்லாவற்றையும் 0, 1 என்ற இரண்டு இலக்கங்களை மட்டும் கொண்ட இரும (binary) வடிவில் சேமிக்கிறது. ஒவ்வொரு இரும இலக்கமும் பிட் (bit) எனப்படும்."
+        },
+        {
+          "en": "Each position has a place value that is a power of the base. In binary the place values from the right are 1, 2, 4, 8, 16 and so on.",
+          "ta": "ஒவ்வொரு இடத்திற்கும் அடிமானத்தின் அடுக்காக அமையும் இட மதிப்பு உண்டு. இரும முறையில் வலமிருந்து இட மதிப்புகள் 1, 2, 4, 8, 16 என்று அமைகின்றன."
+        },
+        {
+          "en": "To convert decimal to binary, divide by 2 again and again and read the remainders from the bottom up. To convert back, add the place values of the 1s.",
+          "ta": "பதின்மத்திலிருந்து இருமத்திற்கு மாற்ற, எண்ணைத் தொடர்ந்து 2 ஆல் வகுத்து, மீதிகளைக் கீழிருந்து மேலாகப் படிக்க வேண்டும். மீண்டும் பதின்மத்திற்கு மாற்ற, 1 உள்ள இடங்களின் இட மதிப்புகளைக் கூட்ட வேண்டும்."
+        },
+        {
+          "en": "Octal groups binary digits in threes and hexadecimal groups them in fours, so both are short ways of writing binary. Hexadecimal uses A to F for the values 10 to 15.",
+          "ta": "எண்கோண முறை இரும இலக்கங்களை மூன்று மூன்றாகவும், பதினறும முறை நான்கு நான்காகவும் குழுவாக்குகின்றன; எனவே இரண்டுமே இரும எண்களைச் சுருக்கமாக எழுதும் வழிகள். பதினறும முறையில் 10 முதல் 15 வரையிலான மதிப்புகளுக்கு A முதல் F வரை எழுத்துகள் பயன்படுகின்றன."
+        }
+      ],
+      "example": {
+        "prompt": {
+          "en": "Convert the decimal number 13 to binary.",
+          "ta": "பதின்ம எண் 13 ஐ இரும எண்ணாக மாற்றுக."
+        },
+        "steps": {
+          "en": [
+            "13 ÷ 2 = 6, remainder 1",
+            "6 ÷ 2 = 3, remainder 0",
+            "3 ÷ 2 = 1, remainder 1",
+            "1 ÷ 2 = 0, remainder 1",
+            "Read the remainders from the bottom up: 1101."
+          ],
+          "ta": [
+            "13 ÷ 2 = 6, மீதி 1",
+            "6 ÷ 2 = 3, மீதி 0",
+            "3 ÷ 2 = 1, மீதி 1",
+            "1 ÷ 2 = 0, மீதி 1",
+            "மீதிகளைக் கீழிருந்து மேலாகப் படித்தால்: 1101."
+          ]
+        },
+        "answer": {
+          "en": "13 in decimal is 1101 in binary. Check: 8 + 4 + 0 + 1 = 13.",
+          "ta": "பதின்மத்தில் 13 என்பது இருமத்தில் 1101. சரிபார்ப்பு: 8 + 4 + 0 + 1 = 13."
+        }
+      },
+      "mistake": {
+        "claim": {
+          "en": "When converting decimal to binary, you read the remainders from top to bottom.",
+          "ta": "பதின்மத்திலிருந்து இருமத்திற்கு மாற்றும்போது மீதிகளை மேலிருந்து கீழாகப் படிக்க வேண்டும்."
+        },
+        "correction": {
+          "en": "The remainders must be read from the bottom up: the last remainder is the leftmost, most significant bit. Reading from the top gives the digits in reverse order.",
+          "ta": "மீதிகளைக் கீழிருந்து மேலாகவே படிக்க வேண்டும்; கடைசியாகக் கிடைக்கும் மீதியே இடது ஓரத்திலுள்ள, அதிக மதிப்புள்ள பிட். மேலிருந்து படித்தால் இலக்கங்கள் தலைகீழாக வந்துவிடும்."
+        }
+      },
+      "simple": {
+        "en": "Think of a number system as a counting style. In decimal you use ten digits, 0 to 9, before moving to the next place. In binary there are only two digits, 0 and 1, so you move to the next place much sooner: 0, 1, 10, 11, 100.",
+        "ta": "எண் முறைமையை ஒரு எண்ணும் பாணியாக நினைத்துக்கொள்ளுங்கள். பதின்மத்தில் 0 முதல் 9 வரை பத்து இலக்கங்களைப் பயன்படுத்திய பிறகுதான் அடுத்த இடத்திற்குச் செல்கிறோம். இருமத்தில் 0, 1 என்ற இரண்டு இலக்கங்கள் மட்டுமே உள்ளதால், மிக விரைவிலேயே அடுத்த இடத்திற்குச் செல்கிறோம்: 0, 1, 10, 11, 100."
+      },
+      "terms": [
+        {
+          "term": "binary",
+          "aliases": [
+            "binary number",
+            "binary number system",
+            "base 2",
+            "இருமம்"
+          ],
+          "ta": "இரும எண் முறைமை",
+          "definition": {
+            "en": "Binary is the base-2 number system. It uses only the digits 0 and 1, and it is how computers store data.",
+            "ta": "இரும எண் முறைமை (binary) அடிமானம் 2 கொண்டது. இது 0, 1 ஆகிய இலக்கங்களை மட்டுமே பயன்படுத்துகிறது; கணினி தரவைச் சேமிப்பது இந்த வடிவில்தான்."
+          }
+        },
+        {
+          "term": "decimal",
+          "aliases": [
+            "decimal number",
+            "decimal number system",
+            "base 10"
+          ],
+          "ta": "பதின்ம எண் முறைமை",
+          "definition": {
+            "en": "Decimal is the base-10 number system we use every day, with the digits 0 to 9.",
+            "ta": "பதின்ம எண் முறைமை (decimal) அடிமானம் 10 கொண்டது; நாம் அன்றாடம் பயன்படுத்தும் 0 முதல் 9 வரையிலான இலக்கங்கள் இதில் உள்ளன."
+          }
+        },
+        {
+          "term": "octal",
+          "aliases": [
+            "octal number",
+            "octal number system",
+            "base 8"
+          ],
+          "ta": "எண்கோண எண் முறைமை",
+          "definition": {
+            "en": "Octal is the base-8 number system, with the digits 0 to 7. One octal digit stands for exactly three binary digits.",
+            "ta": "எண்கோண எண் முறைமை (octal) அடிமானம் 8 கொண்டது; இதில் 0 முதல் 7 வரையிலான இலக்கங்கள் உள்ளன. ஒரு எண்கோண இலக்கம் சரியாக மூன்று இரும இலக்கங்களுக்குச் சமம்."
+          }
+        },
+        {
+          "term": "hexadecimal",
+          "aliases": [
+            "hex",
+            "hexadecimal number",
+            "base 16"
+          ],
+          "ta": "பதினறும எண் முறைமை",
+          "definition": {
+            "en": "Hexadecimal is the base-16 number system. It uses 0 to 9 and then A to F for the values 10 to 15. One hexadecimal digit stands for exactly four binary digits.",
+            "ta": "பதினறும எண் முறைமை (hexadecimal) அடிமானம் 16 கொண்டது. இதில் 0 முதல் 9 வரையும், 10 முதல் 15 வரையிலான மதிப்புகளுக்கு A முதல் F வரையும் பயன்படுகின்றன. ஒரு பதினறும இலக்கம் சரியாக நான்கு இரும இலக்கங்களுக்குச் சமம்."
+          }
+        },
+        {
+          "term": "radix",
+          "aliases": [
+            "base of a number system",
+            "அடிமானம்"
+          ],
+          "ta": "அடிமானம்",
+          "definition": {
+            "en": "The base, or radix, of a number system is the number of different digits it uses. Binary has base 2 and decimal has base 10.",
+            "ta": "ஒரு எண் முறைமையின் அடிமானம் (base / radix) என்பது அது பயன்படுத்தும் வெவ்வேறு இலக்கங்களின் எண்ணிக்கை. இருமத்தின் அடிமானம் 2; பதின்மத்தின் அடிமானம் 10."
+          }
+        },
+        {
+          "term": "place value",
+          "aliases": [
+            "positional value",
+            "இட மதிப்பு"
+          ],
+          "ta": "இட மதிப்பு",
+          "definition": {
+            "en": "Place value is what a digit is worth because of its position. In base b, the positions from the right are worth 1, b, b², b³ and so on.",
+            "ta": "ஒரு இலக்கம் அது இருக்கும் இடத்தால் பெறும் மதிப்பே இட மதிப்பு. அடிமானம் b எனில், வலமிருந்து இடங்களின் மதிப்பு 1, b, b², b³ என்று அமையும்."
+          }
+        }
+      ],
+      "keywords": {
+        "en": [
+          "number system",
+          "binary",
+          "decimal",
+          "octal",
+          "hexadecimal",
+          "hex",
+          "radix",
+          "number conversion",
+          "base conversion",
+          "base 2",
+          "base 8",
+          "base 16",
+          "place value"
+        ],
+        "ta": [
+          "எண் முறைமை",
+          "எண் முறை",
+          "இரும எண்",
+          "இருமம்",
+          "இருமத்தில்",
+          "இருமத்திற்கு",
+          "இருமத்திலிருந்து",
+          "பதின்ம எண்",
+          "பதின்மம்",
+          "பதின்மத்தில்",
+          "பதின்மத்திற்கு",
+          "பதின்மத்திலிருந்து",
+          "எண்கோண",
+          "பதினறும",
+          "அடிமானம்",
+          "எண் மாற்றம்",
+          "இட மதிப்பு"
+        ]
+      },
+      "excludePhrases": [
+        "binary search",
+        "binary tree",
+        "binary file",
+        "decimal point",
+        "binary operator"
+      ],
+      "conceptRef": null,
+      "relatedMaterials": []
+    },
+    {
+      "id": "concept.boolean-algebra",
+      "topic": "Boolean algebra",
+      "title": {
+        "en": "Boolean algebra and logic gates",
+        "ta": "பூலியன் இயற்கணிதமும் தர்க்க வாயில்களும் (Boolean algebra)"
+      },
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": [
+        "Tamil Medium",
+        "English Medium"
+      ],
+      "language": [
+        "en",
+        "ta"
+      ],
+      "provenance": "sample-unapproved",
+      "approvedBy": null,
+      "approvedOn": null,
+      "source": {
+        "writtenBy": "IRUSHY project (AI-assisted draft written for this repository)",
+        "writtenOn": "2026-10-15",
+        "basis": "General school computing knowledge. Not copied from any textbook or from the TNHHSSCTA materials.",
+        "reviewNeeded": "A subject teacher for the content and a Tamil-medium teacher for the Tamil wording."
+      },
+      "definition": {
+        "en": "Boolean algebra is the algebra of the two values 1 (true) and 0 (false). Logic gates are the electronic circuits that carry out Boolean operations such as AND, OR and NOT.",
+        "ta": "பூலியன் இயற்கணிதம் என்பது 1 (உண்மை), 0 (பொய்) என்ற இரண்டு மதிப்புகளுக்கான இயற்கணிதம் ஆகும். AND, OR, NOT போன்ற பூலியன் செயல்களைச் செய்யும் மின்னணுச் சுற்றுகளே தர்க்க வாயில்கள் (logic gates)."
+      },
+      "keyPoints": [
+        {
+          "en": "AND gives 1 only when all inputs are 1. OR gives 1 when at least one input is 1. NOT turns 1 into 0 and 0 into 1.",
+          "ta": "AND வாயில் எல்லா உள்ளீடுகளும் 1 ஆக இருந்தால் மட்டுமே 1 தரும். OR வாயில் குறைந்தது ஒரு உள்ளீடு 1 ஆக இருந்தாலே 1 தரும். NOT வாயில் 1 ஐ 0 ஆகவும், 0 ஐ 1 ஆகவும் மாற்றும்."
+        },
+        {
+          "en": "A truth table lists the output for every combination of inputs. With n inputs there are 2^n rows, so a 2-input gate has 4 rows.",
+          "ta": "உள்ளீடுகளின் ஒவ்வொரு சேர்க்கைக்கும் உரிய வெளியீட்டைப் பட்டியலிடுவது உண்மை அட்டவணை (truth table). n உள்ளீடுகள் இருந்தால் 2^n வரிசைகள் இருக்கும்; எனவே 2 உள்ளீடு கொண்ட வாயிலுக்கு 4 வரிசைகள்."
+        },
+        {
+          "en": "NAND is AND followed by NOT, and NOR is OR followed by NOT. They are called universal gates because any other gate can be built from either one of them.",
+          "ta": "AND ஐத் தொடர்ந்து NOT செய்வது NAND; OR ஐத் தொடர்ந்து NOT செய்வது NOR. மற்ற எந்த வாயிலையும் இவற்றில் ஏதேனும் ஒன்றைக் கொண்டே அமைக்க முடியும் என்பதால் இவை பொது வாயில்கள் (universal gates) எனப்படுகின்றன."
+        },
+        {
+          "en": "XOR gives 1 when its two inputs are different and 0 when they are the same.",
+          "ta": "XOR வாயில் இரண்டு உள்ளீடுகளும் வேறுபட்டால் 1 தரும்; ஒன்றாக இருந்தால் 0 தரும்."
+        }
+      ],
+      "example": {
+        "prompt": {
+          "en": "Find the output of A AND (NOT B) when A = 1 and B = 0.",
+          "ta": "A = 1, B = 0 எனில் A AND (NOT B) இன் வெளியீட்டைக் காண்க."
+        },
+        "steps": {
+          "en": [
+            "Work out the bracket first: NOT B = NOT 0 = 1.",
+            "Now apply AND: A AND 1 = 1 AND 1.",
+            "AND gives 1 only when both inputs are 1, so the result is 1."
+          ],
+          "ta": [
+            "முதலில் அடைப்புக்குள் உள்ளதைக் கணக்கிடுங்கள்: NOT B = NOT 0 = 1.",
+            "அடுத்து AND: A AND 1 = 1 AND 1.",
+            "இரண்டு உள்ளீடுகளும் 1 ஆக இருப்பதால் AND வாயில் 1 தரும்; எனவே விடை 1."
+          ]
+        },
+        "answer": {
+          "en": "The output is 1.",
+          "ta": "வெளியீடு 1."
+        }
+      },
+      "mistake": {
+        "claim": {
+          "en": "An OR gate gives 0 when both inputs are 1.",
+          "ta": "இரண்டு உள்ளீடுகளும் 1 ஆக இருந்தால் OR வாயில் 0 தரும்."
+        },
+        "correction": {
+          "en": "OR gives 1 whenever at least one input is 1, so 1 OR 1 = 1. The gate that gives 0 for the inputs 1 and 1 is XOR.",
+          "ta": "குறைந்தது ஒரு உள்ளீடு 1 ஆக இருந்தாலே OR வாயில் 1 தரும்; எனவே 1 OR 1 = 1. 1, 1 என்ற உள்ளீடுகளுக்கு 0 தருவது XOR வாயில்."
+        }
+      },
+      "simple": {
+        "en": "Think of logic gates as light switches. AND is like two switches in a row: the bulb lights only if both are on. OR is like two switches side by side: either one can light the bulb. NOT simply flips on to off and off to on.",
+        "ta": "தர்க்க வாயில்களை மின் சுவிட்சுகளாக நினைத்துக்கொள்ளுங்கள். AND என்பது வரிசையாக இணைக்கப்பட்ட இரண்டு சுவிட்சுகள் போன்றது: இரண்டும் ON ஆக இருந்தால்தான் விளக்கு எரியும். OR என்பது பக்கவாட்டில் இணைக்கப்பட்ட இரண்டு சுவிட்சுகள் போன்றது: ஏதேனும் ஒன்று ON ஆனாலே விளக்கு எரியும். NOT, ON ஐ OFF ஆகவும் OFF ஐ ON ஆகவும் மாற்றும்."
+      },
+      "terms": [
+        {
+          "term": "logic gate",
+          "aliases": [
+            "logic gates",
+            "தர்க்க வாயில்"
+          ],
+          "ta": "தர்க்க வாயில்",
+          "definition": {
+            "en": "A logic gate is an electronic circuit that takes one or more binary inputs and gives one binary output according to a rule such as AND, OR or NOT.",
+            "ta": "தர்க்க வாயில் (logic gate) என்பது ஒன்று அல்லது அதற்கு மேற்பட்ட இரும உள்ளீடுகளைப் பெற்று, AND, OR, NOT போன்ற ஒரு விதிப்படி ஒரு இரும வெளியீட்டைத் தரும் மின்னணுச் சுற்று ஆகும்."
+          }
+        },
+        {
+          "term": "truth table",
+          "aliases": [
+            "truth tables",
+            "உண்மை அட்டவணை"
+          ],
+          "ta": "உண்மை அட்டவணை",
+          "definition": {
+            "en": "A truth table lists the output of a logic circuit for every possible combination of inputs. With n inputs it has 2^n rows.",
+            "ta": "ஒரு தர்க்கச் சுற்றின் உள்ளீடுகளின் ஒவ்வொரு சேர்க்கைக்கும் உரிய வெளியீட்டைப் பட்டியலிடுவது உண்மை அட்டவணை (truth table). n உள்ளீடுகள் இருந்தால் அதில் 2^n வரிசைகள் இருக்கும்."
+          }
+        },
+        {
+          "term": "AND gate",
+          "ta": "AND வாயில்",
+          "definition": {
+            "en": "An AND gate gives 1 only when all of its inputs are 1.",
+            "ta": "எல்லா உள்ளீடுகளும் 1 ஆக இருக்கும்போது மட்டுமே AND வாயில் 1 தரும்."
+          }
+        },
+        {
+          "term": "OR gate",
+          "ta": "OR வாயில்",
+          "definition": {
+            "en": "An OR gate gives 1 when at least one of its inputs is 1.",
+            "ta": "குறைந்தது ஒரு உள்ளீடு 1 ஆக இருந்தால் OR வாயில் 1 தரும்."
+          }
+        },
+        {
+          "term": "NOT gate",
+          "aliases": [
+            "inverter"
+          ],
+          "ta": "NOT வாயில்",
+          "definition": {
+            "en": "A NOT gate, also called an inverter, has one input and gives the opposite value: 1 becomes 0 and 0 becomes 1.",
+            "ta": "NOT வாயில் (inverter) ஒரே ஒரு உள்ளீட்டைக் கொண்டது; அதன் எதிர் மதிப்பைத் தரும்: 1 என்பது 0 ஆகவும், 0 என்பது 1 ஆகவும் மாறும்."
+          }
+        },
+        {
+          "term": "NAND gate",
+          "aliases": [
+            "nand"
+          ],
+          "ta": "NAND வாயில்",
+          "definition": {
+            "en": "A NAND gate is an AND gate followed by NOT: it gives 0 only when all inputs are 1.",
+            "ta": "NAND வாயில் என்பது AND வாயிலைத் தொடர்ந்து NOT: எல்லா உள்ளீடுகளும் 1 ஆக இருந்தால் மட்டுமே அது 0 தரும்."
+          }
+        },
+        {
+          "term": "NOR gate",
+          "aliases": [
+            "nor"
+          ],
+          "ta": "NOR வாயில்",
+          "definition": {
+            "en": "A NOR gate is an OR gate followed by NOT: it gives 1 only when all inputs are 0.",
+            "ta": "NOR வாயில் என்பது OR வாயிலைத் தொடர்ந்து NOT: எல்லா உள்ளீடுகளும் 0 ஆக இருந்தால் மட்டுமே அது 1 தரும்."
+          }
+        },
+        {
+          "term": "XOR gate",
+          "aliases": [
+            "xor",
+            "exclusive or"
+          ],
+          "ta": "XOR வாயில்",
+          "definition": {
+            "en": "An XOR (exclusive OR) gate gives 1 when its two inputs are different and 0 when they are the same.",
+            "ta": "XOR (exclusive OR) வாயில், இரண்டு உள்ளீடுகளும் வேறுபட்டால் 1 தரும்; ஒன்றாக இருந்தால் 0 தரும்."
+          }
+        },
+        {
+          "term": "universal gate",
+          "aliases": [
+            "universal gates"
+          ],
+          "ta": "பொது வாயில்",
+          "definition": {
+            "en": "NAND and NOR are called universal gates because any other logic gate can be built using only one of them.",
+            "ta": "மற்ற எந்தத் தர்க்க வாயிலையும் இவற்றில் ஒன்றை மட்டுமே கொண்டு அமைக்க முடியும் என்பதால் NAND, NOR ஆகியவை பொது வாயில்கள் (universal gates) எனப்படுகின்றன."
+          }
+        },
+        {
+          "term": "De Morgan's laws",
+          "aliases": [
+            "de morgan",
+            "demorgan",
+            "de morgans law",
+            "de morgan theorem"
+          ],
+          "ta": "டி மார்கன் விதிகள்",
+          "definition": {
+            "en": "De Morgan's laws say that NOT (A AND B) = (NOT A) OR (NOT B), and NOT (A OR B) = (NOT A) AND (NOT B).",
+            "ta": "டி மார்கன் விதிகள் (De Morgan's laws): NOT (A AND B) = (NOT A) OR (NOT B); NOT (A OR B) = (NOT A) AND (NOT B)."
+          }
+        }
+      ],
+      "keywords": {
+        "en": [
+          "boolean",
+          "boolean algebra",
+          "logic gate",
+          "gate",
+          "truth table",
+          "logic circuit",
+          "nand",
+          "nor",
+          "xor",
+          "xnor",
+          "universal gate",
+          "de morgan"
+        ],
+        "ta": [
+          "பூலியன்",
+          "தர்க்க வாயில்",
+          "வாயில்!",
+          "உண்மை அட்டவணை",
+          "தர்க்கச் சுற்று",
+          "டி மார்கன்"
+        ]
+      },
+      "excludePhrases": [
+        "boolean value"
+      ],
+      "conceptRef": null,
+      "relatedMaterials": []
+    },
+    {
+      "id": "concept.computer-organisation",
+      "topic": "Computer organisation",
+      "title": {
+        "en": "Computer organisation",
+        "ta": "கணினி அமைப்பு (Computer organisation)"
+      },
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": [
+        "Tamil Medium",
+        "English Medium"
+      ],
+      "language": [
+        "en",
+        "ta"
+      ],
+      "provenance": "sample-unapproved",
+      "approvedBy": null,
+      "approvedOn": null,
+      "source": {
+        "writtenBy": "IRUSHY project (AI-assisted draft written for this repository)",
+        "writtenOn": "2026-10-15",
+        "basis": "General school computing knowledge. Not copied from any textbook or from the TNHHSSCTA materials.",
+        "reviewNeeded": "A subject teacher for the content and a Tamil-medium teacher for the Tamil wording."
+      },
+      "definition": {
+        "en": "Computer organisation describes the main parts of a computer and how they work together: input devices, the central processing unit (CPU), memory and output devices.",
+        "ta": "கணினியின் முக்கியப் பகுதிகளையும் அவை எவ்வாறு இணைந்து செயல்படுகின்றன என்பதையும் விவரிப்பது கணினி அமைப்பு (computer organisation) ஆகும்: உள்ளீட்டுச் சாதனங்கள், மையச் செயலகம் (CPU), நினைவகம், வெளியீட்டுச் சாதனங்கள்."
+      },
+      "keyPoints": [
+        {
+          "en": "Input devices such as the keyboard and mouse send data into the computer; output devices such as the monitor and printer show the results.",
+          "ta": "விசைப்பலகை, சுட்டி (mouse) போன்ற உள்ளீட்டுச் சாதனங்கள் தரவைக் கணினிக்குள் அனுப்புகின்றன; திரை (monitor), அச்சுப்பொறி (printer) போன்ற வெளியீட்டுச் சாதனங்கள் முடிவுகளைக் காட்டுகின்றன."
+        },
+        {
+          "en": "The CPU is the brain of the computer. Its Arithmetic Logic Unit (ALU) does calculations and comparisons, and its Control Unit (CU) directs the order in which instructions run.",
+          "ta": "CPU கணினியின் மூளை போன்றது. அதிலுள்ள கணித தர்க்க அலகு (ALU) கணக்கீடுகளையும் ஒப்பீடுகளையும் செய்கிறது; கட்டுப்பாட்டு அலகு (CU) அறிவுறுத்தல்கள் இயங்கும் வரிசையை வழிநடத்துகிறது."
+        },
+        {
+          "en": "Memory holds the data and instructions the CPU is working on. Registers are tiny, very fast storage places inside the CPU itself.",
+          "ta": "CPU தற்போது பயன்படுத்தும் தரவையும் அறிவுறுத்தல்களையும் நினைவகம் வைத்திருக்கிறது. பதிவகங்கள் (registers) CPU வுக்குள்ளேயே இருக்கும் மிகச் சிறிய, மிக வேகமான சேமிப்பு இடங்கள்."
+        },
+        {
+          "en": "The CPU repeats a cycle for every instruction: fetch it from memory, decode it, then execute it.",
+          "ta": "ஒவ்வொரு அறிவுறுத்தலுக்கும் CPU ஒரு சுழற்சியைத் தொடர்ந்து செய்கிறது: நினைவகத்திலிருந்து பெறுதல் (fetch), புரிந்துகொள்ளுதல் (decode), பின்னர் செயல்படுத்துதல் (execute)."
+        }
+      ],
+      "example": {
+        "prompt": {
+          "en": "Trace what happens when you type 5 + 3 into a calculator program and see 8.",
+          "ta": "ஒரு கணிப்பான் (calculator) நிரலில் 5 + 3 என டைப் செய்து 8 என்ற விடையைப் பார்க்கும்போது என்ன நடக்கிறது என்பதை வரிசைப்படுத்துக."
+        },
+        "steps": {
+          "en": [
+            "Input: the keyboard sends 5, + and 3 to the computer.",
+            "Memory: the numbers and the program's instructions are held in RAM.",
+            "Control unit: fetches the add instruction and decodes it.",
+            "ALU: adds 5 and 3 to get 8.",
+            "Output: the monitor displays 8."
+          ],
+          "ta": [
+            "உள்ளீடு: விசைப்பலகை 5, +, 3 ஆகியவற்றைக் கணினிக்கு அனுப்புகிறது.",
+            "நினைவகம்: எண்களும் நிரலின் அறிவுறுத்தல்களும் RAM இல் வைக்கப்படுகின்றன.",
+            "கட்டுப்பாட்டு அலகு: கூட்டல் அறிவுறுத்தலைப் பெற்று, அதைப் புரிந்துகொள்கிறது.",
+            "ALU: 5 உடன் 3 ஐக் கூட்டி 8 பெறுகிறது.",
+            "வெளியீடு: திரை 8 ஐக் காட்டுகிறது."
+          ]
+        },
+        "answer": {
+          "en": "Input → memory → CPU (control unit and ALU) → output.",
+          "ta": "உள்ளீடு → நினைவகம் → CPU (கட்டுப்பாட்டு அலகு, ALU) → வெளியீடு."
+        }
+      },
+      "mistake": {
+        "claim": {
+          "en": "The CPU is where your files are stored.",
+          "ta": "உங்கள் கோப்புகள் CPU வில்தான் சேமிக்கப்படுகின்றன."
+        },
+        "correction": {
+          "en": "The CPU processes data but does not keep your files. Files are kept on storage such as a hard disk or SSD, and the CPU works on data only while it is in memory.",
+          "ta": "CPU தரவைச் செயலாக்குகிறது; ஆனால் கோப்புகளைச் சேமிப்பதில்லை. கோப்புகள் வன் வட்டு (hard disk), SSD போன்ற சேமிப்பகத்தில் இருக்கின்றன; தரவு நினைவகத்தில் இருக்கும்போது மட்டுமே CPU அதைச் செயலாக்குகிறது."
+        }
+      },
+      "simple": {
+        "en": "A computer works like a kitchen. Ingredients come in (input), the cook follows the recipe and does the work (CPU), the table holds what is being used right now (memory), and the finished dish is served (output).",
+        "ta": "கணினி ஒரு சமையலறை போலச் செயல்படுகிறது. பொருட்கள் உள்ளே வருகின்றன (உள்ளீடு); சமையல்காரர் செய்முறையைப் பின்பற்றி வேலை செய்கிறார் (CPU); தற்போது பயன்படும் பொருட்கள் மேசையில் இருக்கின்றன (நினைவகம்); தயாரான உணவு பரிமாறப்படுகிறது (வெளியீடு)."
+      },
+      "terms": [
+        {
+          "term": "CPU",
+          "aliases": [
+            "central processing unit",
+            "processor",
+            "சிபியு",
+            "மையச் செயலகம்"
+          ],
+          "ta": "மையச் செயலகம்",
+          "definition": {
+            "en": "The CPU (Central Processing Unit) is the part of the computer that carries out instructions. It contains the ALU and the control unit.",
+            "ta": "CPU (Central Processing Unit - மையச் செயலகம்) என்பது அறிவுறுத்தல்களைச் செயல்படுத்தும் கணினியின் பகுதி. அதில் ALU, கட்டுப்பாட்டு அலகு ஆகியவை உள்ளன."
+          }
+        },
+        {
+          "term": "ALU",
+          "aliases": [
+            "arithmetic logic unit",
+            "arithmetic and logic unit",
+            "கணித தர்க்க அலகு"
+          ],
+          "ta": "கணித தர்க்க அலகு",
+          "definition": {
+            "en": "The ALU (Arithmetic Logic Unit) is the part of the CPU that does arithmetic, such as addition, and logical comparisons, such as checking whether one number is larger than another.",
+            "ta": "ALU (Arithmetic Logic Unit - கணித தர்க்க அலகு) என்பது கூட்டல் போன்ற கணக்கீடுகளையும், ஒரு எண் மற்றொன்றை விடப் பெரியதா என்பது போன்ற தர்க்க ஒப்பீடுகளையும் செய்யும் CPU வின் பகுதி."
+          }
+        },
+        {
+          "term": "control unit",
+          "aliases": [
+            "கட்டுப்பாட்டு அலகு"
+          ],
+          "ta": "கட்டுப்பாட்டு அலகு",
+          "definition": {
+            "en": "The control unit is the part of the CPU that fetches instructions, decodes them and directs the other parts of the computer to carry them out.",
+            "ta": "கட்டுப்பாட்டு அலகு (control unit) என்பது அறிவுறுத்தல்களைப் பெற்று, அவற்றைப் புரிந்துகொண்டு, அவற்றைச் செயல்படுத்துமாறு கணினியின் மற்றப் பகுதிகளை வழிநடத்தும் CPU வின் பகுதி."
+          }
+        },
+        {
+          "term": "CPU register",
+          "aliases": [
+            "cpu registers",
+            "processor register",
+            "பதிவகம்"
+          ],
+          "ta": "பதிவகம்",
+          "definition": {
+            "en": "A register is a very small, very fast storage location inside the CPU that holds the data or instruction being worked on right now.",
+            "ta": "பதிவகம் (register) என்பது CPU வுக்குள் உள்ள மிகச் சிறிய, மிக வேகமான சேமிப்பு இடம்; தற்போது செயலாக்கப்படும் தரவையோ அறிவுறுத்தலையோ அது வைத்திருக்கிறது."
+          }
+        },
+        {
+          "term": "input device",
+          "aliases": [
+            "input devices",
+            "input unit",
+            "உள்ளீட்டுச் சாதனம்"
+          ],
+          "ta": "உள்ளீட்டுச் சாதனம்",
+          "definition": {
+            "en": "An input device sends data into the computer. Examples are the keyboard, mouse, scanner and microphone.",
+            "ta": "உள்ளீட்டுச் சாதனம் தரவைக் கணினிக்குள் அனுப்புகிறது. விசைப்பலகை, சுட்டி (mouse), scanner, microphone ஆகியவை எடுத்துக்காட்டுகள்."
+          }
+        },
+        {
+          "term": "output device",
+          "aliases": [
+            "output devices",
+            "output unit",
+            "வெளியீட்டுச் சாதனம்"
+          ],
+          "ta": "வெளியீட்டுச் சாதனம்",
+          "definition": {
+            "en": "An output device shows or delivers the results from the computer. Examples are the monitor, printer and speakers.",
+            "ta": "வெளியீட்டுச் சாதனம் கணினியின் முடிவுகளைக் காட்டுகிறது அல்லது வழங்குகிறது. திரை (monitor), அச்சுப்பொறி (printer), ஒலிபெருக்கி (speaker) ஆகியவை எடுத்துக்காட்டுகள்."
+          }
+        },
+        {
+          "term": "hardware",
+          "aliases": [
+            "வன்பொருள்"
+          ],
+          "ta": "வன்பொருள்",
+          "definition": {
+            "en": "Hardware is the physical parts of a computer that you can touch, such as the CPU, keyboard and monitor.",
+            "ta": "வன்பொருள் (hardware) என்பது CPU, விசைப்பலகை, திரை போன்ற, தொட்டுணரக்கூடிய கணினியின் பருப்பொருள் பகுதிகள்."
+          }
+        },
+        {
+          "term": "fetch-decode-execute cycle",
+          "aliases": [
+            "fetch decode execute",
+            "machine cycle",
+            "instruction cycle"
+          ],
+          "ta": "அறிவுறுத்தல் சுழற்சி",
+          "definition": {
+            "en": "The fetch-decode-execute cycle is the loop the CPU repeats for every instruction: fetch it from memory, decode what it means, then execute it.",
+            "ta": "ஒவ்வொரு அறிவுறுத்தலுக்கும் CPU மீண்டும் மீண்டும் செய்யும் சுழற்சியே fetch-decode-execute சுழற்சி: நினைவகத்திலிருந்து பெறுதல், அதன் பொருளைப் புரிந்துகொள்ளுதல், பின்னர் செயல்படுத்துதல்."
+          }
+        }
+      ],
+      "keywords": {
+        "en": [
+          "computer organisation",
+          "computer organization",
+          "cpu",
+          "central processing unit",
+          "processor",
+          "alu",
+          "arithmetic logic unit",
+          "control unit",
+          "cpu register",
+          "input device",
+          "output device",
+          "motherboard",
+          "fetch decode execute",
+          "machine cycle",
+          "parts of a computer",
+          "components of a computer",
+          "block diagram of a computer"
+        ],
+        "ta": [
+          "கணினி அமைப்பு",
+          "மையச் செயலகம்",
+          "செயலி!",
+          "கட்டுப்பாட்டு அலகு",
+          "கணித தர்க்க அலகு",
+          "உள்ளீட்டுச் சாதனம்",
+          "வெளியீட்டுச் சாதனம்",
+          "பதிவகம்",
+          "சிபியு",
+          "கணினியின் பகுதிகள்"
+        ]
+      },
+      "excludePhrases": [],
+      "conceptRef": null,
+      "relatedMaterials": []
+    },
+    {
+      "id": "concept.computer-memory",
+      "topic": "Computer memory",
+      "title": {
+        "en": "Computer memory",
+        "ta": "கணினி நினைவகம் (Computer memory)"
+      },
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": [
+        "Tamil Medium",
+        "English Medium"
+      ],
+      "language": [
+        "en",
+        "ta"
+      ],
+      "provenance": "sample-unapproved",
+      "approvedBy": null,
+      "approvedOn": null,
+      "source": {
+        "writtenBy": "IRUSHY project (AI-assisted draft written for this repository)",
+        "writtenOn": "2026-10-15",
+        "basis": "General school computing knowledge. Not copied from any textbook or from the TNHHSSCTA materials.",
+        "reviewNeeded": "A subject teacher for the content and a Tamil-medium teacher for the Tamil wording."
+      },
+      "definition": {
+        "en": "Computer memory is where a computer keeps data and instructions. Primary memory (RAM and ROM) works directly with the CPU, while secondary storage (hard disk, SSD, pen drive) keeps data for the long term.",
+        "ta": "கணினி தரவையும் அறிவுறுத்தல்களையும் வைத்திருக்கும் இடமே கணினி நினைவகம். முதன்மை நினைவகம் (RAM, ROM) CPU உடன் நேரடியாகச் செயல்படுகிறது; இரண்டாம் நிலைச் சேமிப்பகம் (வன் வட்டு, SSD, pen drive) தரவை நீண்ட காலத்திற்கு வைத்திருக்கிறது."
+      },
+      "keyPoints": [
+        {
+          "en": "RAM (Random Access Memory) is volatile: it loses its contents when the power goes off. ROM (Read Only Memory) is non-volatile and keeps the start-up instructions.",
+          "ta": "RAM (Random Access Memory) நிலையற்றது (volatile): மின்சாரம் நின்றால் அதிலுள்ள தகவல் அழிந்துவிடும். ROM (Read Only Memory) நிலையானது (non-volatile); கணினி தொடங்கத் தேவையான அறிவுறுத்தல்களை அது வைத்திருக்கிறது."
+        },
+        {
+          "en": "A bit is a single 0 or 1. 8 bits make 1 byte, 1024 bytes make 1 KB, 1024 KB make 1 MB and 1024 MB make 1 GB.",
+          "ta": "பிட் (bit) என்பது ஒற்றை 0 அல்லது 1. 8 பிட் = 1 பைட் (byte); 1024 பைட் = 1 KB; 1024 KB = 1 MB; 1024 MB = 1 GB."
+        },
+        {
+          "en": "Cache memory is a small, very fast memory between the CPU and RAM that keeps the data the CPU uses most often.",
+          "ta": "CPU அடிக்கடி பயன்படுத்தும் தரவை வைத்திருக்கும், CPU க்கும் RAM க்கும் இடையே உள்ள சிறிய, மிக வேகமான நினைவகமே Cache நினைவகம்."
+        },
+        {
+          "en": "Secondary storage is slower than RAM but much larger, and it keeps data even without power.",
+          "ta": "இரண்டாம் நிலைச் சேமிப்பகம் RAM ஐ விட மெதுவானது; ஆனால் மிகப் பெரியது; மின்சாரம் இல்லாமலும் தரவைத் தக்கவைக்கும்."
+        }
+      ],
+      "example": {
+        "prompt": {
+          "en": "A file is 3 MB. How many KB is that, and how many bytes?",
+          "ta": "ஒரு கோப்பின் அளவு 3 MB. அது எத்தனை KB? எத்தனை பைட்?"
+        },
+        "steps": {
+          "en": [
+            "1 MB = 1024 KB, so 3 MB = 3 × 1024 = 3072 KB.",
+            "1 KB = 1024 bytes, so 3072 KB = 3072 × 1024 = 3145728 bytes."
+          ],
+          "ta": [
+            "1 MB = 1024 KB; எனவே 3 MB = 3 × 1024 = 3072 KB.",
+            "1 KB = 1024 பைட்; எனவே 3072 KB = 3072 × 1024 = 3145728 பைட்."
+          ]
+        },
+        "answer": {
+          "en": "3 MB = 3072 KB = 3145728 bytes.",
+          "ta": "3 MB = 3072 KB = 3145728 பைட்."
+        }
+      },
+      "mistake": {
+        "claim": {
+          "en": "RAM keeps your work safe even after the computer is switched off.",
+          "ta": "கணினியை அணைத்த பிறகும் RAM உங்கள் வேலையைப் பாதுகாப்பாக வைத்திருக்கும்."
+        },
+        "correction": {
+          "en": "RAM is volatile, so unsaved work in RAM is lost when the power goes off. Save your work to storage such as a hard disk, SSD or pen drive to keep it.",
+          "ta": "RAM நிலையற்றது; எனவே RAM இல் உள்ள சேமிக்காத வேலை மின்சாரம் நின்றவுடன் அழிந்துவிடும். அதைப் பாதுகாக்க வன் வட்டு, SSD அல்லது pen drive போன்ற சேமிப்பகத்தில் சேமியுங்கள்."
+        }
+      },
+      "simple": {
+        "en": "RAM is like your study desk: quick to use, but cleared at the end of the day. Storage is like your cupboard: slower to reach, but things stay there until you remove them.",
+        "ta": "RAM உங்கள் படிப்பு மேசை போன்றது: பயன்படுத்த வேகமானது; ஆனால் நாள் முடிவில் காலி செய்யப்படும். சேமிப்பகம் உங்கள் அலமாரி போன்றது: எடுக்கச் சற்று நேரமாகும்; ஆனால் நீங்கள் எடுக்கும் வரை பொருட்கள் அங்கேயே இருக்கும்."
+      },
+      "terms": [
+        {
+          "term": "RAM",
+          "aliases": [
+            "random access memory",
+            "ரேம்"
+          ],
+          "ta": "RAM (Random Access Memory)",
+          "definition": {
+            "en": "RAM (Random Access Memory) is the computer's main working memory. It is fast and volatile: it holds the programs and data in use and loses them when the power goes off.",
+            "ta": "RAM (Random Access Memory) கணினியின் முதன்மை வேலை நினைவகம். இது வேகமானது, நிலையற்றது (volatile): பயன்பாட்டில் உள்ள நிரல்களையும் தரவையும் வைத்திருக்கும்; மின்சாரம் நின்றால் அவற்றை இழந்துவிடும்."
+          }
+        },
+        {
+          "term": "ROM",
+          "aliases": [
+            "read only memory",
+            "ரோம்"
+          ],
+          "ta": "ROM (Read Only Memory)",
+          "definition": {
+            "en": "ROM (Read Only Memory) is non-volatile memory that keeps its contents without power. It stores the start-up instructions the computer needs when it is switched on.",
+            "ta": "ROM (Read Only Memory) மின்சாரம் இல்லாமலும் தகவலைத் தக்கவைக்கும் நிலையான (non-volatile) நினைவகம். கணினியை இயக்கியதும் தேவைப்படும் தொடக்க அறிவுறுத்தல்களை இது சேமிக்கிறது."
+          }
+        },
+        {
+          "term": "cache memory",
+          "aliases": [
+            "cache"
+          ],
+          "ta": "Cache நினைவகம்",
+          "definition": {
+            "en": "Cache memory is a small, very fast memory between the CPU and RAM that keeps the data the CPU uses most often, so the CPU does not have to wait for RAM.",
+            "ta": "Cache நினைவகம், CPU க்கும் RAM க்கும் இடையே உள்ள சிறிய, மிக வேகமான நினைவகம்; CPU அடிக்கடி பயன்படுத்தும் தரவை அது வைத்திருப்பதால் CPU, RAM க்காகக் காத்திருக்க வேண்டியதில்லை."
+          }
+        },
+        {
+          "term": "bit",
+          "aliases": [
+            "binary digit",
+            "பிட்"
+          ],
+          "ta": "பிட்",
+          "definition": {
+            "en": "A bit (binary digit) is the smallest unit of data: a single 0 or 1.",
+            "ta": "பிட் (bit - binary digit) என்பது தரவின் மிகச் சிறிய அலகு: ஒற்றை 0 அல்லது 1."
+          }
+        },
+        {
+          "term": "byte",
+          "aliases": [
+            "bytes",
+            "பைட்"
+          ],
+          "ta": "பைட்",
+          "definition": {
+            "en": "A byte is a group of 8 bits. It is the basic unit used to measure memory and file sizes.",
+            "ta": "பைட் (byte) என்பது 8 பிட்களின் தொகுப்பு. நினைவகம், கோப்பு அளவுகளை அளக்கப் பயன்படும் அடிப்படை அலகு இதுவே."
+          }
+        },
+        {
+          "term": "volatile memory",
+          "aliases": [
+            "volatile",
+            "non volatile",
+            "non volatile memory",
+            "நிலையற்ற நினைவகம்"
+          ],
+          "ta": "நிலையற்ற நினைவகம்",
+          "definition": {
+            "en": "Volatile memory, such as RAM, loses its contents when the power is switched off. Non-volatile memory, such as ROM or an SSD, keeps them.",
+            "ta": "RAM போன்ற நிலையற்ற நினைவகம் (volatile memory) மின்சாரம் நின்றவுடன் தகவலை இழக்கும். ROM, SSD போன்ற நிலையான நினைவகம் (non-volatile) அதைத் தக்கவைக்கும்."
+          }
+        },
+        {
+          "term": "secondary storage",
+          "aliases": [
+            "secondary memory",
+            "storage device",
+            "hard disk",
+            "ssd",
+            "pen drive",
+            "வன் வட்டு"
+          ],
+          "ta": "இரண்டாம் நிலைச் சேமிப்பகம்",
+          "definition": {
+            "en": "Secondary storage, such as a hard disk, SSD or pen drive, keeps data permanently. It is slower than RAM but much larger, and it does not need power to hold data.",
+            "ta": "வன் வட்டு (hard disk), SSD, pen drive போன்ற இரண்டாம் நிலைச் சேமிப்பகம் தரவை நிரந்தரமாக வைத்திருக்கும். இது RAM ஐ விட மெதுவானது; ஆனால் மிகப் பெரியது; தரவைத் தக்கவைக்க மின்சாரம் தேவையில்லை."
+          }
+        },
+        {
+          "term": "memory units",
+          "aliases": [
+            "kilobyte",
+            "megabyte",
+            "gigabyte",
+            "terabyte",
+            "kb",
+            "mb",
+            "gb",
+            "tb"
+          ],
+          "ta": "நினைவக அலகுகள்",
+          "definition": {
+            "en": "Memory units: 1 KB = 1024 bytes, 1 MB = 1024 KB, 1 GB = 1024 MB and 1 TB = 1024 GB.",
+            "ta": "நினைவக அலகுகள்: 1 KB = 1024 பைட்; 1 MB = 1024 KB; 1 GB = 1024 MB; 1 TB = 1024 GB."
+          }
+        }
+      ],
+      "keywords": {
+        "en": [
+          "memory",
+          "computer memory",
+          "ram",
+          "rom",
+          "cache",
+          "primary memory",
+          "secondary memory",
+          "secondary storage",
+          "storage",
+          "hard disk",
+          "ssd",
+          "pen drive",
+          "bit",
+          "byte",
+          "kilobyte",
+          "megabyte",
+          "gigabyte",
+          "terabyte",
+          "volatile",
+          "nibble"
+        ],
+        "ta": [
+          "நினைவகம்",
+          "முதன்மை நினைவகம்",
+          "இரண்டாம் நிலை",
+          "சேமிப்பகம்",
+          "பைட்",
+          "பிட்",
+          "ரேம்",
+          "ரோம்",
+          "வன் வட்டு",
+          "நிலையற்ற"
+        ]
+      },
+      "excludePhrases": [
+        "little bit",
+        "a bit more",
+        "bit more",
+        "bit confused",
+        "bit difficult",
+        "bit hard",
+        "bit slow",
+        "bit late"
+      ],
+      "conceptRef": null,
+      "relatedMaterials": []
+    },
+    {
+      "id": "concept.operating-systems",
+      "topic": "Operating systems",
+      "title": {
+        "en": "Operating systems",
+        "ta": "இயக்க முறைமைகள் (Operating systems)"
+      },
+      "class": 11,
+      "subject": "Computer Science",
+      "medium": [
+        "Tamil Medium",
+        "English Medium"
+      ],
+      "language": [
+        "en",
+        "ta"
+      ],
+      "provenance": "sample-unapproved",
+      "approvedBy": null,
+      "approvedOn": null,
+      "source": {
+        "writtenBy": "IRUSHY project (AI-assisted draft written for this repository)",
+        "writtenOn": "2026-10-15",
+        "basis": "General school computing knowledge. Not copied from any textbook or from the TNHHSSCTA materials.",
+        "reviewNeeded": "A subject teacher for the content and a Tamil-medium teacher for the Tamil wording."
+      },
+      "definition": {
+        "en": "An operating system (OS) is the system software that manages the computer's hardware and lets you run application programs. Windows and Linux are examples.",
+        "ta": "இயக்க முறைமை (Operating System - OS) என்பது கணினியின் வன்பொருளை நிர்வகித்து, பயன்பாட்டு நிரல்களை இயக்க உதவும் முறைமை மென்பொருள் ஆகும். Windows, Linux ஆகியவை இதற்கு எடுத்துக்காட்டுகள்."
+      },
+      "keyPoints": [
+        {
+          "en": "The OS manages memory, files and folders, input and output devices, and the programs that are running (processes).",
+          "ta": "நினைவகம், கோப்புகள், கோப்புறைகள், உள்ளீடு மற்றும் வெளியீட்டுச் சாதனங்கள், இயங்கும் நிரல்கள் (processes) ஆகியவற்றை இயக்க முறைமை நிர்வகிக்கிறது."
+        },
+        {
+          "en": "It gives the user an interface: a GUI (Graphical User Interface) with windows and icons, or a CLI (Command Line Interface) where you type commands.",
+          "ta": "பயனருக்கு அது ஒரு இடைமுகத்தைத் தருகிறது: சாளரங்களும் படவுருக்களும் (icons) கொண்ட GUI (Graphical User Interface), அல்லது கட்டளைகளை டைப் செய்யும் CLI (Command Line Interface)."
+        },
+        {
+          "en": "Application software, such as a word processor or a browser, runs on top of the OS and asks the OS whenever it needs the hardware.",
+          "ta": "சொல் செயலி (word processor), உலாவி (browser) போன்ற பயன்பாட்டு மென்பொருள்கள் இயக்க முறைமையின் மேல் இயங்குகின்றன; வன்பொருள் தேவைப்படும்போதெல்லாம் அவை இயக்க முறைமையிடம் கேட்கின்றன."
+        },
+        {
+          "en": "The OS is loaded into memory when the computer starts; this start-up process is called booting.",
+          "ta": "கணினியைத் தொடங்கும்போது இயக்க முறைமை நினைவகத்திற்குள் ஏற்றப்படுகிறது; இந்தத் தொடக்கச் செயல்முறை booting எனப்படும்."
+        }
+      ],
+      "example": {
+        "prompt": {
+          "en": "You click Save in a text editor. What does the operating system do?",
+          "ta": "ஒரு text editor இல் Save ஐச் சொடுக்குகிறீர்கள். இயக்க முறைமை என்ன செய்கிறது?"
+        },
+        "steps": {
+          "en": [
+            "The editor asks the OS to save the file.",
+            "The OS finds free space on the disk and writes the data there.",
+            "It records the file's name and location in the folder so you can find it again.",
+            "It tells the editor that the save worked, and the editor shows that to you."
+          ],
+          "ta": [
+            "கோப்பைச் சேமிக்குமாறு editor இயக்க முறைமையிடம் கேட்கிறது.",
+            "இயக்க முறைமை வட்டில் (disk) காலியான இடத்தைக் கண்டறிந்து, தரவை அங்கு எழுதுகிறது.",
+            "மீண்டும் கண்டுபிடிக்க வசதியாக, கோப்பின் பெயரையும் இருப்பிடத்தையும் கோப்புறையில் பதிவு செய்கிறது.",
+            "சேமிப்பு வெற்றிகரமாக முடிந்ததை editor க்குத் தெரிவிக்கிறது; editor அதை உங்களுக்குக் காட்டுகிறது."
+          ]
+        },
+        "answer": {
+          "en": "The OS handles the disk and the folder record; the application only asks.",
+          "ta": "வட்டையும் கோப்புறைப் பதிவையும் இயக்க முறைமை கையாள்கிறது; பயன்பாடு கேட்கிறது, அவ்வளவுதான்."
+        }
+      },
+      "mistake": {
+        "claim": {
+          "en": "Microsoft Word, a web browser and an operating system are all the same kind of software.",
+          "ta": "Microsoft Word, இணைய உலாவி, இயக்க முறைமை ஆகிய மூன்றும் ஒரே வகை மென்பொருள்."
+        },
+        "correction": {
+          "en": "Word and browsers are application software. The operating system is system software: it runs underneath and manages the hardware for those applications.",
+          "ta": "Word, உலாவி ஆகியவை பயன்பாட்டு மென்பொருள்கள் (application software). இயக்க முறைமை ஒரு முறைமை மென்பொருள் (system software): அது அடியில் இயங்கி, அந்தப் பயன்பாடுகளுக்காக வன்பொருளை நிர்வகிக்கிறது."
+        }
+      },
+      "simple": {
+        "en": "The operating system is like a school office. Students (programs) do not run the building themselves; they ask the office for a room (memory), the files they need (storage) or the projector (devices), and the office makes sure everyone gets a fair turn.",
+        "ta": "இயக்க முறைமை ஒரு பள்ளி அலுவலகம் போன்றது. மாணவர்கள் (நிரல்கள்) கட்டடத்தைத் தாங்களே நடத்துவதில்லை; அறை (நினைவகம்), தேவையான கோப்புகள் (சேமிப்பகம்), projector (சாதனங்கள்) ஆகியவற்றை அலுவலகத்திடம் கேட்கிறார்கள். அனைவருக்கும் நியாயமான வாய்ப்பு கிடைப்பதை அலுவலகம் உறுதிசெய்கிறது."
+      },
+      "terms": [
+        {
+          "term": "operating system",
+          "aliases": [
+            "os",
+            "இயக்க முறைமை"
+          ],
+          "ta": "இயக்க முறைமை",
+          "definition": {
+            "en": "An operating system (OS) is the system software that manages the computer's hardware and lets you run application programs.",
+            "ta": "இயக்க முறைமை (OS) என்பது கணினியின் வன்பொருளை நிர்வகித்து, பயன்பாட்டு நிரல்களை இயக்க உதவும் முறைமை மென்பொருள்."
+          }
+        },
+        {
+          "term": "system software",
+          "aliases": [
+            "முறைமை மென்பொருள்"
+          ],
+          "ta": "முறைமை மென்பொருள்",
+          "definition": {
+            "en": "System software runs and manages the computer itself. The operating system is the main example.",
+            "ta": "முறைமை மென்பொருள் (system software) கணினியையே இயக்கி நிர்வகிக்கிறது. இயக்க முறைமை இதற்கு முக்கிய எடுத்துக்காட்டு."
+          }
+        },
+        {
+          "term": "application software",
+          "aliases": [
+            "app",
+            "apps",
+            "பயன்பாட்டு மென்பொருள்"
+          ],
+          "ta": "பயன்பாட்டு மென்பொருள்",
+          "definition": {
+            "en": "Application software helps you do a task, such as writing a document, browsing the web or editing a photo. It runs on top of the operating system.",
+            "ta": "ஆவணம் எழுதுதல், இணையத்தில் உலாவுதல், புகைப்படம் திருத்துதல் போன்ற ஒரு பணியைச் செய்ய உதவுவது பயன்பாட்டு மென்பொருள் (application software). இது இயக்க முறைமையின் மேல் இயங்குகிறது."
+          }
+        },
+        {
+          "term": "software",
+          "aliases": [
+            "மென்பொருள்"
+          ],
+          "ta": "மென்பொருள்",
+          "definition": {
+            "en": "Software is the set of programs that tell the hardware what to do. It is divided into system software and application software.",
+            "ta": "வன்பொருளுக்கு என்ன செய்ய வேண்டும் என்று சொல்லும் நிரல்களின் தொகுப்பே மென்பொருள் (software). இது முறைமை மென்பொருள், பயன்பாட்டு மென்பொருள் என இரு வகைப்படும்."
+          }
+        },
+        {
+          "term": "GUI",
+          "aliases": [
+            "graphical user interface"
+          ],
+          "ta": "வரைகலைப் பயனர் இடைமுகம்",
+          "definition": {
+            "en": "A GUI (Graphical User Interface) lets you use the computer through windows, icons, menus and a pointer.",
+            "ta": "GUI (Graphical User Interface - வரைகலைப் பயனர் இடைமுகம்) சாளரங்கள், படவுருக்கள் (icons), பட்டிகள் (menus), சுட்டி ஆகியவற்றின் மூலம் கணினியைப் பயன்படுத்த உதவுகிறது."
+          }
+        },
+        {
+          "term": "CLI",
+          "aliases": [
+            "command line interface",
+            "command line",
+            "cui",
+            "character user interface"
+          ],
+          "ta": "கட்டளை வரி இடைமுகம்",
+          "definition": {
+            "en": "A CLI (Command Line Interface) is a text screen where you type commands, for example in a Linux terminal.",
+            "ta": "CLI (Command Line Interface - கட்டளை வரி இடைமுகம்) என்பது கட்டளைகளை டைப் செய்யும் உரைத் திரை; எடுத்துக்காட்டு: Linux terminal."
+          }
+        },
+        {
+          "term": "booting",
+          "aliases": [
+            "boot",
+            "boot up",
+            "bootstrapping"
+          ],
+          "ta": "கணினித் தொடக்கம் (booting)",
+          "definition": {
+            "en": "Booting is the start-up process in which the computer runs its start-up instructions and loads the operating system into memory.",
+            "ta": "கணினி தனது தொடக்க அறிவுறுத்தல்களை இயக்கி, இயக்க முறைமையை நினைவகத்திற்குள் ஏற்றும் தொடக்கச் செயல்முறையே booting எனப்படும்."
+          }
+        },
+        {
+          "term": "process management",
+          "aliases": [
+            "multitasking",
+            "running process"
+          ],
+          "ta": "process மேலாண்மை",
+          "definition": {
+            "en": "A process is a program that is currently running. The OS shares the CPU between processes so that several programs seem to run at once; this is called multitasking.",
+            "ta": "தற்போது இயங்கிக்கொண்டிருக்கும் நிரலே process. பல நிரல்கள் ஒரே நேரத்தில் இயங்குவது போலத் தோன்றும் வகையில், இயக்க முறைமை CPU வை process களுக்கு இடையே பகிர்ந்தளிக்கிறது; இதுவே multitasking."
+          }
+        },
+        {
+          "term": "kernel",
+          "ta": "kernel (இயக்க முறைமையின் மையம்)",
+          "definition": {
+            "en": "The kernel is the core of the operating system. It controls the CPU, memory and devices directly.",
+            "ta": "kernel என்பது இயக்க முறைமையின் மையப் பகுதி. CPU, நினைவகம், சாதனங்கள் ஆகியவற்றை அது நேரடியாகக் கட்டுப்படுத்துகிறது."
+          }
+        }
+      ],
+      "keywords": {
+        "en": [
+          "operating system",
+          "os",
+          "windows",
+          "linux",
+          "ubuntu",
+          "android",
+          "kernel",
+          "gui",
+          "cli",
+          "command line",
+          "booting",
+          "boot",
+          "system software",
+          "application software",
+          "software",
+          "file management",
+          "process management",
+          "multitasking"
+        ],
+        "ta": [
+          "இயக்க முறைமை",
+          "இயக்க அமைப்பு",
+          "முறைமை மென்பொருள்",
+          "பயன்பாட்டு மென்பொருள்",
+          "மென்பொருள்",
+          "விண்டோஸ்",
+          "லினக்ஸ்"
+        ]
+      },
+      "excludePhrases": [],
+      "conceptRef": null,
+      "relatedMaterials": []
+    },
+    {
+      "id": "concept.python-basics",
+      "topic": "Python basics",
+      "title": {
+        "en": "Python basics",
+        "ta": "Python அடிப்படைகள் (Python basics)"
+      },
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": [
+        "Tamil Medium",
+        "English Medium"
+      ],
+      "language": [
+        "en",
+        "ta"
+      ],
+      "provenance": "sample-unapproved",
+      "approvedBy": null,
+      "approvedOn": null,
+      "source": {
+        "writtenBy": "IRUSHY project (AI-assisted draft written for this repository)",
+        "writtenOn": "2026-10-15",
+        "basis": "General school computing knowledge. Not copied from any textbook or from the TNHHSSCTA materials.",
+        "reviewNeeded": "A subject teacher for the content and a Tamil-medium teacher for the Tamil wording."
+      },
+      "definition": {
+        "en": "Python is a high-level programming language. A Python program is a list of statements that the Python interpreter runs one at a time, from top to bottom.",
+        "ta": "Python ஒரு உயர்நிலை நிரலாக்க மொழி (high-level programming language). Python நிரல் என்பது, Python interpreter மேலிருந்து கீழாக ஒவ்வொன்றாக இயக்கும் கூற்றுகளின் (statements) வரிசை ஆகும்."
+      },
+      "keyPoints": [
+        {
+          "en": "A variable is a name that refers to a value, for example age = 16. You do not declare a type; Python works it out from the value.",
+          "ta": "மாறி (variable) என்பது ஒரு மதிப்பைக் குறிக்கும் பெயர்; எடுத்துக்காட்டு: age = 16. தரவு வகையை முன்கூட்டியே அறிவிக்கத் தேவையில்லை; மதிப்பைக் கொண்டே Python அதைத் தீர்மானிக்கிறது."
+        },
+        {
+          "en": "Common data types are int (whole numbers), float (numbers with a decimal point), str (text in quotes) and bool (True or False).",
+          "ta": "பொதுவான தரவு வகைகள்: int (முழு எண்கள்), float (தசமப் புள்ளி கொண்ட எண்கள்), str (மேற்கோள் குறிக்குள் உள்ள உரை), bool (True அல்லது False)."
+        },
+        {
+          "en": "print() shows output and input() reads what the user types. input() always gives a string, so use int() to turn it into a number.",
+          "ta": "print() வெளியீட்டைக் காட்டும்; பயனர் டைப் செய்வதை input() படிக்கும். input() எப்போதும் string ஐயே தரும்; எனவே எண்ணாக மாற்ற int() ஐப் பயன்படுத்த வேண்டும்."
+        },
+        {
+          "en": "Python uses indentation, the spaces at the start of a line, to group statements, for example the lines inside an if or a for loop.",
+          "ta": "கூற்றுகளைக் குழுவாக்க Python உள்தள்ளலைப் (indentation - வரியின் தொடக்கத்தில் உள்ள இடைவெளிகள்) பயன்படுத்துகிறது; எடுத்துக்காட்டாக if அல்லது for மடக்கின் (loop) உள்ளே உள்ள வரிகள்."
+        }
+      ],
+      "example": {
+        "prompt": {
+          "en": "Write a program that reads two numbers and prints their sum.",
+          "ta": "இரண்டு எண்களைப் படித்து, அவற்றின் கூட்டுத்தொகையை அச்சிடும் நிரலை எழுதுக."
+        },
+        "code": [
+          "a = int(input(\"First number: \"))",
+          "b = int(input(\"Second number: \"))",
+          "print(\"Sum =\", a + b)"
+        ],
+        "steps": {
+          "en": [
+            "input() reads text, so int() turns it into a number.",
+            "a + b adds the two numbers.",
+            "print() shows the result."
+          ],
+          "ta": [
+            "input() உரையைப் படிக்கிறது; எனவே int() அதை எண்ணாக மாற்றுகிறது.",
+            "a + b இரண்டு எண்களையும் கூட்டுகிறது.",
+            "print() முடிவைக் காட்டுகிறது."
+          ]
+        },
+        "answer": {
+          "en": "If you type 4 and 5, the output is: Sum = 9",
+          "ta": "4, 5 என டைப் செய்தால் வெளியீடு: Sum = 9"
+        }
+      },
+      "mistake": {
+        "claim": {
+          "en": "The value returned by input() can be added like a number straight away.",
+          "ta": "input() தரும் மதிப்பை நேரடியாக எண்ணாகக் கூட்டலாம்."
+        },
+        "correction": {
+          "en": "input() returns a string, and \"4\" + \"5\" gives \"45\", not 9. Convert it first, for example int(input()).",
+          "ta": "input() ஒரு string ஐயே தரும்; \"4\" + \"5\" என்பது 9 அல்ல, \"45\" ஆகும். முதலில் int(input()) என மாற்றுங்கள்."
+        }
+      },
+      "simple": {
+        "en": "A variable is like a labelled box: the label is the variable's name and the value is what you put inside. print() opens the box and shows what is in it.",
+        "ta": "மாறி என்பது பெயர் ஒட்டிய ஒரு பெட்டி போன்றது: ஒட்டியுள்ள பெயரே மாறியின் பெயர்; உள்ளே வைக்கும் பொருளே மதிப்பு. print() பெட்டியைத் திறந்து உள்ளே இருப்பதைக் காட்டுகிறது."
+      },
+      "terms": [
+        {
+          "term": "variable",
+          "aliases": [
+            "variables",
+            "மாறி!"
+          ],
+          "ta": "மாறி",
+          "definition": {
+            "en": "A variable is a name that refers to a value, for example age = 16. The value can change while the program runs.",
+            "ta": "மாறி (variable) என்பது ஒரு மதிப்பைக் குறிக்கும் பெயர்; எடுத்துக்காட்டு: age = 16. நிரல் இயங்கும்போது அதன் மதிப்பு மாறலாம்."
+          }
+        },
+        {
+          "term": "data type",
+          "aliases": [
+            "data types",
+            "datatype",
+            "தரவு வகை"
+          ],
+          "ta": "தரவு வகை",
+          "definition": {
+            "en": "A data type tells Python what kind of value something is: int for whole numbers, float for decimals, str for text and bool for True or False.",
+            "ta": "ஒரு மதிப்பு எந்த வகையைச் சேர்ந்தது என்பதை Python க்குச் சொல்வது தரவு வகை (data type): முழு எண்களுக்கு int, தசம எண்களுக்கு float, உரைக்கு str, True / False க்கு bool."
+          }
+        },
+        {
+          "term": "int",
+          "aliases": [
+            "integer"
+          ],
+          "ta": "முழு எண் (int)",
+          "definition": {
+            "en": "int is Python's data type for whole numbers such as 7, 0 or -12.",
+            "ta": "7, 0, -12 போன்ற முழு எண்களுக்கான Python தரவு வகை int."
+          }
+        },
+        {
+          "term": "float",
+          "aliases": [
+            "floating point"
+          ],
+          "ta": "தசம எண் (float)",
+          "definition": {
+            "en": "float is Python's data type for numbers with a decimal point, such as 3.5 or -0.25.",
+            "ta": "3.5, -0.25 போன்ற தசமப் புள்ளி கொண்ட எண்களுக்கான Python தரவு வகை float."
+          }
+        },
+        {
+          "term": "string",
+          "aliases": [
+            "str",
+            "strings"
+          ],
+          "ta": "string (உரை)",
+          "definition": {
+            "en": "A string (str) is text inside quotes, such as \"Chennai\". Strings can be joined with + and measured with len().",
+            "ta": "string (str) என்பது மேற்கோள் குறிக்குள் உள்ள உரை; எடுத்துக்காட்டு: \"Chennai\". string களை + மூலம் இணைக்கலாம்; len() மூலம் அவற்றின் நீளத்தை அறியலாம்."
+          }
+        },
+        {
+          "term": "print function",
+          "aliases": [
+            "print()",
+            "print statement"
+          ],
+          "ta": "print()",
+          "definition": {
+            "en": "print() displays output on the screen, for example print(\"Hello\") shows Hello.",
+            "ta": "print() திரையில் வெளியீட்டைக் காட்டும்; எடுத்துக்காட்டாக print(\"Hello\") என்பது Hello எனக் காட்டும்."
+          }
+        },
+        {
+          "term": "input function",
+          "aliases": [
+            "input statement"
+          ],
+          "ta": "input()",
+          "definition": {
+            "en": "input() waits for the user to type something and returns it as a string. Use int(input()) when you need a number.",
+            "ta": "input() பயனர் டைப் செய்யும் வரை காத்திருந்து, அதை string ஆகத் தரும். எண் தேவைப்பட்டால் int(input()) எனப் பயன்படுத்துங்கள்."
+          }
+        },
+        {
+          "term": "indentation",
+          "aliases": [
+            "indent",
+            "உள்தள்ளல்"
+          ],
+          "ta": "உள்தள்ளல்",
+          "definition": {
+            "en": "Indentation is the space at the start of a line. Python uses it to show which lines belong inside an if, a loop or a function; wrong indentation causes an error.",
+            "ta": "வரியின் தொடக்கத்தில் உள்ள இடைவெளியே உள்தள்ளல் (indentation). if, மடக்கு (loop) அல்லது சார்பு (function) ஆகியவற்றின் உள்ளே எந்த வரிகள் உள்ளன என்பதைக் காட்ட Python அதைப் பயன்படுத்துகிறது; தவறான உள்தள்ளல் பிழையை (error) உண்டாக்கும்."
+          }
+        },
+        {
+          "term": "operator",
+          "aliases": [
+            "operators",
+            "arithmetic operator",
+            "modulus",
+            "floor division",
+            "செயற்குறி"
+          ],
+          "ta": "செயற்குறி",
+          "definition": {
+            "en": "An operator is a symbol that works on values: + - * / for arithmetic, // for floor division, % for the remainder and ** for powers. For example, 7 % 3 is 1.",
+            "ta": "செயற்குறி (operator) என்பது மதிப்புகளின் மீது செயல்படும் குறியீடு: கணக்கீட்டுக்கு + - * /, ஈவின் முழு எண் பகுதிக்கு //, மீதிக்கு %, அடுக்குக்கு **. எடுத்துக்காட்டாக 7 % 3 = 1."
+          }
+        },
+        {
+          "term": "loop",
+          "aliases": [
+            "loops",
+            "for loop",
+            "while loop",
+            "மடக்கு"
+          ],
+          "ta": "மடக்கு",
+          "definition": {
+            "en": "A loop repeats a block of code. A for loop repeats over a range or a list; a while loop repeats as long as a condition is True.",
+            "ta": "மடக்கு (loop) ஒரு குறிமுறைப் பகுதியை (block) மீண்டும் மீண்டும் இயக்கும். for மடக்கு ஒரு range அல்லது list மீது சுற்றும்; while மடக்கு ஒரு நிபந்தனை True ஆக இருக்கும் வரை சுற்றும்."
+          }
+        },
+        {
+          "term": "interpreter",
+          "ta": "interpreter",
+          "definition": {
+            "en": "An interpreter runs a program one statement at a time. Python uses an interpreter, so an error stops the program at the line where it happens.",
+            "ta": "interpreter ஒரு நிரலை ஒவ்வொரு கூற்றாக இயக்குகிறது. Python ஒரு interpreter ஐப் பயன்படுத்துவதால், பிழை ஏற்படும் வரியிலேயே நிரல் நின்றுவிடும்."
+          }
+        }
+      ],
+      "keywords": {
+        "en": [
+          "python",
+          "python program",
+          "python basics",
+          "variable",
+          "data type",
+          "int",
+          "float",
+          "string",
+          "bool",
+          "indentation",
+          "operator",
+          "for loop",
+          "while loop",
+          "loop",
+          "print function",
+          "input function",
+          "len"
+        ],
+        "ta": [
+          "பைதான்",
+          "பைத்தான்",
+          "மாறி!",
+          "தரவு வகை",
+          "செயற்குறி",
+          "மடக்கு",
+          "உள்தள்ளல்"
+        ]
+      },
+      "excludePhrases": [],
+      "conceptRef": "mat.CS-2-EM-13",
+      "relatedMaterials": [
+        "mat.CS-2-TM-14",
+        "mat.CS-2-TM-44"
+      ]
+    },
+    {
+      "id": "concept.html",
+      "topic": "HTML",
+      "title": {
+        "en": "HTML",
+        "ta": "HTML (வலைப் பக்கங்களை அமைக்கும் மொழி)"
+      },
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": [
+        "Tamil Medium",
+        "English Medium"
+      ],
+      "language": [
+        "en",
+        "ta"
+      ],
+      "provenance": "sample-unapproved",
+      "approvedBy": null,
+      "approvedOn": null,
+      "source": {
+        "writtenBy": "IRUSHY project (AI-assisted draft written for this repository)",
+        "writtenOn": "2026-10-15",
+        "basis": "General school computing knowledge. Not copied from any textbook or from the TNHHSSCTA materials.",
+        "reviewNeeded": "A subject teacher for the content and a Tamil-medium teacher for the Tamil wording."
+      },
+      "definition": {
+        "en": "HTML (HyperText Markup Language) is the language used to build web pages. It uses tags written inside angle brackets, such as <p> for a paragraph, to mark up the parts of a page.",
+        "ta": "HTML (HyperText Markup Language) என்பது வலைப் பக்கங்களை உருவாக்கப் பயன்படும் மொழி. பக்கத்தின் பகுதிகளைக் குறிக்க, கோண அடைப்புக்குள் எழுதப்படும் குறிச்சொற்களை (tags) அது பயன்படுத்துகிறது; எடுத்துக்காட்டாக பத்திக்கு <p>."
+      },
+      "keyPoints": [
+        {
+          "en": "Most tags come in pairs: an opening tag like <b> and a closing tag like </b>. A few, such as <br>, have no closing tag.",
+          "ta": "பெரும்பாலான குறிச்சொற்கள் ஜோடியாக வருகின்றன: <b> போன்ற தொடக்கக் குறிச்சொல், </b> போன்ற முடிவுக் குறிச்சொல். <br> போன்ற சில குறிச்சொற்களுக்கு முடிவுக் குறிச்சொல் இல்லை."
+        },
+        {
+          "en": "A page has two main parts: <head> holds information about the page, such as its <title>, and <body> holds what the visitor sees.",
+          "ta": "ஒரு பக்கத்தில் இரண்டு முக்கியப் பகுதிகள் உள்ளன: <title> போன்ற பக்கத்தைப் பற்றிய தகவலை <head> வைத்திருக்கிறது; பார்வையாளர் பார்க்கும் உள்ளடக்கத்தை <body> வைத்திருக்கிறது."
+        },
+        {
+          "en": "Attributes add extra information inside the opening tag; for example, the href attribute of <a> gives the address of a link.",
+          "ta": "பண்புகள் (attributes) தொடக்கக் குறிச்சொல்லுக்குள் கூடுதல் தகவலைச் சேர்க்கின்றன; எடுத்துக்காட்டாக <a> இன் href பண்பு இணைப்பின் முகவரியைத் தருகிறது."
+        },
+        {
+          "en": "Headings go from <h1> (largest) to <h6> (smallest), and lists use <ul> or <ol> with <li> for each item.",
+          "ta": "தலைப்புகள் <h1> (மிகப் பெரியது) முதல் <h6> (மிகச் சிறியது) வரை உள்ளன; பட்டியல்களுக்கு <ul> அல்லது <ol>, ஒவ்வொரு உருப்படிக்கும் <li> பயன்படுகின்றன."
+        }
+      ],
+      "example": {
+        "prompt": {
+          "en": "Write the HTML for a page titled My School with one heading and one paragraph.",
+          "ta": "My School என்ற title கொண்ட, ஒரு தலைப்பும் ஒரு பத்தியும் உள்ள பக்கத்திற்கான HTML ஐ எழுதுக."
+        },
+        "code": [
+          "<html>",
+          "<head><title>My School</title></head>",
+          "<body>",
+          "<h1>Welcome</h1>",
+          "<p>Our school has a computer lab.</p>",
+          "</body>",
+          "</html>"
+        ],
+        "steps": {
+          "en": [
+            "<title> goes inside <head>; it appears on the browser tab.",
+            "<h1> and <p> go inside <body> because the visitor sees them.",
+            "Every opening tag here has a matching closing tag."
+          ],
+          "ta": [
+            "<title> ஆனது <head> க்குள் வரும்; அது உலாவியின் tab இல் தெரியும்.",
+            "<h1>, <p> ஆகியவற்றைப் பார்வையாளர் பார்ப்பதால் அவை <body> க்குள் வருகின்றன.",
+            "இங்கு ஒவ்வொரு தொடக்கக் குறிச்சொல்லுக்கும் பொருந்தும் முடிவுக் குறிச்சொல் உள்ளது."
+          ]
+        },
+        "answer": {
+          "en": "The browser shows the heading Welcome with the paragraph below it.",
+          "ta": "உலாவி Welcome என்ற தலைப்பையும், அதன் கீழே பத்தியையும் காட்டும்."
+        }
+      },
+      "mistake": {
+        "claim": {
+          "en": "The <title> tag shows a big heading at the top of the page.",
+          "ta": "<title> குறிச்சொல் பக்கத்தின் மேலே பெரிய தலைப்பைக் காட்டும்."
+        },
+        "correction": {
+          "en": "<title> only sets the text on the browser tab and lives inside <head>. A visible heading on the page uses <h1> to <h6> inside <body>.",
+          "ta": "<title> உலாவியின் tab இல் தெரியும் உரையை மட்டுமே அமைக்கிறது; அது <head> க்குள் இருக்கிறது. பக்கத்தில் தெரியும் தலைப்புக்கு <body> க்குள் <h1> முதல் <h6> வரை பயன்படுத்த வேண்டும்."
+        }
+      },
+      "simple": {
+        "en": "HTML is like labelling the parts of a notebook page: this line is the heading, this is a paragraph, this is a list. The browser reads the labels and shows each part in the right way.",
+        "ta": "HTML என்பது ஒரு நோட்டுப் புத்தகப் பக்கத்தின் பகுதிகளுக்கு லேபிள் ஒட்டுவது போன்றது: இது தலைப்பு, இது பத்தி, இது பட்டியல். உலாவி அந்த லேபிள்களைப் படித்து, ஒவ்வொரு பகுதியையும் சரியான முறையில் காட்டுகிறது."
+      },
+      "terms": [
+        {
+          "term": "tag",
+          "aliases": [
+            "tags",
+            "html tag",
+            "html tags",
+            "குறிச்சொல்",
+            "குறிச்சொற்கள்"
+          ],
+          "ta": "குறிச்சொல்",
+          "definition": {
+            "en": "A tag is a keyword in angle brackets, such as <p> or <h1>, that marks the start or end of a part of a web page.",
+            "ta": "குறிச்சொல் (tag) என்பது <p>, <h1> போல கோண அடைப்புக்குள் எழுதப்படும் சொல்; வலைப் பக்கத்தின் ஒரு பகுதியின் தொடக்கத்தையோ முடிவையோ அது குறிக்கிறது."
+          }
+        },
+        {
+          "term": "attribute",
+          "aliases": [
+            "attributes",
+            "html attribute"
+          ],
+          "ta": "பண்பு",
+          "definition": {
+            "en": "An attribute gives extra information about an element and is written inside the opening tag, for example the href in <a href=\"page.html\">.",
+            "ta": "பண்பு (attribute) ஒரு கூறைப் பற்றிய கூடுதல் தகவலைத் தருகிறது; அது தொடக்கக் குறிச்சொல்லுக்குள் எழுதப்படுகிறது; எடுத்துக்காட்டு: <a href=\"page.html\"> இல் உள்ள href."
+          }
+        },
+        {
+          "term": "hyperlink",
+          "aliases": [
+            "anchor tag",
+            "link tag",
+            "anchor",
+            "href"
+          ],
+          "ta": "மீஇணைப்பு",
+          "definition": {
+            "en": "A hyperlink is made with the <a> tag; its href attribute gives the address of the page to open.",
+            "ta": "<a> குறிச்சொல் மூலம் மீஇணைப்பு (hyperlink) உருவாக்கப்படுகிறது; அதன் href பண்பு திறக்க வேண்டிய பக்கத்தின் முகவரியைத் தருகிறது."
+          }
+        },
+        {
+          "term": "head tag",
+          "aliases": [
+            "head section"
+          ],
+          "ta": "<head>",
+          "definition": {
+            "en": "<head> holds information about the page that is not shown in the page itself, such as the <title> and links to style sheets.",
+            "ta": "<head> பக்கத்தில் நேரடியாகத் தெரியாத, பக்கத்தைப் பற்றிய தகவலை வைத்திருக்கிறது; எடுத்துக்காட்டு: <title>, style sheet இணைப்புகள்."
+          }
+        },
+        {
+          "term": "body tag",
+          "aliases": [
+            "body section"
+          ],
+          "ta": "<body>",
+          "definition": {
+            "en": "<body> holds everything the visitor sees on the page: headings, paragraphs, images, links and so on.",
+            "ta": "தலைப்புகள், பத்திகள், படங்கள், இணைப்புகள் என பார்வையாளர் பக்கத்தில் பார்க்கும் அனைத்தையும் <body> வைத்திருக்கிறது."
+          }
+        },
+        {
+          "term": "title tag",
+          "ta": "<title>",
+          "definition": {
+            "en": "<title> sets the text shown on the browser tab. It goes inside <head>.",
+            "ta": "உலாவியின் tab இல் தெரியும் உரையை <title> அமைக்கிறது. இது <head> க்குள் வரும்."
+          }
+        },
+        {
+          "term": "web page",
+          "aliases": [
+            "webpage",
+            "web pages",
+            "வலைப் பக்கம்",
+            "வலைப்பக்கம்"
+          ],
+          "ta": "வலைப் பக்கம்",
+          "definition": {
+            "en": "A web page is a document written in HTML that a browser displays.",
+            "ta": "வலைப் பக்கம் (web page) என்பது உலாவி காட்டும், HTML இல் எழுதப்பட்ட ஆவணம்."
+          }
+        },
+        {
+          "term": "HTML element",
+          "aliases": [
+            "html elements"
+          ],
+          "ta": "HTML கூறு",
+          "definition": {
+            "en": "An element is an opening tag, its content and its closing tag together, for example <p>Hello</p>.",
+            "ta": "தொடக்கக் குறிச்சொல், அதன் உள்ளடக்கம், முடிவுக் குறிச்சொல் ஆகிய மூன்றும் சேர்ந்ததே கூறு (element); எடுத்துக்காட்டு: <p>Hello</p>."
+          }
+        }
+      ],
+      "keywords": {
+        "en": [
+          "html",
+          "hypertext markup language",
+          "tag",
+          "web page",
+          "webpage",
+          "hyperlink",
+          "anchor tag",
+          "attribute",
+          "head tag",
+          "body tag",
+          "title tag",
+          "markup",
+          "html element",
+          "h1",
+          "paragraph tag",
+          "img tag"
+        ],
+        "ta": [
+          "குறிச்சொல்",
+          "வலைப் பக்கம்",
+          "வலைப்பக்கம்",
+          "மீஇணைப்பு",
+          "எச்டிஎம்எல்"
+        ]
+      },
+      "excludePhrases": [],
+      "conceptRef": null,
+      "relatedMaterials": []
+    },
+    {
+      "id": "concept.html-css",
+      "topic": "HTML / CSS",
+      "title": {
+        "en": "HTML and CSS",
+        "ta": "HTML மற்றும் CSS"
+      },
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": [
+        "Tamil Medium",
+        "English Medium"
+      ],
+      "language": [
+        "en",
+        "ta"
+      ],
+      "provenance": "sample-unapproved",
+      "approvedBy": null,
+      "approvedOn": null,
+      "source": {
+        "writtenBy": "IRUSHY project (AI-assisted draft written for this repository)",
+        "writtenOn": "2026-10-15",
+        "basis": "General school computing knowledge. Not copied from any textbook or from the TNHHSSCTA materials.",
+        "reviewNeeded": "A subject teacher for the content and a Tamil-medium teacher for the Tamil wording."
+      },
+      "definition": {
+        "en": "CSS (Cascading Style Sheets) is the language that controls how HTML content looks: colours, fonts, spacing and layout. HTML gives a page its structure; CSS gives it its style.",
+        "ta": "CSS (Cascading Style Sheets) என்பது HTML உள்ளடக்கம் எப்படித் தோன்ற வேண்டும் என்பதைக் கட்டுப்படுத்தும் மொழி: நிறம், எழுத்துரு (font), இடைவெளி, அமைப்பு (layout). HTML பக்கத்திற்குக் கட்டமைப்பைத் தருகிறது; CSS அதற்குத் தோற்றத்தைத் தருகிறது."
+      },
+      "keyPoints": [
+        {
+          "en": "A CSS rule has a selector and declarations; for example, p { color: blue; } makes every paragraph blue.",
+          "ta": "ஒரு CSS விதியில் selector உம் declarations உம் இருக்கும்; எடுத்துக்காட்டாக p { color: blue; } என்பது எல்லாப் பத்திகளையும் நீல நிறமாக்கும்."
+        },
+        {
+          "en": "CSS can be written in three places: inline in a style attribute, internally in a <style> element inside <head>, or externally in a separate .css file linked with <link>.",
+          "ta": "CSS ஐ மூன்று இடங்களில் எழுதலாம்: style பண்பில் நேரடியாக (inline), <head> இல் உள்ள <style> கூறுக்குள் (internal), அல்லது <link> மூலம் இணைக்கப்படும் தனி .css கோப்பில் (external)."
+        },
+        {
+          "en": "An external style sheet lets many pages share one look, so changing one file restyles the whole site.",
+          "ta": "வெளிப்புற style sheet பல பக்கங்களுக்கு ஒரே தோற்றத்தைத் தருகிறது; எனவே ஒரு கோப்பை மாற்றினாலே முழுத் தளத்தின் தோற்றமும் மாறும்."
+        },
+        {
+          "en": "When rules conflict, the more specific rule, or the one that comes later, wins. This is the cascade in Cascading Style Sheets.",
+          "ta": "விதிகள் முரண்பட்டால், அதிகக் குறிப்பான (specific) விதியோ பின்னால் வரும் விதியோ செல்லுபடியாகும். Cascading Style Sheets என்பதில் உள்ள cascade இதுதான்."
+        }
+      ],
+      "example": {
+        "prompt": {
+          "en": "Make all <h1> headings dark blue and centred.",
+          "ta": "எல்லா <h1> தலைப்புகளையும் அடர் நீல நிறத்தில், நடுவில் அமைக்கவும்."
+        },
+        "code": [
+          "h1 {",
+          "  color: darkblue;",
+          "  text-align: center;",
+          "}"
+        ],
+        "steps": {
+          "en": [
+            "h1 is the selector: the rule applies to every <h1>.",
+            "color sets the text colour and text-align: center centres it.",
+            "Put the rule in a <style> element in <head>, or in a linked .css file."
+          ],
+          "ta": [
+            "h1 என்பது selector: இந்த விதி எல்லா <h1> களுக்கும் பொருந்தும்.",
+            "color எழுத்தின் நிறத்தை அமைக்கிறது; text-align: center அதை நடுவில் வைக்கிறது.",
+            "இந்த விதியை <head> இல் உள்ள <style> கூறுக்குள் அல்லது இணைக்கப்பட்ட .css கோப்பில் எழுதுங்கள்."
+          ]
+        },
+        "answer": {
+          "en": "Every <h1> on the page becomes dark blue and centred.",
+          "ta": "பக்கத்திலுள்ள ஒவ்வொரு <h1> உம் அடர் நீல நிறத்தில், நடுவில் தோன்றும்."
+        }
+      },
+      "mistake": {
+        "claim": {
+          "en": "CSS is used to add content such as paragraphs and images to a page.",
+          "ta": "பத்திகள், படங்கள் போன்ற உள்ளடக்கத்தைப் பக்கத்தில் சேர்க்க CSS பயன்படுகிறது."
+        },
+        "correction": {
+          "en": "Content and structure come from HTML. CSS only changes how that content looks; if you remove the CSS, the content is still there, just unstyled.",
+          "ta": "உள்ளடக்கமும் கட்டமைப்பும் HTML இலிருந்தே வருகின்றன. CSS அந்த உள்ளடக்கத்தின் தோற்றத்தை மட்டுமே மாற்றுகிறது; CSS ஐ நீக்கினாலும் உள்ளடக்கம் அப்படியே இருக்கும், அலங்காரம் மட்டும் இருக்காது."
+        }
+      },
+      "simple": {
+        "en": "If HTML is the walls and rooms of a house, CSS is the paint, curtains and furniture arrangement. Same house, different look.",
+        "ta": "HTML ஒரு வீட்டின் சுவர்களும் அறைகளும் என்றால், CSS அதன் வண்ணம், திரைச்சீலைகள், தளவாட அமைப்பு. வீடு அதேதான்; தோற்றம் மட்டும் மாறுகிறது."
+      },
+      "terms": [
+        {
+          "term": "CSS",
+          "aliases": [
+            "cascading style sheets"
+          ],
+          "ta": "CSS",
+          "definition": {
+            "en": "CSS (Cascading Style Sheets) is the language that controls how a web page looks: colours, fonts, spacing and layout.",
+            "ta": "CSS (Cascading Style Sheets) என்பது வலைப் பக்கத்தின் தோற்றத்தைக் கட்டுப்படுத்தும் மொழி: நிறம், எழுத்துரு, இடைவெளி, அமைப்பு."
+          }
+        },
+        {
+          "term": "selector",
+          "aliases": [
+            "css selector",
+            "selectors"
+          ],
+          "ta": "selector",
+          "definition": {
+            "en": "A selector picks which elements a CSS rule applies to: p selects every paragraph, .note selects elements with class=\"note\" and #top selects the element with id=\"top\".",
+            "ta": "ஒரு CSS விதி எந்தக் கூறுகளுக்குப் பொருந்தும் என்பதை selector தேர்வு செய்கிறது: p எல்லாப் பத்திகளையும், .note என்பது class=\"note\" உள்ள கூறுகளையும், #top என்பது id=\"top\" உள்ள கூறையும் தேர்வு செய்யும்."
+          }
+        },
+        {
+          "term": "style sheet",
+          "aliases": [
+            "stylesheet",
+            "external style sheet",
+            "external css",
+            "internal style sheet"
+          ],
+          "ta": "style sheet",
+          "definition": {
+            "en": "A style sheet is a file of CSS rules. An external style sheet, a .css file linked with <link>, lets many pages share one look.",
+            "ta": "style sheet என்பது CSS விதிகள் அடங்கிய கோப்பு. <link> மூலம் இணைக்கப்படும் வெளிப்புற style sheet (.css கோப்பு) பல பக்கங்களுக்கு ஒரே தோற்றத்தைத் தருகிறது."
+          }
+        },
+        {
+          "term": "inline style",
+          "aliases": [
+            "inline css",
+            "style attribute"
+          ],
+          "ta": "inline style",
+          "definition": {
+            "en": "An inline style is CSS written in an element's style attribute, for example <p style=\"color:red\">. It affects only that one element.",
+            "ta": "ஒரு கூறின் style பண்பில் நேரடியாக எழுதப்படும் CSS inline style எனப்படும்; எடுத்துக்காட்டு: <p style=\"color:red\">. அது அந்த ஒரு கூறை மட்டுமே பாதிக்கும்."
+          }
+        },
+        {
+          "term": "CSS property",
+          "aliases": [
+            "css properties"
+          ],
+          "ta": "CSS property",
+          "definition": {
+            "en": "A CSS property is the feature being styled, such as color, font-size or margin. Each property is given a value, as in color: blue.",
+            "ta": "CSS property என்பது அலங்கரிக்கப்படும் அம்சம்; எடுத்துக்காட்டு: color, font-size, margin. ஒவ்வொரு property க்கும் ஒரு மதிப்பு தரப்படும்; எடுத்துக்காட்டு: color: blue."
+          }
+        }
+      ],
+      "keywords": {
+        "en": [
+          "css",
+          "style sheet",
+          "stylesheet",
+          "cascading style sheets",
+          "selector",
+          "inline style",
+          "external style sheet",
+          "internal style sheet",
+          "styling",
+          "font colour",
+          "font color",
+          "background colour",
+          "background color"
+        ],
+        "ta": [
+          "ஸ்டைல் ஷீட்",
+          "நடைத்தாள்"
+        ]
+      },
+      "excludePhrases": [],
+      "conceptRef": null,
+      "relatedMaterials": []
+    },
+    {
+      "id": "concept.database-sql",
+      "topic": "Database / SQL",
+      "title": {
+        "en": "Databases and SQL",
+        "ta": "தரவுத்தளமும் SQL உம் (Database / SQL)"
+      },
+      "class": 12,
+      "subject": "Computer Science",
+      "medium": [
+        "Tamil Medium",
+        "English Medium"
+      ],
+      "language": [
+        "en",
+        "ta"
+      ],
+      "provenance": "sample-unapproved",
+      "approvedBy": null,
+      "approvedOn": null,
+      "source": {
+        "writtenBy": "IRUSHY project (AI-assisted draft written for this repository)",
+        "writtenOn": "2026-10-15",
+        "basis": "General school computing knowledge. Not copied from any textbook or from the TNHHSSCTA materials.",
+        "reviewNeeded": "A subject teacher for the content and a Tamil-medium teacher for the Tamil wording."
+      },
+      "definition": {
+        "en": "A database is an organised collection of related data. In a relational database the data is kept in tables, and SQL (Structured Query Language) is the language used to create, read, change and delete that data.",
+        "ta": "தரவுத்தளம் (database) என்பது ஒன்றோடொன்று தொடர்புடைய தரவுகளின் ஒழுங்கமைக்கப்பட்ட தொகுப்பு. உறவுமுறைத் தரவுத்தளத்தில் (relational database) தரவு அட்டவணைகளில் வைக்கப்படுகிறது; அந்தத் தரவை உருவாக்க, படிக்க, மாற்ற, நீக்கப் பயன்படும் மொழி SQL (Structured Query Language)."
+      },
+      "keyPoints": [
+        {
+          "en": "A table is made of rows (records) and columns (fields). Each row describes one item, such as one student.",
+          "ta": "அட்டவணை வரிசைகள் (rows / records), நிரல்கள் (columns / fields) ஆகியவற்றால் ஆனது. ஒவ்வொரு வரிசையும் ஒரு மாணவர் போன்ற ஒரே ஒரு உருப்படியை விவரிக்கிறது."
+        },
+        {
+          "en": "A primary key is a column whose value is different for every row, such as a roll number, so that each record can be identified.",
+          "ta": "முதன்மைச் சாவி (primary key) என்பது ஒவ்வொரு வரிசைக்கும் வெவ்வேறு மதிப்பைக் கொண்ட நிரல் (column); எடுத்துக்காட்டு: roll number. இதன் மூலம் ஒவ்வொரு பதிவையும் தனியாக அடையாளம் காணலாம்."
+        },
+        {
+          "en": "SELECT reads data, INSERT adds rows, UPDATE changes rows and DELETE removes rows.",
+          "ta": "SELECT தரவைப் படிக்கும்; INSERT வரிசைகளைச் சேர்க்கும்; UPDATE வரிசைகளை மாற்றும்; DELETE வரிசைகளை நீக்கும்."
+        },
+        {
+          "en": "WHERE filters rows by a condition and ORDER BY sorts the result.",
+          "ta": "WHERE ஒரு நிபந்தனையின் அடிப்படையில் வரிசைகளை வடிகட்டும்; ORDER BY முடிவை வரிசைப்படுத்தும்."
+        }
+      ],
+      "example": {
+        "prompt": {
+          "en": "From a table student(rollno, name, mark), list the names of students who scored more than 80, highest first.",
+          "ta": "student(rollno, name, mark) என்ற அட்டவணையிலிருந்து, 80 க்கு மேல் மதிப்பெண் பெற்ற மாணவர்களின் பெயர்களை, அதிக மதிப்பெண் முதலில் வருமாறு பட்டியலிடுக."
+        },
+        "code": [
+          "SELECT name",
+          "FROM student",
+          "WHERE mark > 80",
+          "ORDER BY mark DESC;"
+        ],
+        "steps": {
+          "en": [
+            "SELECT name chooses the column to show.",
+            "FROM student names the table.",
+            "WHERE mark > 80 keeps only the matching rows.",
+            "ORDER BY mark DESC sorts from highest to lowest."
+          ],
+          "ta": [
+            "SELECT name காட்ட வேண்டிய நிரலைத் (column) தேர்ந்தெடுக்கிறது.",
+            "FROM student அட்டவணையின் பெயரைக் குறிக்கிறது.",
+            "WHERE mark > 80 பொருந்தும் வரிசைகளை மட்டும் வைத்துக்கொள்கிறது.",
+            "ORDER BY mark DESC அதிகத்திலிருந்து குறைவாக வரிசைப்படுத்துகிறது."
+          ]
+        },
+        "answer": {
+          "en": "The query returns the names of the students with more than 80, highest first.",
+          "ta": "80 க்கு மேல் மதிப்பெண் பெற்றவர்களின் பெயர்கள், அதிக மதிப்பெண் முதலில் என்ற வரிசையில் கிடைக்கும்."
+        }
+      },
+      "mistake": {
+        "claim": {
+          "en": "WHERE and HAVING do the same job, so either one can be used anywhere.",
+          "ta": "WHERE, HAVING இரண்டும் ஒரே வேலையைச் செய்கின்றன; எனவே எங்கு வேண்டுமானாலும் எதையும் பயன்படுத்தலாம்."
+        },
+        "correction": {
+          "en": "WHERE filters individual rows before grouping, while HAVING filters groups after GROUP BY. Use WHERE for conditions on single rows.",
+          "ta": "WHERE குழுவாக்கத்திற்கு (grouping) முன் தனித்தனி வரிசைகளை வடிகட்டுகிறது; HAVING, GROUP BY க்குப் பிறகு குழுக்களை வடிகட்டுகிறது. தனி வரிசைகளுக்கான நிபந்தனைகளுக்கு WHERE ஐப் பயன்படுத்துங்கள்."
+        }
+      },
+      "simple": {
+        "en": "A database table is like your class attendance register: each row is one student and each column is one detail, such as roll number or name. SQL is how you ask the register a question, like 'who was absent today?'",
+        "ta": "தரவுத்தள அட்டவணை உங்கள் வகுப்பு வருகைப் பதிவேடு போன்றது: ஒவ்வொரு வரிசையும் ஒரு மாணவர்; ஒவ்வொரு நிரலும் (column) roll number, பெயர் போன்ற ஒரு விவரம். 'இன்று யார் வரவில்லை?' என்பது போலப் பதிவேட்டிடம் கேள்வி கேட்கும் வழியே SQL."
+      },
+      "terms": [
+        {
+          "term": "database",
+          "aliases": [
+            "databases",
+            "தரவுத்தளம்"
+          ],
+          "ta": "தரவுத்தளம்",
+          "definition": {
+            "en": "A database is an organised collection of related data that can be searched and updated easily.",
+            "ta": "எளிதில் தேடவும் புதுப்பிக்கவும் கூடிய, ஒன்றோடொன்று தொடர்புடைய தரவுகளின் ஒழுங்கமைக்கப்பட்ட தொகுப்பே தரவுத்தளம் (database)."
+          }
+        },
+        {
+          "term": "DBMS",
+          "aliases": [
+            "database management system",
+            "rdbms"
+          ],
+          "ta": "தரவுத்தள மேலாண்மை அமைப்பு",
+          "definition": {
+            "en": "A DBMS (Database Management System) is the software used to create and manage databases, such as MySQL or SQLite. An RDBMS stores data in related tables.",
+            "ta": "தரவுத்தளங்களை உருவாக்கவும் நிர்வகிக்கவும் பயன்படும் மென்பொருள் DBMS (Database Management System); எடுத்துக்காட்டு: MySQL, SQLite. RDBMS தொடர்புடைய அட்டவணைகளில் தரவைச் சேமிக்கிறது."
+          }
+        },
+        {
+          "term": "table",
+          "aliases": [
+            "tables",
+            "relation"
+          ],
+          "ta": "அட்டவணை",
+          "definition": {
+            "en": "A table stores data in rows and columns. Each row is one record and each column is one field.",
+            "ta": "அட்டவணை (table) வரிசைகளிலும் நிரல்களிலும் (columns) தரவைச் சேமிக்கிறது. ஒவ்வொரு வரிசையும் ஒரு பதிவு (record); ஒவ்வொரு நிரலும் ஒரு புலம் (field)."
+          }
+        },
+        {
+          "term": "record",
+          "aliases": [
+            "records",
+            "tuple"
+          ],
+          "ta": "பதிவு (record)",
+          "definition": {
+            "en": "A record, or row, holds all the details of one item in a table, such as one student.",
+            "ta": "ஒரு அட்டவணையில் ஒரு மாணவர் போன்ற ஒரே உருப்படியின் எல்லா விவரங்களையும் வைத்திருப்பது பதிவு (record / row)."
+          }
+        },
+        {
+          "term": "field",
+          "aliases": [
+            "fields",
+            "புலம்"
+          ],
+          "ta": "புலம் (field)",
+          "definition": {
+            "en": "A field, or column, holds one kind of detail for every record, such as name or mark.",
+            "ta": "ஒவ்வொரு பதிவுக்கும் பெயர், மதிப்பெண் போன்ற ஒரே வகை விவரத்தை வைத்திருப்பது புலம் (field / column)."
+          }
+        },
+        {
+          "term": "primary key",
+          "aliases": [
+            "primary keys",
+            "முதன்மைச் சாவி"
+          ],
+          "ta": "முதன்மைச் சாவி",
+          "definition": {
+            "en": "A primary key is a field whose value is unique for every record and never empty, such as a roll number. It identifies each record.",
+            "ta": "முதன்மைச் சாவி (primary key) என்பது ஒவ்வொரு பதிவுக்கும் தனித்துவமான, காலியாக இருக்க முடியாத மதிப்பைக் கொண்ட புலம்; எடுத்துக்காட்டு: roll number. ஒவ்வொரு பதிவையும் அது அடையாளம் காட்டுகிறது."
+          }
+        },
+        {
+          "term": "foreign key",
+          "aliases": [
+            "foreign keys"
+          ],
+          "ta": "அயல் சாவி",
+          "definition": {
+            "en": "A foreign key is a field in one table that refers to the primary key of another table, linking the two tables.",
+            "ta": "ஒரு அட்டவணையில் உள்ள, மற்றொரு அட்டவணையின் முதன்மைச் சாவியைக் குறிக்கும் புலமே அயல் சாவி (foreign key); இது இரு அட்டவணைகளையும் இணைக்கிறது."
+          }
+        },
+        {
+          "term": "SQL",
+          "aliases": [
+            "structured query language",
+            "mysql",
+            "sqlite"
+          ],
+          "ta": "SQL",
+          "definition": {
+            "en": "SQL (Structured Query Language) is the standard language for working with relational databases: SELECT reads data, INSERT adds it, UPDATE changes it and DELETE removes it.",
+            "ta": "உறவுமுறைத் தரவுத்தளங்களுடன் பணிபுரியும் நிலையான மொழி SQL (Structured Query Language): SELECT தரவைப் படிக்கும், INSERT சேர்க்கும், UPDATE மாற்றும், DELETE நீக்கும்."
+          }
+        },
+        {
+          "term": "query",
+          "aliases": [
+            "queries",
+            "sql query",
+            "select query",
+            "select statement",
+            "வினவல்"
+          ],
+          "ta": "வினவல் (query)",
+          "definition": {
+            "en": "A query is a request for data from a database, for example SELECT name FROM student WHERE mark > 80;",
+            "ta": "தரவுத்தளத்திடம் தரவைக் கேட்கும் கோரிக்கையே வினவல் (query); எடுத்துக்காட்டு: SELECT name FROM student WHERE mark > 80;"
+          }
+        },
+        {
+          "term": "WHERE clause",
+          "aliases": [
+            "where condition"
+          ],
+          "ta": "WHERE",
+          "definition": {
+            "en": "The WHERE clause keeps only the rows that meet a condition, for example WHERE mark > 80.",
+            "ta": "ஒரு நிபந்தனையைப் பூர்த்தி செய்யும் வரிசைகளை மட்டும் WHERE clause வைத்துக்கொள்ளும்; எடுத்துக்காட்டு: WHERE mark > 80."
+          }
+        }
+      ],
+      "keywords": {
+        "en": [
+          "database",
+          "dbms",
+          "rdbms",
+          "sql",
+          "query",
+          "table",
+          "record",
+          "field",
+          "primary key",
+          "foreign key",
+          "select statement",
+          "select query",
+          "where clause",
+          "insert into",
+          "delete from",
+          "update statement",
+          "mysql",
+          "sqlite",
+          "relational database"
+        ],
+        "ta": [
+          "தரவுத்தளம்",
+          "முதன்மைச் சாவி",
+          "அயல் சாவி",
+          "புலம்",
+          "வினவல்"
+        ]
+      },
+      "excludePhrases": [
+        "periodic table",
+        "multiplication table",
+        "time table",
+        "truth table"
+      ],
+      "conceptRef": null,
+      "relatedMaterials": []
+    },
+    {
+      "id": "concept.spreadsheet",
+      "topic": "Spreadsheet",
+      "title": {
+        "en": "Spreadsheets",
+        "ta": "விரிதாள் (Spreadsheet)"
+      },
+      "class": 11,
+      "subject": "Computer Applications",
+      "medium": [
+        "Tamil Medium",
+        "English Medium"
+      ],
+      "language": [
+        "en",
+        "ta"
+      ],
+      "provenance": "sample-unapproved",
+      "approvedBy": null,
+      "approvedOn": null,
+      "source": {
+        "writtenBy": "IRUSHY project (AI-assisted draft written for this repository)",
+        "writtenOn": "2026-10-15",
+        "basis": "General school computing knowledge. Not copied from any textbook or from the TNHHSSCTA materials.",
+        "reviewNeeded": "A subject teacher for the content and a Tamil-medium teacher for the Tamil wording."
+      },
+      "definition": {
+        "en": "A spreadsheet is a program that arranges data in a grid of rows and columns so that you can calculate with it. LibreOffice Calc and Microsoft Excel are examples.",
+        "ta": "விரிதாள் (spreadsheet) என்பது தரவை வரிசைகள் (rows), நிரல்கள் (columns) கொண்ட கட்டமாக அமைத்து, அதைக் கொண்டு கணக்கிட உதவும் மென்பொருள். LibreOffice Calc, Microsoft Excel ஆகியவை எடுத்துக்காட்டுகள்."
+      },
+      "keyPoints": [
+        {
+          "en": "Each box is a cell, named by its column letter and row number, such as B3.",
+          "ta": "ஒவ்வொரு கட்டமும் ஒரு கலம் (cell); அதன் நிரல் (column) எழுத்தும் வரிசை (row) எண்ணும் சேர்ந்து அதன் பெயர் அமைகிறது; எடுத்துக்காட்டு: B3."
+        },
+        {
+          "en": "A formula always starts with =, for example =A1+A2, and it recalculates by itself when the numbers change.",
+          "ta": "சூத்திரம் (formula) எப்போதும் = குறியுடன் தொடங்கும்; எடுத்துக்காட்டு: =A1+A2. எண்கள் மாறும்போது அது தானாகவே மீண்டும் கணக்கிடும்."
+        },
+        {
+          "en": "Functions are ready-made formulas: SUM adds, AVERAGE finds the mean, and MAX and MIN find the largest and smallest values.",
+          "ta": "சார்புகள் (functions) தயாரான சூத்திரங்கள்: SUM கூட்டும்; AVERAGE சராசரியைக் காணும்; MAX, MIN மிகப் பெரிய, மிகச் சிறிய மதிப்புகளைக் காணும்."
+        },
+        {
+          "en": "A range such as A1:A10 means every cell from A1 to A10.",
+          "ta": "A1:A10 போன்ற வரம்பு (range), A1 முதல் A10 வரையிலான எல்லாக் கலங்களையும் குறிக்கும்."
+        }
+      ],
+      "example": {
+        "prompt": {
+          "en": "Marks for five students are in B2 to B6. Find the total in B7 and the average in B8.",
+          "ta": "ஐந்து மாணவர்களின் மதிப்பெண்கள் B2 முதல் B6 வரை உள்ளன. B7 இல் மொத்தத்தையும் B8 இல் சராசரியையும் காண்க."
+        },
+        "code": [
+          "B7:  =SUM(B2:B6)",
+          "B8:  =AVERAGE(B2:B6)"
+        ],
+        "steps": {
+          "en": [
+            "B2:B6 is the range of the five marks.",
+            "SUM adds them; AVERAGE divides that total by 5.",
+            "If a mark is corrected later, both results update automatically."
+          ],
+          "ta": [
+            "B2:B6 என்பது ஐந்து மதிப்பெண்களின் வரம்பு.",
+            "SUM அவற்றைக் கூட்டுகிறது; AVERAGE அந்த மொத்தத்தை 5 ஆல் வகுக்கிறது.",
+            "பின்னர் ஒரு மதிப்பெண் திருத்தப்பட்டால், இரண்டு முடிவுகளும் தானாகவே மாறும்."
+          ]
+        },
+        "answer": {
+          "en": "B7 shows the total and B8 the average of B2 to B6.",
+          "ta": "B7 இல் மொத்தமும், B8 இல் B2 முதல் B6 வரையிலான சராசரியும் தெரியும்."
+        }
+      },
+      "mistake": {
+        "claim": {
+          "en": "Typing SUM(A1:A5) into a cell adds the numbers.",
+          "ta": "ஒரு கலத்தில் SUM(A1:A5) என டைப் செய்தாலே எண்கள் கூட்டப்படும்."
+        },
+        "correction": {
+          "en": "Without the = sign the spreadsheet treats it as plain text. Type =SUM(A1:A5).",
+          "ta": "= குறி இல்லாவிட்டால் விரிதாள் அதைச் சாதாரண உரையாகவே கருதும். =SUM(A1:A5) என டைப் செய்யுங்கள்."
+        }
+      },
+      "simple": {
+        "en": "A spreadsheet is a smart notebook grid. You write numbers in the boxes, and a formula is a box that keeps doing the maths for you, even after you change the numbers.",
+        "ta": "விரிதாள் ஒரு புத்திசாலியான கட்ட நோட்டுப் புத்தகம். கட்டங்களில் எண்களை எழுதுகிறீர்கள்; எண்களை மாற்றினாலும் உங்களுக்காகக் கணக்கைத் தொடர்ந்து செய்யும் கட்டமே சூத்திரம்."
+      },
+      "terms": [
+        {
+          "term": "cell",
+          "aliases": [
+            "cells",
+            "cell reference",
+            "cell address",
+            "கலம்!"
+          ],
+          "ta": "கலம்",
+          "definition": {
+            "en": "A cell is one box in a spreadsheet, named by its column letter and row number, such as B3. B3 is its cell reference.",
+            "ta": "கலம் (cell) என்பது விரிதாளில் உள்ள ஒரு கட்டம்; அதன் நிரல் எழுத்தும் வரிசை எண்ணும் சேர்ந்து அதன் பெயர் அமைகிறது; எடுத்துக்காட்டு: B3. இதுவே அதன் cell reference."
+          }
+        },
+        {
+          "term": "formula",
+          "aliases": [
+            "formulas",
+            "formulae",
+            "சூத்திரம்"
+          ],
+          "ta": "சூத்திரம்",
+          "definition": {
+            "en": "A formula is a calculation in a cell. It always starts with =, for example =B2+B3, and it updates when the cells it uses change.",
+            "ta": "சூத்திரம் (formula) என்பது ஒரு கலத்தில் உள்ள கணக்கீடு. அது எப்போதும் = உடன் தொடங்கும்; எடுத்துக்காட்டு: =B2+B3. அது பயன்படுத்தும் கலங்கள் மாறும்போது தானாகப் புதுப்பிக்கப்படும்."
+          }
+        },
+        {
+          "term": "spreadsheet function",
+          "aliases": [
+            "sum function",
+            "average function",
+            "max function",
+            "min function",
+            "count function",
+            "autosum"
+          ],
+          "ta": "சார்பு (function)",
+          "definition": {
+            "en": "A function is a ready-made formula. SUM adds a range, AVERAGE finds the mean, MAX and MIN find the largest and smallest, and COUNT counts the numbers.",
+            "ta": "சார்பு (function) என்பது தயாரான சூத்திரம். SUM ஒரு வரம்பைக் கூட்டும்; AVERAGE சராசரியைக் காணும்; MAX, MIN மிகப் பெரிய, மிகச் சிறிய மதிப்புகளைக் காணும்; COUNT எண்களை எண்ணும்."
+          }
+        },
+        {
+          "term": "cell range",
+          "aliases": [
+            "range of cells"
+          ],
+          "ta": "வரம்பு",
+          "definition": {
+            "en": "A range is a block of cells written with a colon, such as A1:A10, which means every cell from A1 to A10.",
+            "ta": "வரம்பு (range) என்பது முக்காற்புள்ளி (:) கொண்டு எழுதப்படும் கலங்களின் தொகுப்பு; எடுத்துக்காட்டாக A1:A10 என்பது A1 முதல் A10 வரையிலான எல்லாக் கலங்களையும் குறிக்கும்."
+          }
+        },
+        {
+          "term": "worksheet",
+          "aliases": [
+            "workbook",
+            "பணித்தாள்"
+          ],
+          "ta": "பணித்தாள்",
+          "definition": {
+            "en": "A worksheet is one page of rows and columns in a spreadsheet file; a workbook is the whole file, which can hold several worksheets.",
+            "ta": "பணித்தாள் (worksheet) என்பது விரிதாள் கோப்பில் உள்ள வரிசைகளும் நிரல்களும் கொண்ட ஒரு பக்கம்; பல பணித்தாள்களைக் கொண்ட முழுக் கோப்பே workbook."
+          }
+        },
+        {
+          "term": "absolute reference",
+          "aliases": [
+            "relative reference",
+            "absolute cell reference"
+          ],
+          "ta": "absolute reference",
+          "definition": {
+            "en": "When a formula is copied, a relative reference such as A1 changes with it, but an absolute reference such as $A$1 stays fixed.",
+            "ta": "சூத்திரத்தை நகலெடுக்கும்போது A1 போன்ற relative reference அதனுடன் மாறும்; $A$1 போன்ற absolute reference மாறாமல் இருக்கும்."
+          }
+        }
+      ],
+      "keywords": {
+        "en": [
+          "spreadsheet",
+          "excel",
+          "ms excel",
+          "calc",
+          "libreoffice calc",
+          "worksheet",
+          "workbook",
+          "cell",
+          "formula",
+          "sum function",
+          "average function",
+          "cell reference",
+          "autosum"
+        ],
+        "ta": [
+          "விரிதாள்",
+          "கலம்!",
+          "கலங்கள்",
+          "கலத்தில்",
+          "சூத்திரம்",
+          "எக்செல்",
+          "பணித்தாள்"
+        ]
+      },
+      "excludePhrases": [
+        "cell biology",
+        "cell phone",
+        "plant cell",
+        "animal cell",
+        "living cell",
+        "chemical formula",
+        "maths formula",
+        "formula 1"
+      ],
+      "conceptRef": null,
+      "relatedMaterials": []
+    },
+    {
+      "id": "concept.computer-networks",
+      "topic": "Computer networks",
+      "title": {
+        "en": "Computer networks",
+        "ta": "கணினி வலைப்பின்னல்கள் (Computer networks)"
+      },
+      "class": 11,
+      "subject": "Computer Applications",
+      "medium": [
+        "Tamil Medium",
+        "English Medium"
+      ],
+      "language": [
+        "en",
+        "ta"
+      ],
+      "provenance": "sample-unapproved",
+      "approvedBy": null,
+      "approvedOn": null,
+      "source": {
+        "writtenBy": "IRUSHY project (AI-assisted draft written for this repository)",
+        "writtenOn": "2026-10-15",
+        "basis": "General school computing knowledge. Not copied from any textbook or from the TNHHSSCTA materials.",
+        "reviewNeeded": "A subject teacher for the content and a Tamil-medium teacher for the Tamil wording."
+      },
+      "definition": {
+        "en": "A computer network is two or more computers or devices connected so that they can share data and resources, such as files, printers and an internet connection.",
+        "ta": "கணினி வலைப்பின்னல் (computer network) என்பது கோப்புகள், அச்சுப்பொறிகள், இணைய இணைப்பு போன்ற தரவையும் வளங்களையும் பகிர்ந்துகொள்ளும் வகையில் இணைக்கப்பட்ட இரண்டு அல்லது அதற்கு மேற்பட்ட கணினிகள் அல்லது சாதனங்கள் ஆகும்."
+      },
+      "keyPoints": [
+        {
+          "en": "By size: a LAN (Local Area Network) covers one building such as a school, a MAN (Metropolitan Area Network) covers a city, and a WAN (Wide Area Network) covers countries. The internet is the largest WAN.",
+          "ta": "அளவின் அடிப்படையில்: LAN (Local Area Network) ஒரு பள்ளி போன்ற ஒரு கட்டடத்தையும், MAN (Metropolitan Area Network) ஒரு நகரத்தையும், WAN (Wide Area Network) நாடுகளையும் இணைக்கின்றன. இணையமே மிகப் பெரிய WAN."
+        },
+        {
+          "en": "Topology is the layout of the connections. Bus, star, ring and mesh are common topologies.",
+          "ta": "இணைப்புகள் எவ்வாறு அமைக்கப்பட்டுள்ளன என்பதே topology (இணைப்பு அமைப்பு). bus, star, ring, mesh ஆகியவை பொதுவான topology கள்."
+        },
+        {
+          "en": "Devices such as a switch connect computers within a network, a router passes data between networks, and a modem connects a network to the internet service.",
+          "ta": "switch ஒரு வலைப்பின்னலுக்குள் கணினிகளை இணைக்கிறது; router வலைப்பின்னல்களுக்கு இடையே தரவைக் கடத்துகிறது; modem வலைப்பின்னலை இணைய சேவையுடன் இணைக்கிறது."
+        },
+        {
+          "en": "Networks follow protocols, the agreed rules for sending data, such as TCP/IP.",
+          "ta": "தரவை அனுப்புவதற்கான ஒப்புக்கொள்ளப்பட்ட விதிமுறைகளான நெறிமுறைகளை (protocols) வலைப்பின்னல்கள் பின்பற்றுகின்றன; எடுத்துக்காட்டு: TCP/IP."
+        }
+      ],
+      "example": {
+        "prompt": {
+          "en": "A school connects the 30 computers in its lab to one printer and one internet connection. What kind of network is it, and what does it share?",
+          "ta": "ஒரு பள்ளி தனது ஆய்வகத்திலுள்ள 30 கணினிகளை ஒரு அச்சுப்பொறியுடனும் ஒரு இணைய இணைப்புடனும் இணைக்கிறது. இது எந்த வகை வலைப்பின்னல்? அது எதைப் பகிர்கிறது?"
+        },
+        "steps": {
+          "en": [
+            "All the computers are in one building, so it is a LAN.",
+            "Such a lab usually uses a star topology: each computer has its own cable to a central switch.",
+            "The computers share one printer and one internet connection instead of needing one each."
+          ],
+          "ta": [
+            "எல்லாக் கணினிகளும் ஒரே கட்டடத்தில் இருப்பதால் இது ஒரு LAN.",
+            "இத்தகைய ஆய்வகத்தில் பொதுவாக star topology பயன்படுகிறது: ஒவ்வொரு கணினியும் தனிக் கம்பி மூலம் நடுவிலுள்ள switch உடன் இணைக்கப்படுகிறது.",
+            "ஒவ்வொரு கணினிக்கும் தனியாகத் தேவைப்படாமல், ஒரே அச்சுப்பொறியையும் ஒரே இணைய இணைப்பையும் அனைத்துக் கணினிகளும் பகிர்ந்துகொள்கின்றன."
+          ]
+        },
+        "answer": {
+          "en": "It is a LAN that shares a printer and an internet connection.",
+          "ta": "இது ஒரு அச்சுப்பொறியையும் ஒரு இணைய இணைப்பையும் பகிர்ந்துகொள்ளும் LAN."
+        }
+      },
+      "mistake": {
+        "claim": {
+          "en": "A LAN only works if it is connected to the internet.",
+          "ta": "LAN இயங்க வேண்டுமானால் அது இணையத்துடன் இணைக்கப்பட்டிருக்க வேண்டும்."
+        },
+        "correction": {
+          "en": "A LAN works on its own: the computers in it can share files and printers with no internet at all. Internet access is an extra connection, usually through a router.",
+          "ta": "LAN தனியாகவே இயங்கும்: இணையம் இல்லாமலேயே அதிலுள்ள கணினிகள் கோப்புகளையும் அச்சுப்பொறிகளையும் பகிர்ந்துகொள்ளலாம். இணைய வசதி என்பது பொதுவாக router மூலம் கிடைக்கும் கூடுதல் இணைப்பு."
+        }
+      },
+      "simple": {
+        "en": "A network is like friends passing notes. A LAN is passing notes inside one classroom; a WAN is posting letters between towns. The rules everyone follows for writing and passing the notes are the protocols.",
+        "ta": "வலைப்பின்னல் என்பது நண்பர்கள் ஒருவருக்கொருவர் துண்டுச்சீட்டுகளைப் பரிமாறிக்கொள்வது போன்றது. LAN என்பது ஒரே வகுப்பறைக்குள் சீட்டுகளைப் பரிமாறுவது; WAN என்பது ஊர்களுக்கு இடையே கடிதம் அனுப்புவது. சீட்டுகளை எழுதவும் அனுப்பவும் எல்லோரும் பின்பற்றும் விதிகளே நெறிமுறைகள் (protocols)."
+      },
+      "terms": [
+        {
+          "term": "computer network",
+          "aliases": [
+            "network",
+            "networks",
+            "networking",
+            "வலைப்பின்னல்"
+          ],
+          "ta": "கணினி வலைப்பின்னல்",
+          "definition": {
+            "en": "A computer network is two or more computers or devices connected so that they can share data and resources.",
+            "ta": "தரவையும் வளங்களையும் பகிர்ந்துகொள்ளும் வகையில் இணைக்கப்பட்ட இரண்டு அல்லது அதற்கு மேற்பட்ட கணினிகள் அல்லது சாதனங்களே கணினி வலைப்பின்னல் (computer network)."
+          }
+        },
+        {
+          "term": "LAN",
+          "aliases": [
+            "local area network"
+          ],
+          "ta": "LAN (குறும்பரப்பு வலைப்பின்னல்)",
+          "definition": {
+            "en": "A LAN (Local Area Network) connects computers in one building or campus, such as a school lab.",
+            "ta": "LAN (Local Area Network) ஒரு பள்ளி ஆய்வகம் போன்ற ஒரே கட்டடம் அல்லது வளாகத்திலுள்ள கணினிகளை இணைக்கிறது."
+          }
+        },
+        {
+          "term": "WAN",
+          "aliases": [
+            "wide area network"
+          ],
+          "ta": "WAN (பரந்த பரப்பு வலைப்பின்னல்)",
+          "definition": {
+            "en": "A WAN (Wide Area Network) connects computers across cities or countries. The internet is the largest WAN.",
+            "ta": "WAN (Wide Area Network) நகரங்கள் அல்லது நாடுகளுக்கு இடையே கணினிகளை இணைக்கிறது. இணையமே மிகப் பெரிய WAN."
+          }
+        },
+        {
+          "term": "metropolitan area network",
+          "aliases": [
+            "man network"
+          ],
+          "ta": "MAN (நகரப் பரப்பு வலைப்பின்னல்)",
+          "definition": {
+            "en": "A MAN (Metropolitan Area Network) covers a city, for example a network that links a college's campuses across town.",
+            "ta": "MAN (Metropolitan Area Network) ஒரு நகரம் முழுவதையும் உள்ளடக்கும்; எடுத்துக்காட்டு: நகரின் பல இடங்களில் உள்ள ஒரு கல்லூரியின் வளாகங்களை இணைக்கும் வலைப்பின்னல்."
+          }
+        },
+        {
+          "term": "topology",
+          "aliases": [
+            "network topology",
+            "star topology",
+            "bus topology",
+            "ring topology",
+            "mesh topology"
+          ],
+          "ta": "இணைப்பு அமைப்பு (topology)",
+          "definition": {
+            "en": "Topology is the layout of a network. In a star topology every computer connects to a central switch; in a bus topology all share one cable; in a ring each connects to the next; in a mesh many connect directly.",
+            "ta": "வலைப்பின்னலின் இணைப்பு அமைப்பே topology. star topology இல் ஒவ்வொரு கணினியும் நடுவிலுள்ள switch உடன் இணைகிறது; bus இல் அனைத்தும் ஒரே கம்பியைப் பகிர்கின்றன; ring இல் ஒவ்வொன்றும் அடுத்ததுடன் இணைகிறது; mesh இல் பல கணினிகள் நேரடியாக இணைகின்றன."
+          }
+        },
+        {
+          "term": "router",
+          "aliases": [
+            "routers"
+          ],
+          "ta": "router",
+          "definition": {
+            "en": "A router passes data between different networks, for example between your home network and the internet.",
+            "ta": "router வெவ்வேறு வலைப்பின்னல்களுக்கு இடையே தரவைக் கடத்துகிறது; எடுத்துக்காட்டாக உங்கள் வீட்டு வலைப்பின்னலுக்கும் இணையத்துக்கும் இடையே."
+          }
+        },
+        {
+          "term": "network switch",
+          "aliases": [
+            "hub"
+          ],
+          "ta": "switch",
+          "definition": {
+            "en": "A switch connects computers within one network and sends each piece of data only to the computer it is meant for. An older hub sends everything to every computer.",
+            "ta": "switch ஒரே வலைப்பின்னலிலுள்ள கணினிகளை இணைத்து, ஒவ்வொரு தரவையும் அது சேர வேண்டிய கணினிக்கு மட்டும் அனுப்புகிறது. பழைய hub எல்லாவற்றையும் எல்லாக் கணினிகளுக்கும் அனுப்பும்."
+          }
+        },
+        {
+          "term": "modem",
+          "ta": "modem",
+          "definition": {
+            "en": "A modem converts between the signals used on a telephone, cable or fibre line and the digital data used by computers.",
+            "ta": "தொலைபேசி, cable அல்லது fibre இணைப்பில் பயன்படும் சமிக்ஞைகளுக்கும் கணினி பயன்படுத்தும் இலக்க (digital) தரவுக்கும் இடையே modem மாற்றம் செய்கிறது."
+          }
+        },
+        {
+          "term": "protocol",
+          "aliases": [
+            "protocols",
+            "tcp ip",
+            "நெறிமுறை"
+          ],
+          "ta": "நெறிமுறை",
+          "definition": {
+            "en": "A protocol is an agreed set of rules for sending data, such as TCP/IP for the internet or HTTP for web pages.",
+            "ta": "தரவை அனுப்புவதற்கான ஒப்புக்கொள்ளப்பட்ட விதிமுறைகளின் தொகுப்பே நெறிமுறை (protocol); எடுத்துக்காட்டு: இணையத்திற்கு TCP/IP, வலைப் பக்கங்களுக்கு HTTP."
+          }
+        }
+      ],
+      "keywords": {
+        "en": [
+          "network",
+          "networking",
+          "computer network",
+          "lan",
+          "wan",
+          "metropolitan area network",
+          "topology",
+          "router",
+          "network switch",
+          "hub",
+          "modem",
+          "protocol",
+          "tcp ip",
+          "ethernet",
+          "wifi",
+          "wi fi"
+        ],
+        "ta": [
+          "வலைப்பின்னல்",
+          "பிணையம்",
+          "நெட்வொர்க்",
+          "இணைப்பு அமைப்பு",
+          "நெறிமுறை"
+        ]
+      },
+      "excludePhrases": [
+        "neural network",
+        "social network",
+        "social networking"
+      ],
+      "conceptRef": "mat.CA-2-EM-35",
+      "relatedMaterials": [
+        "mat.CA-2-EM-36",
+        "mat.CA-2-EM-37"
+      ]
+    },
+    {
+      "id": "concept.internet",
+      "topic": "Internet",
+      "title": {
+        "en": "The internet",
+        "ta": "இணையம் (Internet)"
+      },
+      "class": 11,
+      "subject": "Computer Applications",
+      "medium": [
+        "Tamil Medium",
+        "English Medium"
+      ],
+      "language": [
+        "en",
+        "ta"
+      ],
+      "provenance": "sample-unapproved",
+      "approvedBy": null,
+      "approvedOn": null,
+      "source": {
+        "writtenBy": "IRUSHY project (AI-assisted draft written for this repository)",
+        "writtenOn": "2026-10-15",
+        "basis": "General school computing knowledge. Not copied from any textbook or from the TNHHSSCTA materials.",
+        "reviewNeeded": "A subject teacher for the content and a Tamil-medium teacher for the Tamil wording."
+      },
+      "definition": {
+        "en": "The internet is a worldwide network of networks that connects computers all over the world. Services such as the World Wide Web, email and video calls run on top of it.",
+        "ta": "இணையம் (Internet) என்பது உலகெங்கும் உள்ள கணினிகளை இணைக்கும், வலைப்பின்னல்களின் உலகளாவிய வலைப்பின்னல் ஆகும். World Wide Web, மின்னஞ்சல் (email), வீடியோ அழைப்புகள் போன்ற சேவைகள் அதன் மேல் இயங்குகின்றன."
+      },
+      "keyPoints": [
+        {
+          "en": "The World Wide Web is a collection of web pages linked to each other. It is one service on the internet, not the internet itself.",
+          "ta": "World Wide Web என்பது ஒன்றோடொன்று இணைக்கப்பட்ட வலைப் பக்கங்களின் தொகுப்பு. அது இணையத்தில் இயங்கும் ஒரு சேவை மட்டுமே; இணையமே அல்ல."
+        },
+        {
+          "en": "A web browser requests pages using HTTP, or HTTPS when the connection is encrypted.",
+          "ta": "உலாவி (browser) HTTP மூலம் பக்கங்களைக் கேட்டுப் பெறுகிறது; இணைப்பு மறையாக்கம் (encryption) செய்யப்பட்டிருந்தால் HTTPS."
+        },
+        {
+          "en": "A URL is the full address of a web page. Its domain name is the readable part; for this website the domain name is tnhhsscta.com.",
+          "ta": "URL என்பது ஒரு வலைப் பக்கத்தின் முழு முகவரி. அதில் எளிதில் படிக்கக்கூடிய பகுதி domain name (களப் பெயர்); இந்த இணையதளத்தின் domain name: tnhhsscta.com."
+        },
+        {
+          "en": "Every device on the internet has an IP address, and DNS translates domain names into IP addresses.",
+          "ta": "இணையத்திலுள்ள ஒவ்வொரு சாதனத்திற்கும் ஒரு IP முகவரி உண்டு; domain name களை IP முகவரிகளாக மாற்றுவது DNS."
+        }
+      ],
+      "example": {
+        "prompt": {
+          "en": "What happens when you type tnhhsscta.com into a browser and press Enter?",
+          "ta": "உலாவியில் tnhhsscta.com என டைப் செய்து Enter அழுத்தும்போது என்ன நடக்கிறது?"
+        },
+        "steps": {
+          "en": [
+            "DNS looks up the IP address of tnhhsscta.com.",
+            "The browser connects to that server and sends an HTTPS request for the page.",
+            "The server sends back the page: HTML, images and so on.",
+            "The browser displays the page."
+          ],
+          "ta": [
+            "DNS, tnhhsscta.com இன் IP முகவரியைக் கண்டறிகிறது.",
+            "உலாவி அந்த server உடன் இணைந்து, பக்கத்திற்கான HTTPS கோரிக்கையை அனுப்புகிறது.",
+            "server பக்கத்தை (HTML, படங்கள் முதலியவை) திருப்பி அனுப்புகிறது.",
+            "உலாவி பக்கத்தைக் காட்டுகிறது."
+          ]
+        },
+        "answer": {
+          "en": "Name lookup (DNS), request (HTTPS), response, display.",
+          "ta": "பெயர் தேடல் (DNS), கோரிக்கை (HTTPS), பதில், காட்சி."
+        }
+      },
+      "mistake": {
+        "claim": {
+          "en": "The internet and the World Wide Web are the same thing.",
+          "ta": "இணையமும் World Wide Web உம் ஒன்றே."
+        },
+        "correction": {
+          "en": "The internet is the network itself. The Web is one service that runs on it; email and online games also use the internet without being part of the Web.",
+          "ta": "இணையம் என்பது வலைப்பின்னலே. Web அதில் இயங்கும் ஒரு சேவை; மின்னஞ்சல், இணைய விளையாட்டுகள் போன்றவையும் இணையத்தைப் பயன்படுத்துகின்றன; ஆனால் அவை Web இன் பகுதி அல்ல."
+        }
+      },
+      "simple": {
+        "en": "The internet is like the road network of a country, and the Web is like the shops along those roads. Email is a different service that uses the same roads.",
+        "ta": "இணையம் ஒரு நாட்டின் சாலை வலைப்பின்னல் போன்றது; Web அந்தச் சாலைகளின் ஓரமுள்ள கடைகள் போன்றது. மின்னஞ்சல் அதே சாலைகளைப் பயன்படுத்தும் வேறொரு சேவை."
+      },
+      "terms": [
+        {
+          "term": "internet",
+          "aliases": [
+            "the internet",
+            "இணையம்!"
+          ],
+          "ta": "இணையம்",
+          "definition": {
+            "en": "The internet is a worldwide network of networks that connects computers all over the world.",
+            "ta": "உலகெங்கும் உள்ள கணினிகளை இணைக்கும், வலைப்பின்னல்களின் உலகளாவிய வலைப்பின்னலே இணையம் (internet)."
+          }
+        },
+        {
+          "term": "World Wide Web",
+          "aliases": [
+            "www",
+            "the web"
+          ],
+          "ta": "World Wide Web",
+          "definition": {
+            "en": "The World Wide Web is the collection of linked web pages that you open in a browser. It is one service on the internet.",
+            "ta": "உலாவியில் திறக்கும், ஒன்றோடொன்று இணைக்கப்பட்ட வலைப் பக்கங்களின் தொகுப்பே World Wide Web. இது இணையத்தில் இயங்கும் ஒரு சேவை."
+          }
+        },
+        {
+          "term": "browser",
+          "aliases": [
+            "web browser",
+            "browsers",
+            "உலாவி"
+          ],
+          "ta": "உலாவி",
+          "definition": {
+            "en": "A web browser, such as Chrome or Firefox, is the program that requests web pages and displays them.",
+            "ta": "Chrome, Firefox போன்ற உலாவி (web browser), வலைப் பக்கங்களைக் கேட்டுப் பெற்று அவற்றைக் காட்டும் நிரல் ஆகும்."
+          }
+        },
+        {
+          "term": "URL",
+          "aliases": [
+            "web address",
+            "website address",
+            "uniform resource locator",
+            "இணைய முகவரி"
+          ],
+          "ta": "இணைய முகவரி (URL)",
+          "definition": {
+            "en": "A URL (Uniform Resource Locator) is the full address of a resource on the web, made of the protocol, the domain name and the path.",
+            "ta": "URL (Uniform Resource Locator) என்பது இணையத்திலுள்ள ஒரு வளத்தின் முழு முகவரி; அதில் protocol, domain name, path ஆகியவை இருக்கும்."
+          }
+        },
+        {
+          "term": "HTTP",
+          "aliases": [
+            "https",
+            "hypertext transfer protocol"
+          ],
+          "ta": "HTTP",
+          "definition": {
+            "en": "HTTP is the protocol browsers use to fetch web pages. HTTPS is the secure version: the connection is encrypted, which the browser shows with a padlock.",
+            "ta": "உலாவிகள் வலைப் பக்கங்களைப் பெறப் பயன்படுத்தும் நெறிமுறை HTTP. அதன் பாதுகாப்பான வடிவம் HTTPS: இணைப்பு மறையாக்கம் (encryption) செய்யப்படுகிறது; உலாவி அதைப் பூட்டுக் குறியால் காட்டும்."
+          }
+        },
+        {
+          "term": "IP address",
+          "aliases": [
+            "ip addresses",
+            "ip முகவரி"
+          ],
+          "ta": "IP முகவரி",
+          "definition": {
+            "en": "An IP address is the number that identifies a device on a network, for example 192.168.1.10.",
+            "ta": "ஒரு வலைப்பின்னலில் ஒரு சாதனத்தை அடையாளம் காட்டும் எண்ணே IP முகவரி; எடுத்துக்காட்டு: 192.168.1.10."
+          }
+        },
+        {
+          "term": "DNS",
+          "aliases": [
+            "domain name system"
+          ],
+          "ta": "DNS",
+          "definition": {
+            "en": "DNS (Domain Name System) translates domain names such as tnhhsscta.com into IP addresses, like a phone book for the internet.",
+            "ta": "tnhhsscta.com போன்ற domain name களை IP முகவரிகளாக மாற்றுவது DNS (Domain Name System); இது இணையத்தின் தொலைபேசி எண் புத்தகம் போன்றது."
+          }
+        },
+        {
+          "term": "domain name",
+          "aliases": [
+            "domain",
+            "domain names"
+          ],
+          "ta": "domain name (களப் பெயர்)",
+          "definition": {
+            "en": "A domain name is the readable name of a website, such as tnhhsscta.com.",
+            "ta": "domain name (களப் பெயர்) என்பது ஒரு இணையதளத்தின் எளிதில் படிக்கக்கூடிய பெயர்; எடுத்துக்காட்டு: tnhhsscta.com."
+          }
+        },
+        {
+          "term": "ISP",
+          "aliases": [
+            "internet service provider"
+          ],
+          "ta": "இணைய சேவை வழங்குநர்",
+          "definition": {
+            "en": "An ISP (Internet Service Provider) is the company that connects you to the internet.",
+            "ta": "உங்களை இணையத்துடன் இணைக்கும் நிறுவனமே ISP (Internet Service Provider - இணைய சேவை வழங்குநர்)."
+          }
+        },
+        {
+          "term": "email",
+          "aliases": [
+            "e mail",
+            "electronic mail",
+            "மின்னஞ்சல்"
+          ],
+          "ta": "மின்னஞ்சல்",
+          "definition": {
+            "en": "Email (electronic mail) sends messages over the internet to an address such as name@example.com.",
+            "ta": "மின்னஞ்சல் (email) இணையம் வழியாக name@example.com போன்ற முகவரிக்குச் செய்திகளை அனுப்புகிறது."
+          }
+        },
+        {
+          "term": "search engine",
+          "aliases": [
+            "search engines",
+            "தேடுபொறி"
+          ],
+          "ta": "தேடுபொறி",
+          "definition": {
+            "en": "A search engine, such as Google, finds web pages that match the words you type.",
+            "ta": "Google போன்ற தேடுபொறி (search engine), நீங்கள் டைப் செய்யும் சொற்களுக்குப் பொருந்தும் வலைப் பக்கங்களைக் கண்டறிகிறது."
+          }
+        }
+      ],
+      "keywords": {
+        "en": [
+          "internet",
+          "world wide web",
+          "www",
+          "web",
+          "browser",
+          "web browser",
+          "url",
+          "http",
+          "https",
+          "ip address",
+          "dns",
+          "domain name",
+          "isp",
+          "email",
+          "search engine",
+          "web server"
+        ],
+        "ta": [
+          "இணையம்!",
+          "இணையத்தில்",
+          "இணையத்தை",
+          "இணையத்தின்",
+          "உலாவி",
+          "மின்னஞ்சல்",
+          "இணைய முகவரி",
+          "தேடுபொறி",
+          "இன்டர்நெட்"
+        ]
+      },
+      "excludePhrases": [
+        "internet of things"
+      ],
+      "conceptRef": null,
+      "relatedMaterials": []
+    },
+    {
+      "id": "concept.internet-safety",
+      "topic": "Internet safety",
+      "title": {
+        "en": "Internet safety",
+        "ta": "இணையப் பாதுகாப்பு (Internet safety)"
+      },
+      "class": 11,
+      "subject": "Computer Applications",
+      "medium": [
+        "Tamil Medium",
+        "English Medium"
+      ],
+      "language": [
+        "en",
+        "ta"
+      ],
+      "provenance": "sample-unapproved",
+      "approvedBy": null,
+      "approvedOn": null,
+      "source": {
+        "writtenBy": "IRUSHY project (AI-assisted draft written for this repository)",
+        "writtenOn": "2026-10-15",
+        "basis": "General school computing knowledge. Not copied from any textbook or from the TNHHSSCTA materials.",
+        "reviewNeeded": "A subject teacher for the content and a Tamil-medium teacher for the Tamil wording."
+      },
+      "definition": {
+        "en": "Internet safety means protecting yourself, your accounts and your personal information when you use the internet.",
+        "ta": "இணையத்தைப் பயன்படுத்தும்போது உங்களையும், உங்கள் கணக்குகளையும், தனிப்பட்ட தகவல்களையும் பாதுகாத்துக்கொள்வதே இணையப் பாதுகாப்பு."
+      },
+      "keyPoints": [
+        {
+          "en": "Use strong passwords and never share them, or an OTP, with anyone. A genuine website or assistant will never ask for them in a chat.",
+          "ta": "வலுவான கடவுச்சொற்களைப் பயன்படுத்துங்கள்; அவற்றையோ OTP ஐயோ யாருடனும் பகிராதீர்கள். உண்மையான இணையதளமோ உதவியாளரோ அவற்றை உரையாடலில் ஒருபோதும் கேட்காது."
+        },
+        {
+          "en": "Phishing is a fake message or website that tries to trick you into giving passwords or bank details. Check the sender and the web address before you click.",
+          "ta": "Phishing என்பது கடவுச்சொல் அல்லது வங்கி விவரங்களை ஏமாற்றிப் பெற முயலும் போலிச் செய்தி அல்லது போலி இணையதளம். சொடுக்கும் முன் அனுப்பியவரையும் இணைய முகவரியையும் சரிபாருங்கள்."
+        },
+        {
+          "en": "Malware, such as a virus, is harmful software. Download only from trusted sources and keep your software updated.",
+          "ta": "வைரஸ் (virus) போன்ற malware தீங்கிழைக்கும் மென்பொருள். நம்பகமான இடங்களிலிருந்து மட்டுமே பதிவிறக்குங்கள்; மென்பொருள்களைப் புதுப்பித்து வையுங்கள்."
+        },
+        {
+          "en": "Think before you post: personal details such as your phone number, home address or exam number should stay private.",
+          "ta": "பதிவிடும் முன் யோசியுங்கள்: தொலைபேசி எண், வீட்டு முகவரி, தேர்வு எண் போன்ற தனிப்பட்ட விவரங்கள் தனிப்பட்டவையாகவே இருக்க வேண்டும்."
+        }
+      ],
+      "example": {
+        "prompt": {
+          "en": "You get a message: 'Your exam result is blocked. Click this link and enter your password to unlock it.' What should you do?",
+          "ta": "'உங்கள் தேர்வு முடிவு முடக்கப்பட்டுள்ளது. இந்த இணைப்பைச் சொடுக்கி, கடவுச்சொல்லை உள்ளிட்டு அதைத் திறக்கவும்' என்று ஒரு செய்தி வருகிறது. நீங்கள் என்ன செய்ய வேண்டும்?"
+        },
+        "steps": {
+          "en": [
+            "Notice the warning signs: it creates panic and asks for your password.",
+            "Do not click the link and do not enter any details.",
+            "Check with your teacher, or go to the official website yourself.",
+            "Delete or report the message."
+          ],
+          "ta": [
+            "எச்சரிக்கை அறிகுறிகளைக் கவனியுங்கள்: அது பதற்றத்தை உண்டாக்கி, கடவுச்சொல்லைக் கேட்கிறது.",
+            "இணைப்பைச் சொடுக்காதீர்கள்; எந்த விவரத்தையும் உள்ளிடாதீர்கள்.",
+            "உங்கள் ஆசிரியரிடம் கேளுங்கள், அல்லது அதிகாரப்பூர்வ இணையதளத்திற்கு நீங்களே நேரடியாகச் செல்லுங்கள்.",
+            "அந்தச் செய்தியை நீக்குங்கள் அல்லது புகார் செய்யுங்கள்."
+          ]
+        },
+        "answer": {
+          "en": "It is a phishing message: ignore the link and check through a route you trust.",
+          "ta": "இது ஒரு phishing செய்தி: இணைப்பைப் புறக்கணித்து, நீங்கள் நம்பும் வழியில் சரிபாருங்கள்."
+        }
+      },
+      "mistake": {
+        "claim": {
+          "en": "A website is safe just because it has a nice logo and looks official.",
+          "ta": "அழகான லோகோவும் அதிகாரப்பூர்வத் தோற்றமும் இருந்தாலே ஒரு இணையதளம் பாதுகாப்பானது."
+        },
+        "correction": {
+          "en": "Fake sites often copy logos. Check the exact web address and look for HTTPS, and never enter a password on a page you reached from an unexpected message.",
+          "ta": "போலித் தளங்கள் பெரும்பாலும் லோகோக்களை நகலெடுக்கின்றன. சரியான இணைய முகவரியையும் HTTPS ஐயும் சரிபாருங்கள்; எதிர்பாராத செய்தியின் மூலம் வந்த பக்கத்தில் ஒருபோதும் கடவுச்சொல்லை உள்ளிடாதீர்கள்."
+        }
+      },
+      "simple": {
+        "en": "Treat your password like the key to your house: you would not give it to a stranger who rings the bell, even if they wear a uniform.",
+        "ta": "உங்கள் கடவுச்சொல்லை வீட்டுச் சாவி போல நினையுங்கள்: சீருடை அணிந்திருந்தாலும், அழைப்பு மணி அடிக்கும் அந்நியரிடம் அதைக் கொடுக்க மாட்டீர்கள்."
+      },
+      "terms": [
+        {
+          "term": "phishing",
+          "aliases": [
+            "phishing attack",
+            "ஃபிஷிங்"
+          ],
+          "ta": "phishing (ஏமாற்றுச் செய்தி மோசடி)",
+          "definition": {
+            "en": "Phishing is a fake message or website that pretends to be trusted, to trick you into giving passwords, OTPs or bank details.",
+            "ta": "நம்பகமானது போல நடித்து, கடவுச்சொல், OTP அல்லது வங்கி விவரங்களை ஏமாற்றிப் பெற முயலும் போலிச் செய்தி அல்லது இணையதளமே phishing."
+          }
+        },
+        {
+          "term": "malware",
+          "aliases": [
+            "malicious software",
+            "spyware",
+            "ransomware"
+          ],
+          "ta": "தீம்பொருள் (malware)",
+          "definition": {
+            "en": "Malware is harmful software, such as viruses, worms, spyware and ransomware.",
+            "ta": "வைரஸ், worm, spyware, ransomware போன்ற தீங்கிழைக்கும் மென்பொருளே malware (தீம்பொருள்)."
+          }
+        },
+        {
+          "term": "virus",
+          "aliases": [
+            "computer virus",
+            "viruses",
+            "antivirus",
+            "வைரஸ்"
+          ],
+          "ta": "வைரஸ்",
+          "definition": {
+            "en": "A computer virus is malware that attaches itself to files or programs and spreads when they are shared or opened.",
+            "ta": "கணினி வைரஸ் என்பது கோப்புகளுடன் அல்லது நிரல்களுடன் ஒட்டிக்கொண்டு, அவை பகிரப்படும்போது அல்லது திறக்கப்படும்போது பரவும் malware."
+          }
+        },
+        {
+          "term": "strong password",
+          "aliases": [
+            "password safety",
+            "safe password",
+            "good password",
+            "password tips",
+            "வலுவான கடவுச்சொல்"
+          ],
+          "ta": "வலுவான கடவுச்சொல்",
+          "definition": {
+            "en": "A strong password is long and hard to guess: it mixes capital and small letters, numbers and symbols, and it is not your name or date of birth.",
+            "ta": "வலுவான கடவுச்சொல் நீளமாகவும் ஊகிக்கக் கடினமாகவும் இருக்கும்: பெரிய, சிறிய எழுத்துகள், எண்கள், குறியீடுகள் கலந்திருக்கும்; உங்கள் பெயரோ பிறந்த தேதியோ அல்ல."
+          }
+        },
+        {
+          "term": "OTP",
+          "aliases": [
+            "one time password"
+          ],
+          "ta": "OTP",
+          "definition": {
+            "en": "An OTP (One Time Password) is a short code sent to your phone or email that works only once. Never share it with anyone.",
+            "ta": "OTP (One Time Password) என்பது உங்கள் தொலைபேசிக்கோ மின்னஞ்சலுக்கோ அனுப்பப்படும், ஒருமுறை மட்டுமே செல்லுபடியாகும் குறுகிய குறியீடு. அதை யாருடனும் பகிராதீர்கள்."
+          }
+        },
+        {
+          "term": "two-step verification",
+          "aliases": [
+            "two step verification",
+            "two factor",
+            "two factor authentication",
+            "2fa"
+          ],
+          "ta": "இரு-படிச் சரிபார்ப்பு",
+          "definition": {
+            "en": "Two-step verification asks for something extra, such as an OTP, after your password, so a stolen password alone is not enough.",
+            "ta": "கடவுச்சொல்லுக்குப் பிறகு OTP போன்ற கூடுதல் ஒன்றைக் கேட்பது இரு-படிச் சரிபார்ப்பு (two-step verification); எனவே திருடப்பட்ட கடவுச்சொல் மட்டும் போதாது."
+          }
+        },
+        {
+          "term": "cyberbullying",
+          "aliases": [
+            "cyber bullying",
+            "online bullying"
+          ],
+          "ta": "இணையவழித் துன்புறுத்தல்",
+          "definition": {
+            "en": "Cyberbullying is using messages, posts or images online to hurt or threaten someone. Do not reply; save the evidence and tell a trusted adult or teacher.",
+            "ta": "இணையத்தில் செய்திகள், பதிவுகள் அல்லது படங்கள் மூலம் ஒருவரைப் புண்படுத்துவதோ மிரட்டுவதோ இணையவழித் துன்புறுத்தல் (cyberbullying). பதில் அளிக்காதீர்கள்; ஆதாரங்களைச் சேமித்து, நம்பகமான பெரியவரிடமோ ஆசிரியரிடமோ சொல்லுங்கள்."
+          }
+        },
+        {
+          "term": "firewall",
+          "aliases": [
+            "firewalls"
+          ],
+          "ta": "firewall",
+          "definition": {
+            "en": "A firewall checks the traffic coming into and going out of a computer or network and blocks connections that are not allowed.",
+            "ta": "firewall ஒரு கணினி அல்லது வலைப்பின்னலுக்குள் வரும், வெளியே செல்லும் போக்குவரத்தைச் சரிபார்த்து, அனுமதிக்கப்படாத இணைப்புகளைத் தடுக்கிறது."
+          }
+        }
+      ],
+      "keywords": {
+        "en": [
+          "internet safety",
+          "online safety",
+          "cyber safety",
+          "cyber security",
+          "cybersecurity",
+          "safe online",
+          "strong password",
+          "phishing",
+          "malware",
+          "virus",
+          "antivirus",
+          "otp",
+          "hacker",
+          "scam",
+          "online fraud",
+          "cyberbullying",
+          "spam",
+          "firewall"
+        ],
+        "ta": [
+          "இணையப் பாதுகாப்பு",
+          "இணைய பாதுகாப்பு",
+          "சைபர் பாதுகாப்பு",
+          "வலுவான கடவுச்சொல்",
+          "வைரஸ்",
+          "மோசடி",
+          "ஃபிஷிங்"
+        ]
+      },
+      "excludePhrases": [],
+      "conceptRef": null,
+      "relatedMaterials": []
+    }
+  ]
+}

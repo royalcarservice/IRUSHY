@@ -1,0 +1,425 @@
+{
+  "_meta": {
+    "purpose": "English wording for IRUSHY's local engine. 'frames' have 2-4 variants; the engine picks one with a seed made from the request, so the same question always gets the same wording. 'fixed' entries are single texts (button labels, notices).",
+    "language": "en",
+    "provenance": "engine-wording",
+    "status": "awaiting review",
+    "rules": [
+      "Plain text only. No HTML, no Markdown, no URLs.",
+      "Keep {slot} names exactly as they are; every variant of a frame must use the same slots.",
+      "IRUSHY is an AI assistant, not a human teacher. Never promise anything the website does not publish."
+    ]
+  },
+  "frames": {
+    "greeting.reply": [
+      "Hello! I'm IRUSHY, an AI assistant for this website.",
+      "Hi! I'm IRUSHY, the AI assistant for TNHHSSCTA.",
+      "Hello and welcome. I'm IRUSHY, an AI assistant, not a human teacher."
+    ],
+    "greeting.offer": [
+      "I can help you find pages on this site, or explain a computer-science topic. What would you like to know?",
+      "Ask me about the website, or name a topic such as number systems or Python.",
+      "I can point you to materials and pages, or explain a lesson topic step by step. What do you need?"
+    ],
+    "thanks.reply": ["You're welcome!", "Glad I could help.", "Happy to help."],
+    "thanks.more": [
+      "Ask me anything else about the website or a topic.",
+      "If you have another question, just ask.",
+      "I'm here if you need anything else."
+    ],
+    "farewell.reply": [
+      "Goodbye, and all the best with your studies.",
+      "Bye! Come back any time you need help.",
+      "Take care, and good luck with your preparation."
+    ],
+    "identity.lead": [
+      "I'm IRUSHY, an AI assistant for this website. I'm not a human teacher.",
+      "I am IRUSHY, the website's AI assistant, not a human teacher."
+    ],
+    "identity.engine": [
+      "My answers come from IRUSHY's own rule-based engine and the verified information on this site, not from an online AI service.",
+      "I answer with IRUSHY's own engine, using only the verified information on this site; nothing you type is sent to an outside AI service."
+    ],
+    "website.lead": [
+      "Here's what the website shows.",
+      "From the TNHHSSCTA website:",
+      "Here's how it works on this site."
+    ],
+    "website.link": [
+      "The link is below.",
+      "Use the link below to open it.",
+      "You can open it with the link below."
+    ],
+    "materials.lead": [
+      "Here are published materials that match.",
+      "These materials on the site match your request.",
+      "I found these published materials."
+    ],
+    "materials.item": [
+      "• {title} ({cls} {subject}, {medium}) [{id}]",
+      "• {title}: {cls} {subject}, {medium} [{id}]"
+    ],
+    "materials.more": [
+      "{n} more materials match; the Materials page lists them all.",
+      "There are {n} more matching materials on the Materials page."
+    ],
+    "materials.none": [
+      "I couldn't find a published material that matches that exactly.",
+      "No published material matches that exactly."
+    ],
+    "materials.howto": [
+      "Open them from the Materials page; each row has View and Download links.",
+      "They are on the Materials page, where each row has View and Download links."
+    ],
+    "source.material": [
+      "Related published material: {title} [{id}].",
+      "You can read more in {title} [{id}] on the Materials page."
+    ],
+    "explain.opener": [
+      "Here is a short explanation of {topic}.",
+      "Let's go through {topic} step by step.",
+      "Here are the main ideas of {topic}."
+    ],
+    "explain.termFocus": ["{term}: {definition}", "{term}. {definition}"],
+    "explain.keypoints.lead": ["Key points:", "The main ideas:", "Remember these points:"],
+    "explain.step": ["{n}. {text}", "{n}) {text}"],
+    "definition.lead": ["Here is what {term} means.", "Let me define {term}.", "{term}, in short:"],
+    "definition.topicLead": ["Here is what {topic} means.", "{topic}, in short:", "A quick definition of {topic}:"],
+    "definition.context": [
+      "It is part of the topic {topic}.",
+      "This belongs to the topic {topic}.",
+      "You will meet this in the topic {topic}."
+    ],
+    "procedure.lead": [
+      "Here is the method, from the notes on {topic}.",
+      "Let's work through it, using the notes on {topic}."
+    ],
+    "procedure.method": ["The method: {text}", "How to do it: {text}"],
+    "procedure.exampleOffer": [
+      "I also have a worked example: \"{prompt}\". Ask me to show the example if you'd like to see it.",
+      "There is a worked example for this topic: \"{prompt}\". Tap Show an example to see it worked out."
+    ],
+    "example.lead": ["Here is a worked example.", "Let's try an example.", "Worked example:"],
+    "example.question": ["Question: {prompt}", "Problem: {prompt}"],
+    "example.code.lead": ["Code:", "The code:"],
+    "example.steps.lead": ["Working:", "Step by step:", "How it works:"],
+    "example.step": ["{n}. {text}", "Step {n}: {text}"],
+    "example.answer": ["Answer: {answer}", "Result: {answer}"],
+    "misconception.lead": ["A common mistake:", "Watch out for this mistake:", "Many students slip here:"],
+    "misconception.claim": ["it is wrong to think \"{claim}\"", "the wrong idea is \"{claim}\""],
+    "misconception.fix": ["The correct idea: {correction}", "Here is the fix: {correction}"],
+    "simpler.opener": ["Let me put it more simply.", "Here is a simpler way to see it.", "In everyday words:"],
+    "simpler.core": ["In one line: {text}", "The one thing to remember: {text}"],
+    "visual.sampleAttached": [
+      "I've attached a sample visual below {ids}. It is labelled because the school has not approved it yet.",
+      "There is a sample visual below {ids}; it is labelled because it is not approved by the school."
+    ],
+    "visual.approvedAttached": [
+      "I've attached an approved visual below {ids}.",
+      "There is an approved visual below {ids}."
+    ],
+    "visual.videoClick": [
+      "The video only loads if you click Load video.",
+      "Nothing from the video site loads until you click Load video."
+    ],
+    "visual.noVideo": [
+      "There is no approved or sample video for {topic} yet.",
+      "I don't have a video for {topic} yet."
+    ],
+    "visual.none": [
+      "There is no approved diagram or video for {topic} yet, so I've explained it in words.",
+      "I don't have an approved diagram or video for {topic} yet, so here it is in words."
+    ],
+    "practice.lead.bank": [
+      "Here is a practice question on {topic} from the question bank.",
+      "Try this question on {topic} from the question bank."
+    ],
+    "practice.lead.sampleBank": [
+      "Here is a practice question on {topic} from the sample question bank.",
+      "Try this question on {topic} from the sample question bank."
+    ],
+    "practice.lead.generated": [
+      "Here is a practice question on {topic} that I generated from the topic notes.",
+      "Try this practice question on {topic}, generated from the topic notes."
+    ],
+    "practice.generated.label": [
+      "Generated practice question: not from the question bank and not an exam question.",
+      "This is a generated practice question. It is not from the question bank and not an exam question."
+    ],
+    "practice.bank.sampleLabel": [
+      "This question is from the sample bank, which is not approved by the school.",
+      "Sample bank question: not approved by the school."
+    ],
+    "practice.options.lead": ["Options:", "Choose one:"],
+    "practice.tf.prompt": ["True or false: {claim}", "Is this statement true or false? {claim}"],
+    "practice.term.prompt": ["In one or two sentences, what is {term}?", "Explain briefly: what does {term} mean?"],
+    "practice.example.prompt": ["Try this: {prompt}", "Work this out: {prompt}"],
+    "practice.instructions": [
+      "Type your answer, or tap Show the answer when you are ready.",
+      "Reply with your answer, or ask me to show the answer."
+    ],
+    "practice.correct": ["Correct, well done!", "That's right!", "Yes, that's correct."],
+    "practice.incorrect": ["Not quite.", "That's not the answer, but it was a good try.", "Close, but not correct."],
+    "practice.selfcheck": [
+      "Compare your answer with this model answer.",
+      "Check your answer against this model answer."
+    ],
+    "practice.answer": ["The answer is: {answer}", "Answer: {answer}"],
+    "practice.explanation": ["Why: {text}", "Explanation: {text}"],
+    "practice.none": [
+      "I haven't given you a practice question yet. Name a topic and I'll give you one.",
+      "There's no practice question waiting for an answer. Ask me for a practice question on a topic first."
+    ],
+    "practice.reserved": [
+      "That question is reserved for teachers' papers, so I can't show its answer in chat.",
+      "I can't show the answer to that question here; it is kept for teachers' papers."
+    ],
+    "practice.exhausted": [
+      "You have already seen every practice question I have on {topic}, so I'm starting again from the first one.",
+      "That was the last new question on {topic}; here is one from the start again."
+    ],
+    "practice.whichTopic": [
+      "Which topic would you like a practice question on?",
+      "Tell me the topic and I'll give you a practice question."
+    ],
+    "next.followup": [
+      "Would you like a simpler explanation, an example or a practice question?",
+      "I can also show an example or give you a practice question.",
+      "Want to try a practice question on this?"
+    ],
+    "next.afterSimpler": [
+      "Shall I show a worked example next?",
+      "Would a worked example help now?"
+    ],
+    "next.afterExample": [
+      "Would you like to try a similar question yourself?",
+      "Ready to try a similar question?"
+    ],
+    "next.afterPractice": [
+      "Would you like another question?",
+      "Shall we try one more?"
+    ],
+    "mistake.opener": [
+      "Let's look at this question from your completed test.",
+      "Here is what went wrong in this question from your returned test."
+    ],
+    "mistake.question": ["Question: {question}", "The question was: {question}"],
+    "mistake.compare": [
+      "You chose {selected}; the correct answer is {correct}.",
+      "Your answer was {selected}, but the correct answer is {correct}."
+    ],
+    "mistake.why": ["Why: {text}", "Here's why: {text}"],
+    "mistake.concept": ["The idea behind it: {text}", "The concept to remember: {text}"],
+    "mistake.noExplanation": [
+      "I don't have an approved explanation for this question, so I won't guess why. Please ask your teacher.",
+      "There is no reviewed explanation for this question, and I won't guess. Your teacher can explain it."
+    ],
+    "mistake.revise": [
+      "To revise, open \"{title}\" [{id}] on the Materials page.",
+      "For revision, see \"{title}\" [{id}] on the Materials page."
+    ],
+    "mistake.noMaterial": [
+      "I can't point to a specific lesson, because no published material is mapped to this topic yet.",
+      "No published material is linked to this topic yet, so I can't point to a lesson."
+    ],
+    "assessment.refuse": [
+      "This test is still being assessed, so I can't reveal or confirm any answers.",
+      "I can't give or check answers for a test that is still being assessed."
+    ],
+    "assessment.after": [
+      "Once your teacher has marked and returned the test, I can explain your mistakes.",
+      "After the test has been marked and returned, I can go through your mistakes with you."
+    ],
+    "assessment.howItWorks": [
+      "I can explain mistakes only for a test that has been marked and returned, and only when the test page confirms that to me directly. Typing that a test is finished is not enough.",
+      "Mistake explanations work only after a test is marked and returned, and the test page has to confirm that itself. I can't take it from the chat."
+    ],
+    "assessment.meanwhile": [
+      "Meanwhile, I can explain {topic} in general terms.",
+      "In the meantime, I'm happy to explain the topic {topic} in general."
+    ],
+    "assessment.meanwhileGeneric": [
+      "Meanwhile, I can explain any topic from the materials in general terms.",
+      "In the meantime, I can explain the topics in general, without touching the test."
+    ],
+    "results.unavailable": [
+      "Student results and marks are not available to IRUSHY, and I will never show or guess them.",
+      "I can't see any student results or marks, and I won't guess them."
+    ],
+    "results.why": [
+      "Showing results needs a real teacher-to-student permission system, which does not exist yet.",
+      "Results need proper teacher and student permissions on the server, and those are not built yet."
+    ],
+    "results.contact": [
+      "For a mark or a record, please contact your teacher or the web admin.",
+      "Please ask your teacher or the web admin about marks and records."
+    ],
+    "teacher.needSignIn": [
+      "Building question papers is a teacher tool, and it needs a signed-in teacher account. Choosing Teacher in this panel does not grant access.",
+      "The paper builder is only for signed-in teachers. Selecting Teacher here does not sign you in."
+    ],
+    "teacher.paper.lead": [
+      "Here is what the approved question bank can build.",
+      "I checked the approved question bank for this paper."
+    ],
+    "teacher.paper.requested": ["You asked for: {summary}.", "Request: {summary}."],
+    "teacher.paper.empty": [
+      "The approved question bank has no questions for this yet, so I can't build the paper, and I won't invent questions.",
+      "There are no approved questions that fit this request, so no paper can be built. I don't make up questions."
+    ],
+    "teacher.paper.available": [
+      "{available} of the {requested} questions are available from the approved bank.",
+      "The approved bank can supply {available} of the {requested} questions."
+    ],
+    "teacher.paper.gaps": ["Shortfall: {gaps}.", "Missing: {gaps}."],
+    "teacher.paper.sampleOption": [
+      "The labelled sample bank has {n} more matching questions. A sample draft can use them; it will be watermarked and needs your review.",
+      "{n} more questions are available in the labelled sample bank, for a watermarked sample draft that you would review."
+    ],
+    "teacher.paper.builder": [
+      "The full draft, with its separate answer key, comes from the paper builder (POST /api/teacher/paper).",
+      "Use the paper builder (POST /api/teacher/paper) for the full draft and its separate answer key."
+    ],
+    "teacher.paper.never": [
+      "Every paper is a draft until a teacher reviews it.",
+      "Drafts always need a teacher's review before use."
+    ],
+    "coverage.lead": [
+      "I have explanation notes on these {n} topics: {topics}.",
+      "I can explain these {n} topics: {topics}."
+    ],
+    "coverage.sampleNote": [
+      "{n} of these notes are samples written for IRUSHY; a teacher has not approved them yet.",
+      "{n} notes are still samples, awaiting a teacher's approval."
+    ],
+    "coverage.approvedNote": [
+      "All of these notes have been approved by a teacher.",
+      "These notes are teacher-approved."
+    ],
+    "coverage.none": [
+      "No teacher-approved topic notes are switched on yet, so I can only help with the website and the published materials.",
+      "I don't have approved topic notes yet; I can still help with the website and the materials."
+    ],
+    "coverage.materials": [
+      "The site's Materials page has {n} published materials.",
+      "There are {n} published materials on the Materials page."
+    ],
+    "coverage.teacherBank": [
+      "Question bank: {approved} approved questions and {sample} labelled sample questions.",
+      "The bank holds {approved} approved and {sample} sample questions."
+    ],
+    "coverage.teacherMedia": [
+      "Approved media: {videos} videos and {diagrams} diagrams.",
+      "There are {videos} approved videos and {diagrams} approved diagrams."
+    ],
+    "term.tamil": [
+      "In Tamil-medium books, {en} is usually written as \"{ta}\".",
+      "The Tamil term for {en} is \"{ta}\"."
+    ],
+    "term.english": [
+      "The English term for \"{ta}\" is {en}.",
+      "\"{ta}\" is {en} in English."
+    ],
+    "term.fromNote": [
+      "In Tamil-medium notes, {en} is written as \"{ta}\".",
+      "The Tamil wording for {en} in the notes is \"{ta}\"."
+    ],
+    "term.unknown": [
+      "I don't have a reviewed Tamil term for that. Please ask your teacher which word your textbook uses.",
+      "That word isn't in my glossary. Your teacher can tell you the term your textbook uses."
+    ],
+    "term.defer": [
+      "Textbooks differ, so please use the word your teacher uses.",
+      "If your teacher uses a different word, follow your teacher."
+    ],
+    "notPublished.admit": [
+      "That is not published on this website, so I can't tell you.",
+      "This website doesn't publish that, and I won't guess."
+    ],
+    "notPublished.contact": [
+      "The only contact published on the site is the web admin shown on the home page.",
+      "For that, please contact the web admin shown on the home page."
+    ],
+    "outOfScope.redirect": [
+      "That's outside what I can help with. I'm here for the TNHHSSCTA website and computer-science topics.",
+      "I can't help with that here. I can help with this website and computer-science topics."
+    ],
+    "outOfScope.otherSubject": [
+      "I can only explain computer-science topics from the TNHHSSCTA materials, not other subjects.",
+      "Other subjects are outside my notes; I cover computer-science topics only."
+    ],
+    "outOfScope.neet": [
+      "For NEET, the site has NEET login pages.",
+      "The site's NEET pages are linked below."
+    ],
+    "abuse.calm": [
+      "I'm here to help, so let's keep the conversation respectful.",
+      "Let's keep it polite, and I'll do my best to help."
+    ],
+    "abuse.redirect": [
+      "What would you like to know about the website or a topic?",
+      "Is there something about the website or a lesson I can help with?"
+    ],
+    "probe.reply": [
+      "I don't have hidden instructions or keys to share. IRUSHY's own engine needs no API key, and I never reveal passwords or secrets.",
+      "There are no secrets for me to reveal: IRUSHY's local engine runs without any API key, and I never share passwords."
+    ],
+    "unknown.admit": [
+      "I don't have verified information about that, so I won't guess.",
+      "I can't answer that from the information I have.",
+      "That isn't covered by anything I know, and I'd rather not guess."
+    ],
+    "unknown.notCovered": [
+      "That sounds like a computing topic I don't have notes on yet, so I won't guess.",
+      "I don't have a reviewed note on that topic yet, so I won't guess."
+    ],
+    "unknown.offer": [
+      "I can help with the website (materials, the online test, registration) and topics such as {topics}.",
+      "Try asking about the website, or about a topic such as {topics}."
+    ],
+    "unknown.whichTopic": [
+      "Which topic shall I explain?",
+      "Tell me which topic you'd like explained."
+    ],
+    "unknown.whichTopicExample": [
+      "Which topic would you like an example for?",
+      "Tell me the topic and I'll show a worked example."
+    ],
+    "sample.label": [
+      "Sample content: not yet approved by a teacher.",
+      "This answer uses sample notes that a teacher has not approved yet."
+    ]
+  },
+  "fixed": {
+    "notice.sample": "This answer uses sample content that the school has not approved. Please check it with your teacher.",
+    "label.simpler": "Explain more simply",
+    "prompt.simpler": "Please explain that more simply.",
+    "label.example": "Show an example",
+    "prompt.example": "Show me an example.",
+    "label.similar": "Try a similar question",
+    "prompt.similar": "Give me a similar practice question.",
+    "label.showAnswer": "Show the answer",
+    "prompt.showAnswer": "Show the answer.",
+    "label.materials": "Where are the materials?",
+    "prompt.materials": "Where are the materials?",
+    "label.oneWordTest": "How do I take the online test?",
+    "prompt.oneWordTest": "How do I take the online one word test?",
+    "label.explainTopic": "Explain {topic}",
+    "prompt.explainTopic": "Explain {topic}",
+    "label.coverage": "What topics can you explain?",
+    "prompt.coverage": "What topics can you explain?",
+    "label.sampleDiagram": "Sample diagram - not approved",
+    "label.sampleVideo": "Sample link - not reviewed by the school",
+    "subject.cs": "Computer Science",
+    "subject.ca": "Computer Applications",
+    "subject.ct": "Computer Technology",
+    "subject.gi": "General Instructions",
+    "medium.tm": "Tamil Medium",
+    "medium.em": "English Medium",
+    "class.n": "{n}th",
+    "question.englishOnly": "(This question is available in English only.)",
+    "practice.option": "{key}) {text}",
+    "practice.ref": "Practice ref: {ref}",
+    "term.note": "Glossary note: {note}"
+  }
+}
