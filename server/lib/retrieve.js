@@ -5,7 +5,7 @@
 // such as தேர்வு / தேர்வை / தேர்வில் meet in the index. Ordering is fully
 // deterministic: score, then id.
 
-import { tokenize, isTamilToken, stemTamil, pick } from './lang.js';
+import { tokenize, contentTokens, isTamilToken, stemTamil, pick } from './lang.js';
 
 const K1 = 1.2;
 const B = 0.75;
@@ -95,7 +95,8 @@ export function buildIndex(knowledge) {
   const N = docs.length;
 
   function search(query, { kinds = null, limit = 6, minScore = 0.5 } = {}) {
-    const q = queryTerms(tokenize(query));
+    // Content words only: "what is" / "என்றால் என்ன" must not decide the ranking.
+    const q = queryTerms(contentTokens(query));
     if (!q.length) return [];
     const out = [];
     for (const d of docs) {
