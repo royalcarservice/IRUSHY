@@ -2,7 +2,7 @@
   "name": "irushy-assistant",
   "version": "1.0.0",
   "private": true,
-  "description": "IRUSHY - bilingual (Tamil/English) learning and website-help assistant for the TNHHSSCTA website.",
+  "description": "IRUSHY - bilingual (Tamil/English) learning and website-help assistant for the TNHHSSCTA website, with its own offline engine.",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -10,10 +10,11 @@
   "scripts": {
     "start": "node server/index.js",
     "dev": "node --watch server/index.js",
-    "build:data": "node tools/build-resources-from-live.mjs",
-    "verify:apinex": "node tools/verify-apinex.mjs",
+    "test": "node tools/smoke-test.mjs",
     "smoke": "node tools/smoke-test.mjs",
-    "test": "node tools/smoke-test.mjs"
+    "check:ui": "node tools/ui-check.mjs",
+    "verify:apinex": "node tools/verify-apinex.mjs",
+    "build:data": "node tools/build-resources-from-live.mjs"
   },
   "dependencies": {
     "express": "^4.19.2"
