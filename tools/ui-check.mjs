@@ -88,8 +88,10 @@ async function loadHome(page, srv) {
   await page.waitForFunction(() => window.IRUSHY !== undefined);
 }
 
+// animations: 'disabled' finishes running CSS animations and transitions
+// first, so a fast reply never catches the panel half-way through opening.
 const shot = async (page, name) => {
-  await page.screenshot({ path: path.join(SHOTS, name) });
+  await page.screenshot({ path: path.join(SHOTS, name), animations: 'disabled' });
   return name;
 };
 
