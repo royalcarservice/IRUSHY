@@ -1,122 +1,152 @@
 # IRUSHY security and privacy notes
 
-Everything below is implemented in `server/` and covered by
-`npm test` (157 checks) and `npm run check:ui` (65 checks) unless marked
-otherwise.
+Everything below is implemented in `server/` and covered by `npm test`
+(1610 checks) and `npm run check:ui` (69 checks) unless marked otherwise.
 
 ---
 
-## 1. The API key
+## 1. Keys: none by default
+
+The default engine (`IRUSHY_ENGINE=local`) uses **no key of any kind** and
+makes **no outbound network call**. That is tested by running every local
+server with all outbound paths blocked.
+
+The rules below apply only if you switch on the optional APInex backend
+(`IRUSHY_ENGINE=apinex`):
 
 | Rule | Where it is enforced |
 |---|---|
-| Only ever read from `process.env` (via `.env` or the real environment) | `server/config.js` |
-| Used in exactly one place: the outgoing `Authorization` header | `server/lib/apinex.js` |
+| The key is only ever read from `process.env` (via `.env` or the real environment) | `server/config.js` |
+| Used in exactly one place: the outgoing `Authorization` header | `server/lib/engine/apinex.js` |
 | Absent from the browser bundle | `public/irushy/irushy.js` contains no credential; verified by test |
-| Absent from `/api/config` | `publicConfig()` deliberately exposes only the model id and host, never the key, its length or a hash |
-| Absent from every response, including errors | error objects carry a code, a status and a short provider detail string, never a header |
-| Absent from logs | `server/lib/log.js` redacts the configured key, any secret-looking env value, `sk-...` patterns and `Authorization`/`x-api-key` headers |
+| Absent from `/api/config` | only the engine name, model id and flags are exposed, never the key, its length or a hash |
+| Absent from every response, including errors | errors carry a code, a bilingual message and an `adminHint` naming the variable, never a header or a value |
+| Absent from logs | `server/lib/log.js` redacts configured secrets, `sk-...` patterns, `Bearer` tokens and password/secret/token fields, and keeps each line valid JSON |
 | Not committed | `.gitignore` excludes `.env`, `.env.*` (except `.env.example`), `*.pem`, `*.key`, `secrets.json` |
-| Never requested in chat | the tool refuses without a key; the widget never asks for one; the sign-in route explicitly tells visitors not to type a password |
+| Never requested in chat | the widget never asks; `verify-apinex` refuses without a key; the sign-in route tells visitors not to type a password |
 
-A key that is missing **or still the placeholder** (`sk-apx-REPLACE_ME`) counts
-as *not connected*, so a mis-configured deployment reports
-"IRUSHY is not connected yet." instead of leaking a confusing provider error.
+- **Missing or placeholder key:** a key that is missing, or still the
+  placeholder `sk-apx-REPLACE_ME`, counts as *not connected*. Chat then says
+  "IRUSHY is not connected yet."
+- **No fallback:** IRUSHY never falls back from APInex to the local engine or
+  the other way. It never switches models unless
+  `IRUSHY_ALLOW_MODEL_FALLBACK=true` (off by default).
 
 ## 2. Roles and permissions
 
-- Sessions are an HMAC-SHA256 signed, `HttpOnly`, `SameSite=Lax` cookie
-  (plus `Secure` in production / behind HTTPS). The payload is only
-  `{ sid, role, exp }` — no personal data.
-- `resolveMode()` takes the client's `mode_requested` and compares it with the
-  **signed** role. A client asking for `teacher` is downgraded to `home`, the
-  event is logged, and the visitor is told why.
-- Every teacher route calls `requireTeacher()`; without a signed teacher
-  session it returns `403` with a bilingual explanation.
-- Credential comparison for the optional local demo account uses
-  `crypto.timingSafeEqual`.
-- The optional demo sign-in is **off by default** and exists only to
-  demonstrate enforcement. The real sign-in is not connected yet.
+- **The session cookie** is HMAC-SHA256 signed, `HttpOnly` and `SameSite=Lax`,
+  plus `Secure` in production or behind HTTPS. The payload is
+  `{ sid, role, exp }`, with no personal data. Tampered cookies count as
+  visitors.
+- **`resolveMode()`** is the only decision point. A client asking for `teacher`
+  without a signed teacher session is downgraded to `home`, and the visitor is
+  told why.
+- **`requireTeacher()`** runs on every teacher route; without a teacher session
+  the route returns `403` with a bilingual explanation.
+- **The optional demo sign-in** is off by default and compares credentials in
+  constant time.
 
 ## 3. Untrusted input, both directions
 
-**From the visitor:** messages are length-capped, control characters stripped,
-`context` fields are allow-listed (a non-`11/12` class, unknown medium or an
-over-long topic is dropped), and the whole body is size-limited before parsing.
+**From the visitor:**
+- messages are length-capped and control characters are stripped;
+- the body is size-limited before parsing, and a non-object body is refused;
+- `context` fields are allow-listed and bounded;
+- `history` is trimmed to the configured turns and characters.
 
-**From the model:** the answer is text, never markup.
-- The server strips tags, script patterns and control characters
-  (`sanitize.js`).
-- Any URL the model typed is checked against the verified list: known-good URLs
-  pass; `tnhhsscta.com` URLs the model typed are kept but could not have been
-  invented from nothing; anything else is replaced with
-  `[link removed - not verified]` and reported in `urlsRemoved`.
-- The widget assigns answers with `textContent` only. There is no `innerHTML`
-  on any model-derived value (checked by test).
-- Citations are only attached if the cited id really exists in a data file,
-  so a model-invented `[made.up.source]` cannot appear as a link.
-- Diagram SVG is validated in the loader **and** rebuilt in the browser against
-  a tag/attribute allow-list: no `<script>`, no `<foreignObject>`, no `on*`
-  handlers, no `href`/`src`, no `javascript:` URLs.
-- Retrieved knowledge entries are labelled *untrusted data* in the prompt, so a
-  data file cannot issue instructions to the model.
+History is also treated as untrusted *data*: ids cited in earlier answers are
+only used if they exist in `data/`, so a forged `[concept.x]` or
+`Practice ref:` changes nothing.
 
-**Framing and transport:** API responses set `X-Frame-Options: DENY`,
-`Content-Security-Policy: default-src 'none'; frame-ancestors 'none'` and
-`Cache-Control: no-store`. The site CSP allows only same-origin scripts/styles,
-`data:` images, and frames from YouTube only (a player is never created before a
-click, and uses `youtube-nocookie.com`).
+**From the engine:**
+- Answers are plain text, and the widget assigns them with `textContent`
+  only.
+- The local engine writes text only from the phrasebook and `data/`.
+- For any engine, the response builder:
+  - removes any URL that is not in `data/site-pages.json` and reports it in
+    `urlsRemoved`;
+  - drops any `[id]` that does not exist in the loaded data;
+  - attaches links only by verified page id.
+- Optional-backend (model) output is additionally stripped of tags, script
+  patterns and Markdown.
+- Diagram SVG is validated in the loader and rebuilt in the browser against
+  the same tag/attribute allow-list:
+  - no `<script>` or `<foreignObject>`;
+  - no `on*` handlers;
+  - no external references or `javascript:` URLs.
 
-**CORS:** an explicit origin allow-list with credentials; `*` is never used and
-an unknown origin gets no CORS headers (verified by test).
+**Framing and transport:**
+- API responses set `X-Frame-Options: DENY`,
+  `Content-Security-Policy: default-src 'none'; frame-ancestors 'none'` and
+  `Cache-Control: no-store`.
+- The site CSP allows:
+  - same-origin scripts, plus the site copy's two inline scripts **by SHA-256
+    hash only**;
+  - `data:` images;
+  - frames from the site and `youtube-nocookie.com` only. A player is never
+    created before a click.
 
-## 4. Privacy
+**CORS:** an explicit origin allow-list with credentials. `*` is never used,
+and an unknown origin gets no CORS headers.
 
-- **No transcripts.** Nothing is written to disk. Conversation history lives in
-  the page's memory (last few turns), is bounded server-side
-  (`IRUSHY_MAX_HISTORY_MESSAGES`, `IRUSHY_MAX_HISTORY_CHARS`) and disappears on
-  reload, on **Clear chat**, or when the panel closes and the page is left.
-- **No personal data to the provider.** Nothing about a student is sent to
-  APInex. The assessment path only accepts server-signed tokens; the results
-  path is closed. `IRUSHY_LOG_MESSAGE_BODIES=false` by default, so message text
-  is not logged either — the request log records `id`, `mode`, `lang`,
-  character counts and history length only.
-- The panel tells visitors: *"Nothing you type is stored."* and the FAQ entry on
-  privacy tells them not to type exam numbers, phone numbers or passwords.
-- Data files contain no personal data: the FAQ repeats only the contact details
-  already published on the public home page.
+## 4. Assessments and results
 
-## 5. Abuse and cost control
+- IRUSHY never reveals or confirms answers for a test that may still be
+  assessed. The decision is made in the route before any engine runs, so even
+  the optional backend is never called for it.
+  - **Test status comes only from a server-signed token**
+    (`IRUSHY_ASSESSMENT_SECRET`, HMAC-SHA256, constant-time comparison).
+  - **No secret configured** means every test counts as active.
+  - **Client claims** such as `assessmentStatus: "completed"` are ignored.
+- Student results are **unavailable**. The endpoint returns `503` with
+  `neverSimulated: true` and `records: null`, even for teachers. No mark or
+  record is simulated anywhere.
+
+## 5. Privacy
+
+- **No transcripts.** Nothing is written to disk. History lives in the page's
+  memory (the last few turns), is bounded on the server, and disappears on
+  reload or **Clear chat**.
+- **No message text in logs** by default (`IRUSHY_LOG_MESSAGE_BODIES=false`).
+  The request log records id, engine, intent, mode, language, character counts,
+  history length and timing.
+- **With the local engine, nothing a visitor types leaves the server.** With
+  the optional backend, the message, the bounded history and the retrieved
+  entries go to APInex. No student record is ever sent.
+- The panel says *"Nothing you type is stored."*, and the privacy answer
+  tells visitors not to type exam numbers, phone numbers or passwords.
+- The data files contain no personal data beyond the contact already
+  published on the public home page.
+
+## 6. Abuse and cost control
 
 | Control | Default | Variable |
 |---|---|---|
-| Per-IP rate limit (chat) | 20 / 5 min | `IRUSHY_RATE_LIMIT_MAX`, `IRUSHY_RATE_LIMIT_WINDOW_MS` |
-| Read-endpoint budget | 6× the chat limit, separate bucket | — |
-| Provider-side requests per minute | 5 (matches the APInex free tier) | `IRUSHY_PROVIDER_RPM` |
-| Output tokens | 700 | `IRUSHY_MAX_OUTPUT_TOKENS` |
+| Per-IP chat budget | **60 / 5 min** with the local engine, 20 / 5 min with APInex | `IRUSHY_RATE_LIMIT_MAX`, `IRUSHY_RATE_LIMIT_WINDOW_MS` |
+| Read-endpoint budget | 6× the chat budget, separate bucket | `IRUSHY_READ_LIMIT_MAX` |
+| Provider requests per minute | 5, **APInex backend only** (the local engine has no provider) | `IRUSHY_PROVIDER_RPM` |
+| Answer length | per-intent targets, hard cap 2400 characters | `IRUSHY_MAX_ANSWER_CHARS` |
+| Output tokens (APInex) | 700 | `IRUSHY_MAX_OUTPUT_TOKENS` |
 | Input characters | 2000 | `IRUSHY_MAX_INPUT_CHARS` |
-| History sent upstream | 8 messages / 6000 chars | `IRUSHY_MAX_HISTORY_MESSAGES`, `IRUSHY_MAX_HISTORY_CHARS` |
-| Request timeout | 30 s | `IRUSHY_REQUEST_TIMEOUT_MS` |
-| Retries | 1, for 429/502/503/504 only, jittered backoff | `IRUSHY_MAX_PROVIDER_RETRIES` |
-| Concurrency | 2 in flight, 15 s queue, then a clear "busy" error | `IRUSHY_MAX_CONCURRENT` |
+| History | 8 messages / 6000 chars (1200 per turn) | `IRUSHY_MAX_HISTORY_MESSAGES`, `IRUSHY_MAX_HISTORY_CHARS` |
+| Provider timeout (APInex) | 30 s | `IRUSHY_REQUEST_TIMEOUT_MS` |
+| Provider retries (APInex) | 1, for 429/502/503/504 only | `IRUSHY_MAX_PROVIDER_RETRIES` |
+| Concurrency | 2 in flight, bounded queue with a 15 s wait, then a clear "busy" error | `IRUSHY_MAX_CONCURRENT`, `IRUSHY_QUEUE_TIMEOUT_MS`, `IRUSHY_MAX_QUEUE` |
 | Request body | 32 KB | `IRUSHY_BODY_LIMIT_KB` |
-| Duplicate submissions | same `request_id` joins the in-flight call (provider hit once) | — |
-
-An `AbortController` stops the provider call after the timeout, and the
-assessment-refusal path answers **without** making a provider call at all.
+| Duplicate submissions | the same `request_id` is answered once (joined or replayed for 30 s) | `IRUSHY_DUPLICATE_WINDOW_MS` |
+| Socket timeouts | request 30 s, headers 15 s, keep-alive 5 s | — |
 
 ### Capacity
 
-The APInex free tier allows **5 requests/minute** (rolling 60 s, per account —
-more keys do not help; see the provider's error documentation). One classroom
-of students asking questions at once will hit that. Options before opening
-IRUSHY to many students:
-- move to a paid APInex tier and raise `IRUSHY_PROVIDER_RPM`,
-- or keep IRUSHY in website-help mode for the homepage (most traffic is FAQ and
-  static links, which cost nothing and are served even during an outage).
+The local engine answers in a few milliseconds with no external quota. The
+practical limit is the per-IP chat budget. A whole school lab behind one
+address shares it, so raise `IRUSHY_RATE_LIMIT_MAX` for lab use.
 
-## 6. Reporting a problem
+The optional APInex free tier allows **5 requests per minute** per account,
+and one classroom will exceed that.
 
-If a key is ever suspected of leaking: rotate it in the APInex dashboard, then
-restart the server with the new value. Nothing in this repository needs to
-change, and no secret is stored anywhere else.
+## 7. Reporting a problem
+
+If an APInex key is ever suspected of leaking, rotate it in the APInex
+dashboard and restart the server with the new value. With the default local
+engine there is no key to leak.

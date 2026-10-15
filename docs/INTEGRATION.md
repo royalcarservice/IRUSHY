@@ -95,8 +95,9 @@ want the smallest possible change.
 
 ## Reusing the widget for the Student and Teacher sections
 
-One attribute changes the mode. The mode only affects prompting, retrieval and
-which server-side permissions are required — the component is the same file.
+One attribute changes the mode. The mode only affects which answers and tools
+are offered and which server-side permissions are required; the component is
+the same file.
 
 ```html
 <!-- student page -->
@@ -136,11 +137,31 @@ The frameset copies keep the live geometry exactly: `ROWS="23%,77%"` in
 
 ---
 
+## Running the IRUSHY server next to IIS
+
+The widget is static (three files), but answers come from the IRUSHY Node
+server (`npm start`). It needs no API key and makes no outbound calls with the
+default local engine, so it can run on the same machine or any small host.
+The widget calls `/api` on its own origin unless told otherwise:
+
+| Option | How | Notes |
+|---|---|---|
+| **Same origin (recommended)** | IIS URL Rewrite / ARR: proxy `https://tnhhsscta.com/api/*` to `http://127.0.0.1:8787/api/*` | no CORS needed; teacher session cookies work; set `IRUSHY_TRUST_PROXY=true` so per-IP limits see the visitor's address |
+| Separate host | run IRUSHY at e.g. `https://irushy.example.org`, add `data-irushy-api="https://irushy.example.org/api"` to the script tag, and list the site in `IRUSHY_ALLOWED_ORIGINS` | the widget sends no cookies cross-origin, so homepage and student help work but teacher sign-in does not |
+
+Production settings: `NODE_ENV=production`, `IRUSHY_SESSION_SECRET` set,
+HTTPS in front, and a decision about sample content (unapproved concept notes
+are off in production unless `IRUSHY_ALLOW_SAMPLE_CONTENT=true`). See
+`docs/STATUS.md`.
+
+---
+
 ## Not changing the live site
 
-Everything here is a **local development copy**. The build only ever performed
-read-only `GET` requests against `https://tnhhsscta.com` (to import the
-materials catalogue and verify the nine destinations). No file was uploaded,
-no login was attempted, and there is no deployment step in this repository.
+Everything here is a **local development copy**. The original build only ever
+performed read-only `GET` requests against `https://tnhhsscta.com` (to import
+the materials catalogue and verify the nine destinations); the 2026-10-15
+rebuild made no request to the site at all. No file was uploaded, no login was
+attempted, and there is no deployment step in this repository.
 When you are ready to deploy, the files to copy are the three in
 `public/irushy/` plus whichever shell file you chose in Route A/B/C.

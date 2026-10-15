@@ -1,156 +1,210 @@
 # What is finished, what is waiting, and why
 
 An honest inventory. "Awaiting" never means "silently faked": in every case
-below IRUSHY says so in the panel, and the API returns an explicit code.
+below IRUSHY says so in the panel, and the API returns an explicit code or
+label.
+
+> **2026-10-15 rebuild.** The upload had no `server/` or `tools/` code. Both
+> were rebuilt from the documents in this folder and the widget's contract,
+> and the default engine is now IRUSHY's own local engine. The earlier test
+> counts (157 / 65) belonged to code that is not in the repository; the new
+> suites report their own numbers (`npm test` 1610, `npm run check:ui` 69).
 
 ---
 
 ## Finished and verified
 
-### 1. Homepage assistant, end to end
+### 1. IRUSHY's own engine (default)
+- `IRUSHY_ENGINE=local` is the default. There is no key, no account and no
+  quota, and it makes no network call.
+  - **Proven by test:** every local-engine server in both suites runs with
+    fetch, sockets, TLS, DNS and http(s) requests blocked, and reports zero
+    attempts. The engine is also run in-process under the same block.
+- It is deterministic: the same request twice gives a word-for-word identical
+  answer. This is checked on every answer in the matrix, and across two
+  separately started servers.
+- It covers 23 intents in Tamil and English, from greetings to completed-test
+  mistakes. The full list is in [`ENGINE.md`](ENGINE.md).
+- `npm install && npm start` works with no `.env` and answers real questions.
+
+### 2. Homepage assistant, end to end
 - `Ask IRUSHY` launcher (48 px touch target), compact 384 px desktop panel,
-  full-screen mobile panel.
-- Explained, from **verified** data only: what the site is, the left menu
-  (Admin Login, School Login, Online One Word Test, Materials, Teacher
-  Registration, Student Registration), the NEET logins, the one published
-  contact, how to take the test, what IRUSHY can and cannot see.
-- 12 FAQ entries, every one with a source link into `data/site-pages.json`, so
-  a wrong or invented destination cannot be shown: the loader drops any URL
-  that is not on `tnhhsscta.com`, and the responder removes any URL the model
-  typed that is not in the verified list (`urlsRemoved` in the response).
-- All nine destinations were checked with a real HTTP request on 2026-10-15.
+  full-screen mobile panel. The widget is unchanged except for one line (see 9).
+- Website answers come from **verified** data only:
+  - what the site is;
+  - the left menu;
+  - the NEET logins;
+  - the one published contact;
+  - how to take the test;
+  - what IRUSHY can and cannot see.
+- 12 FAQ entries, each with source links into `data/site-pages.json`. Only
+  verified URLs can appear in an answer.
 
-### 2. Bilingual behaviour
-- `Auto` matches the visitor (Tamil script in the message, else
-  `Accept-Language`), with a labelled manual selector.
-- Verified by test: a Tamil question produces a Tamil answer; the Tamil prompt
-  is a first-class copy of the rules, not a translation afterthought.
-- Sample glossary supplies Tamil technical vocabulary while keeping the English
-  term, which is how Tamil-medium computer science is actually taught.
+### 3. Bilingual behaviour
+- `Auto` matches the visitor:
+  - Tamil script in the message → Tamil;
+  - otherwise `Accept-Language`;
+  - an explicit "explain … in Tamil" is honoured;
+  - a language chosen in the panel always wins.
+- Tamil answers are composed from Tamil wording:
+  - verb-final sentences;
+  - respect forms;
+  - English technical terms kept, as Tamil-medium books do.
 
-### 3. Student mode
-- Concept explanations grounded in the approved materials, with the material
-  entry (file name + URL) attached as the source.
-- Four optional follow-ups: *Explain more simply*, *Show an example*,
-  *Try a similar question*, plus *Copy last answer*.
-- Diagrams render as inline SVG; videos are attached but a player is created
-  **only after** the visitor clicks *Load video* (verified: zero iframes before
-  the click).
-- When no approved visual exists, IRUSHY is instructed to say so and explain in
-  words; the approved video/diagram files are empty, so this is the normal case
-  today and the sample files show exactly how to fill them.
+### 4. Student mode
+- Explain a topic, define a term, step-by-step method, *Explain more simply*,
+  *Show an example*, *Try a similar question*, *Show the answer*, and marking
+  of the student's attempt.
+- **Follow-ups keep the topic** by reading the ids cited in IRUSHY's previous
+  answer. History is untrusted, so forged ids are ignored.
+- Practice questions are chosen in this order:
+  1. approved bank questions marked for practice (none yet);
+  2. labelled sample bank questions;
+  3. **generated** questions from the note, always labelled *not from the
+     question bank and not an exam question*.
+- Diagrams render as inline SVG. A video player is created only after a click.
+  When no approved visual exists, IRUSHY says so.
 
-### 4. Assessment guard (both directions verified)
-- The client **cannot** assert that a test is finished. A client-supplied
-  `assessmentStatus` / `completedTest` is ignored and the request still refuses
-  to discuss answers.
-- The server only accepts an **HMAC-signed token** from the test backend
-  (`IRUSHY_ASSESSMENT_SECRET`). The smoke test mints a valid token and proves
-  the mistake-explanation path opens; it also proves that a tampered token and a
-  token signed with the wrong secret are both rejected, and that a verified
-  **active** test is refused **without spending a provider call**.
-- With no secret configured (the current default) every assessment is treated
-  as active, so IRUSHY declines and explains. That is the safe default.
-- What is *not* built: the ASP/DB side that issues those tokens, and the
-  per-question record store. Until then, mistake-by-mistake feedback needs the
-  question, selected answer, correct answer and concept reference to be sent in
-  by a caller that already has the signed token.
+### 5. Assessment guard (both directions verified)
+- A client can never declare a test finished; such claims are ignored.
+- Without a server-signed token from the test backend
+  (`IRUSHY_ASSESSMENT_SECRET`), IRUSHY refuses to reveal or confirm answers
+  before any engine is called. "Give me the answers for the test" is refused
+  even when a completed token is present.
+- With a verified **completed** token and the test page's context (question,
+  selected answer, correct answer, `conceptRef`), IRUSHY explains the mistake
+  in English or Tamil and points to the published lesson.
+- Tested in both directions: wrong secret, tampered payload, an active test,
+  completed-but-not-permitted, no secret configured.
 
-### 5. Teacher mode
-- Every teacher route requires a server-signed teacher session; a non-teacher
-  gets `403` with an explanation of how access is actually granted.
-- Paper builder: class, subject, medium, topics, duration, question types and
-  counts; **assembled from the approved bank only**, deterministic, with a
-  **separate answer key** object and a plain-text export.
-- Coverage is reported honestly. Because the approved bank is empty, the
-  builder reports the shortfall per section (`coverage.gaps`), never fills it,
-  and offers the labelled-sample route as an explicit choice
-  (`coverage.canFillWithLabelledSample`).
-- Every paper is a **draft** that requires teacher review
-  (`requiresTeacherReview`), and is watermarked when it contains sample
-  questions. There is no publish step; `/teacher/paper/:id/review` only records
-  that a named teacher read it.
+### 6. Teacher mode
+- Every teacher route requires a server-signed teacher session.
+- The paper builder uses **approved questions only**:
+  - it is deterministic;
+  - every paper is a draft that requires review;
+  - the answer key is a separate object, and there is a plain-text export;
+  - gaps are reported, never filled.
+- Labelled sample questions are used only on request, and such a paper is
+  watermarked `SAMPLE - NOT APPROVED`.
+- In teacher mode the chat summarises what the approved bank can build (today:
+  nothing) and points to the builder.
 
-### 6. Failure behaviour
-- Explicit codes and bilingual messages for missing credentials, rejected
-  credentials, exhausted quota, an unavailable model, rate limiting, an upstream
-  outage, timeouts, network errors and unreadable responses.
-- Missing credentials produce **"IRUSHY is not connected yet."** and
-  `answer: null` — never a canned reply pretending to be AI.
-- Every failure response still carries the verified website links, and
-  `/api/site/links` works with no provider at all, so the widget stays useful
-  during an outage.
-- IRUSHY never switches models on its own (`IRUSHY_ALLOW_MODEL_FALLBACK=false`
-  by default) — if `free/gemini-3.8-flash` is unavailable it says so.
+### 7. Failure behaviour
+- The local engine has no provider to fail. Its only failures are
+  `engine_error` and `busy`, with the input and limit codes for bad requests.
+- On the optional APInex backend:
+  - provider failures map to explicit codes with bilingual messages, an
+    `adminHint` and the verified links;
+  - a missing key gives "IRUSHY is not connected yet.";
+  - it never switches models on its own and never silently falls back.
 
-### 7. Security and privacy
-See [`SECURITY.md`](SECURITY.md). All of the following were verified by test,
-not just implemented: no key in the widget, no key in `/api/config`, no key in
-any response, no key in logs, `HttpOnly` + `SameSite` session cookie, `DENY`
-framing and `default-src 'none'` on API responses, CORS allow-list only,
-`413` on oversized bodies, `429` with `Retry-After` on bursts, duplicate
-submissions reaching the provider once, history trimmed rather than forwarded
-whole, and hostile model output (script tag, markup, invented URL) neutralised.
+### 8. Security and privacy
+See [`SECURITY.md`](SECURITY.md). Verified by test:
+- no key anywhere in the page, the widget, `/api/config`, responses or logs;
+- logs are JSON with secrets redacted, and contain no message bodies by default;
+- an `HttpOnly` + `SameSite` session cookie, and tampered cookies are rejected;
+- `DENY` framing and `default-src 'none'` on the API;
+- a site CSP that allows inline scripts by hash only;
+- a CORS allow-list;
+- `413` / `400` on bad bodies, `429` with `Retry-After`;
+- duplicate submissions answered once, and history trimmed;
+- hostile optional-backend output neutralised.
+
+### 9. The one widget change
+The widget used to show *"Student results are not available to IRUSHY."*
+whenever the **answer** contained "result", "mark" or "score". Local-engine
+lessons contain those words (the SQL example's `mark` column), so the notice
+appeared on ordinary answers. It now appears only when the server reports
+`meta.intent: "results_privacy"`. Rendering is still `textContent` only.
 
 ---
+
+## Content awaiting teacher approval
+
+IRUSHY labels all of this as sample content in every answer that uses it:
+- the *Sample - not approved* chip;
+- `sampleContentUsed: true`;
+- a bilingual notice;
+- a closing line in the answer itself.
+
+| # | Content | File | Who should review | Status |
+|---|---|---|---|---|
+| 1 | **13 concept notes**: definition, 2–4 key points, worked example, common mistake, everyday analogy, English and Tamil | `data/knowledge/concepts.json` | subject teacher (content) + Tamil-medium teacher (Tamil) | written for this project, `sample-unapproved` |
+| 2 | **109 named-term definitions** inside those notes, English and Tamil | same file, `terms` | same | `sample-unapproved` |
+| 3 | **Topic placement**: class/subject per note follows the sample bank (e.g. HTML under 12th CS, Spreadsheet under 11th CA); no note is mapped to Computer Technology | same file | subject teacher | to confirm |
+| 4 | **Lesson links** (`conceptRef`) for 11 topics: Number systems, Boolean algebra, Computer organisation, Computer memory, Operating systems, HTML, HTML/CSS, Database/SQL, Spreadsheet, Internet, Internet safety | same file | subject teacher | `null` on purpose. Only Python and Computer networks have a published material whose title names the topic; lesson numbers were never guessed |
+| 5 | **Engine wording**: 115 frames × 2–4 variants + fixed labels | `data/knowledge/phrasebook.en.json`, `phrasebook.ta.json` | Tamil-medium teacher (Tamil), any teacher (English) | awaiting review |
+| 6 | **Word lists** (abuse, off-topic, not published, other subjects, topics without notes) | `data/knowledge/lexicon.json` | a teacher, for false positives | awaiting review |
+| 7 | **Sample glossary**: 54 Tamil technical terms | `data/sample/glossary.sample.json` | Tamil-medium teacher | `sample-unapproved` (unchanged) |
+| 8 | **Sample question bank**: 28 questions | `data/sample/question-bank.sample.json` | subject teacher; move approved items into `data/question-bank.json` (add `"practice": true` to allow them as chat practice) | `sample-unapproved` (unchanged) |
+| 9 | **Sample videos (3) and diagrams (3)** | `data/sample/videos.sample.json`, `diagrams.sample.json` | teacher | `sample-unapproved` (unchanged) |
+| 10 | **Tamil fixes in the verified FAQ**: பொத்தானைச் சொடுக்கவும் (×4), சொல்லமாட்டேன், உரையாடலில், கேளுங்கள், என்ன பார்க்க முடியும்? | `data/site-faq.json` | Tamil-medium teacher, to confirm | changed in a separate commit |
+| 11 | **FAQ wording notes, not changed**: the long first sentence of `faq.what-is-site`; "தமிழ் வடிவு / ஆங்கில வடிவு" (books say "தமிழ் வழி"); "தேர்வை தொடங்கவோ" (sandhi: தேர்வைத் தொடங்கவோ); "விசயங்களை" (விஷயங்களை) | `data/site-faq.json` | Tamil-medium teacher | left as they were |
+
+How to approve a note, fix wording and map a lesson: [`ENGINE.md` §6](ENGINE.md#6-for-teachers-correcting-adding-and-approving-notes).
 
 ## Awaiting content (the assistant is truthful in the meantime)
 
 | Waiting on | Effect today | How to fill it |
 |---|---|---|
-| Approved **video** links | IRUSHY says no approved video exists for the topic. Three sample links are labelled *"Sample link - not reviewed by the school"* | watch and approve a link, then move the entry into `data/videos.json` with `status: "approved"`, `approvedBy`, `approvedOn` |
-| Approved **diagrams** | same as above; three sample SVGs are labelled *"Sample diagram - not approved"* | add validated inline SVG to `data/diagrams.json` |
-| Approved **question bank** | the paper builder reports empty coverage and generates nothing | import approved questions into `data/question-bank.json`; `GET /api/teacher/coverage` shows what the bank can build |
-| **Tamil term review** | glossary terms are marked sample and defer to the teacher's wording | review `data/sample/glossary.sample.json` with a Tamil-medium teacher |
-
-Sample content is deliberately a *separate* file set. It never enters the
-approved bank, it is off in production unless switched on, and every answer
-that uses it carries `sampleContentUsed: true`, a visible label and a
-`sampleNotice` in both languages.
+| Approved **video** links | IRUSHY says no approved video exists; 3 sample links are labelled | approve a link, move it into `data/videos.json` with `status: "approved"`, `approvedBy`, `approvedOn` |
+| Approved **diagrams** | same; 3 sample SVGs are labelled | add validated inline SVG to `data/diagrams.json` |
+| Approved **question bank** | the paper builder reports empty coverage and generates nothing | import approved questions into `data/question-bank.json`; `GET /api/teacher/coverage` shows what it can build |
 
 ---
 
 ## Awaiting integration
 
 ### 1. Real teacher sign-in
-Today: `IRUSHY_ENABLE_DEMO_LOGIN=false` → `POST /api/session/login` answers
-`501` and tells the visitor not to type a password into the chat. For local
-permission testing you can enable a throw-away demo account; the sign-in exists
-only to prove that server-side enforcement works, and it stores nothing.
-
-To make it real, one of:
-- point `/api/session/login` at the existing school account system
-  (`SreeIrushySchool.asp` / the ASP auth), or
-- add a small teacher registry the IRUSHY server can read,
-and issue the session with `loginTeacher()` once the credentials check out.
+`IRUSHY_ENABLE_DEMO_LOGIN=false` by default. `POST /api/session/login` then
+answers `501` and tells visitors not to type a password into the chat. The
+throw-away demo sign-in exists only to prove server-side enforcement. To make
+sign-in real, point `/api/session/login` at the school's account system (the
+ASP auth) or a small teacher registry, then issue the session with
+`sessions.issue(req, res, { role: 'teacher' })`.
 
 ### 2. Completed-test permission (the exact interface)
-The test backend signs:
 
 ```
 token = base64url(JSON({ studentRef, testId, status, completedAt, anonymousPermitted }))
         + "." + base64url(HMAC-SHA256(body, IRUSHY_ASSESSMENT_SECRET))
 ```
 
-`status` is `completed` | `active`. Share `IRUSHY_ASSESSMENT_SECRET` between
-the two services only. A completed token is only honoured for a signed-in
-student unless `anonymousPermitted` is explicitly set.
+- `status` is `completed` or `active`. The secret is shared between the two
+  services only.
+- A completed token is honoured only for a signed-in student whose
+  `studentRef` matches, unless `anonymousPermitted` is set.
+- The test page sends it as `context.assessmentToken`, together with
+  `question`, `selectedAnswer`, `correctAnswer`, `conceptRef` and, optionally,
+  `questionId` and `topic`.
 
-### 3. Student results (server-enforced teacher → student permissions)
+### 3. Student results
 `GET /api/teacher/results/:studentRef` returns `503` with
-`neverSimulated: true` and `records: null`, **even for a signed-in teacher**,
-until a real permission source exists. That requires three things that are not
-in place yet:
-1. a teacher identity that maps to specific students/classes,
-2. a per-student permission check on the server for every request,
-3. an audit record of who looked at whose marks.
-
-Nothing about marks or records is simulated anywhere in this codebase.
+`neverSimulated: true` and `records: null`, even for a signed-in teacher.
+Real results need three things that don't exist yet:
+- a teacher identity mapped to students;
+- a per-student permission check on every request;
+- an audit record.
 
 ### 4. Deployment to the live site
-Not done, and deliberately not part of this work. The live site was not
-modified. Deployment steps are in [`INTEGRATION.md`](INTEGRATION.md).
-A production deployment still needs: `NODE_ENV=production`,
-`IRUSHY_SESSION_SECRET` set, HTTPS, `IRUSHY_ALLOW_SAMPLE_CONTENT=false` until
-content is approved, and the APInex plan sized to the traffic (the free tier is
-**5 requests/minute** — see [SECURITY.md](SECURITY.md#capacity)).
+Not done, and deliberately not part of this work; the live site was not
+modified. Steps are in [`INTEGRATION.md`](INTEGRATION.md). Production needs:
+- `NODE_ENV=production`;
+- `IRUSHY_SESSION_SECRET` set;
+- HTTPS;
+- an approval decision for the concept notes. In production, unapproved notes
+  are off by default, and IRUSHY then answers website questions only.
+
+---
+
+## Not rebuilt / changed from the earlier documents
+
+- **Web search** (`IRUSHY_ENABLE_WEB_SEARCH`) was an APInex-only option. It is
+  not part of the rebuild; the local engine has no web access by design.
+- **`verify-apinex`** does not check the account balance, because no balance
+  endpoint is documented in this repository.
+- **Self-hosted Ollama-compatible backend:** not built. It would sit behind the
+  same engine interface, off by default.
+- **`build-resources-from-live`** is rebuilt but could not be run against the
+  live site from the sandbox, which had no route to tnhhsscta.com. Its parser
+  is tested on markup built from `data/resources.json`.
