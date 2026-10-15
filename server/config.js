@@ -5,8 +5,10 @@
 // variables: with no `.env` at all IRUSHY starts with its own local engine,
 // which needs no key, no account and no network.
 //
-// The optional APInex backend is only used when IRUSHY_ENGINE=apinex is set
-// explicitly. Nothing in this file falls back to it.
+// The optional backends are only used when IRUSHY_ENGINE names one
+// explicitly: apinex (a hosted gateway, needs a key) or ollama (a model on
+// this machine). Nothing in this file falls back to either of them, and their
+// settings are not even read while the local engine is selected.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -15,8 +17,12 @@ import { fileURLToPath } from 'node:url';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-export const ENGINES = Object.freeze(['local', 'apinex']);
+export const ENGINES = Object.freeze(['local', 'apinex', 'ollama']);
 export const APINEX_KEY_PLACEHOLDER = 'sk-apx-REPLACE_ME';
+// Ollama listens on 127.0.0.1:11434 by default. 127.0.0.1 rather than
+// "localhost", which can resolve to ::1 where Ollama is not listening.
+export const OLLAMA_DEFAULT_URL = 'http://127.0.0.1:11434';
+const OLLAMA_MODEL_RE = /^[A-Za-z0-9][A-Za-z0-9._:/@+-]{0,199}$/;
 
 // ---------------------------------------------------------------------------
 // .env loader: KEY=VALUE lines, `#` comments (also trailing ` # comment`),
@@ -95,6 +101,84 @@ export class ConfigError extends Error {
 }
 
 // ---------------------------------------------------------------------------
+// Optional Ollama backend
+// ---------------------------------------------------------------------------
+// "This machine" means a loopback address. Everything else (a LAN box, a
+// docker service name, a hosted service) is another machine: visitors'
+// questions would leave this server, so it needs an explicit opt-in.
+export function isLoopbackHost(hostname) {
+  const h = String(hostname || '').toLowerCase().replace(/^\[|\]$/g, '');
+  if (h === 'localhost' || h === '::1' || h === '0:0:0:0:0:0:0:1') return true;
+  return /^127\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(h) || /^::ffff:127\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(h);
+}
+
+// Ollama names its cloud models with a "cloud" tag (gemma4:cloud,
+// gpt-oss:120b-cloud). They run on ollama.com under an account plan, not on
+// this machine, even when they are called through the local Ollama.
+export function isOllamaCloudModel(model) {
+  const name = String(model || '');
+  const slash = name.lastIndexOf('/');
+  const colon = name.lastIndexOf(':');
+  const tag = colon > slash ? name.slice(colon + 1) : '';
+  return /(^|-)cloud$/i.test(tag);
+}
+
+function parseOllama(env) {
+  const raw = str(env, 'OLLAMA_BASE_URL', '') || OLLAMA_DEFAULT_URL;
+  let u;
+  try {
+    u = new URL(raw);
+  } catch {
+    throw new ConfigError('OLLAMA_BASE_URL is not a valid URL. Example: http://127.0.0.1:11434');
+  }
+  if (u.protocol !== 'http:' && u.protocol !== 'https:') {
+    throw new ConfigError('OLLAMA_BASE_URL must start with http:// or https://');
+  }
+  if (u.username || u.password) {
+    throw new ConfigError('OLLAMA_BASE_URL must not contain a user name or password. A self-hosted Ollama needs none.');
+  }
+  if (u.search || u.hash) throw new ConfigError('OLLAMA_BASE_URL must not contain "?" or "#".');
+  const host = u.hostname.replace(/^\[|\]$/g, '');
+  const remote = !isLoopbackHost(host);
+  const allowRemote = bool(env, 'IRUSHY_OLLAMA_ALLOW_REMOTE', false);
+  if (remote && !allowRemote) {
+    throw new ConfigError(
+      `OLLAMA_BASE_URL points to another machine (${host}). Visitors' questions would leave this server, ` +
+        'so IRUSHY only does that with IRUSHY_OLLAMA_ALLOW_REMOTE=true.'
+    );
+  }
+  const model = str(env, 'OLLAMA_MODEL', '');
+  if (!model) {
+    throw new ConfigError(
+      'IRUSHY_ENGINE=ollama needs OLLAMA_MODEL: the name of a model installed on the Ollama host ("ollama list" shows them). ' +
+        'IRUSHY does not guess a model.'
+    );
+  }
+  if (!OLLAMA_MODEL_RE.test(model)) throw new ConfigError('OLLAMA_MODEL is not a valid Ollama model name (example: llama3.2 or qwen2.5:7b).');
+  const cloud = isOllamaCloudModel(model);
+  if (cloud && !allowRemote) {
+    throw new ConfigError(
+      `OLLAMA_MODEL "${model}" is an Ollama cloud model: it runs on ollama.com, not on this machine, and can use a paid plan. ` +
+        'Use a local model, or set IRUSHY_OLLAMA_ALLOW_REMOTE=true to allow it.'
+    );
+  }
+  return {
+    configured: true,
+    baseUrl: `${u.origin}${u.pathname}`.replace(/\/+$/, ''),
+    host,
+    remote,
+    cloud,
+    allowRemote,
+    model,
+    maxOutputTokens: int(env, 'IRUSHY_MAX_OUTPUT_TOKENS', 700, { min: 50, max: 4000 }),
+    timeoutMs: int(env, 'IRUSHY_REQUEST_TIMEOUT_MS', 30000, { min: 1000, max: 120000 }),
+    maxRetries: int(env, 'IRUSHY_MAX_PROVIDER_RETRIES', 1, { min: 0, max: 2 }),
+    // 0 = let the Ollama server decide (its OLLAMA_CONTEXT_LENGTH)
+    numCtx: int(env, 'OLLAMA_NUM_CTX', 0, { min: 0, max: 1048576 })
+  };
+}
+
+// ---------------------------------------------------------------------------
 // buildConfig
 // ---------------------------------------------------------------------------
 export function buildConfig(env = process.env, { root = ROOT } = {}) {
@@ -123,7 +207,13 @@ export function buildConfig(env = process.env, { root = ROOT } = {}) {
 
   // The local engine costs no provider quota, so its default per-IP chat
   // budget is larger than the APInex one (which mirrors the 5 RPM free tier).
-  const defaultChatMax = engineRaw === 'apinex' ? 20 : 60;
+  // A self-hosted model costs no quota either, but each answer takes seconds
+  // of this machine's CPU/GPU, so it sits in between.
+  const defaultChatMax = { apinex: 20, ollama: 30 }[engineRaw] || 60;
+
+  // Ollama settings are read, and validated, only when it is selected: a
+  // stray OLLAMA_* variable can never stop the default local engine.
+  const ollama = engineRaw === 'ollama' ? parseOllama(env) : { configured: false };
   const rateLimitMax = int(env, 'IRUSHY_RATE_LIMIT_MAX', defaultChatMax, { min: 1, max: 100000 });
 
   const allowedOrigins = str(
@@ -163,6 +253,9 @@ export function buildConfig(env = process.env, { root = ROOT } = {}) {
       rpm: int(env, 'IRUSHY_PROVIDER_RPM', 5, { min: 1, max: 600 }),
       enableWebSearch: bool(env, 'IRUSHY_ENABLE_WEB_SEARCH', false)
     },
+
+    // Optional backend. Only read when engine === 'ollama' (see parseOllama).
+    ollama,
 
     limits: {
       maxInputChars: int(env, 'IRUSHY_MAX_INPUT_CHARS', 2000, { min: 50, max: 20000 }),
@@ -240,6 +333,9 @@ export function diagnosticsView(config, env = process.env) {
       APINEX_API_KEY: state('APINEX_API_KEY'),
       APINEX_BASE_URL: state('APINEX_BASE_URL'),
       APINEX_MODEL: state('APINEX_MODEL'),
+      OLLAMA_BASE_URL: state('OLLAMA_BASE_URL'),
+      OLLAMA_MODEL: state('OLLAMA_MODEL'),
+      IRUSHY_OLLAMA_ALLOW_REMOTE: state('IRUSHY_OLLAMA_ALLOW_REMOTE'),
       IRUSHY_SESSION_SECRET: state('IRUSHY_SESSION_SECRET'),
       IRUSHY_ASSESSMENT_SECRET: state('IRUSHY_ASSESSMENT_SECRET'),
       IRUSHY_ALLOW_SAMPLE_CONTENT: state('IRUSHY_ALLOW_SAMPLE_CONTENT'),
@@ -249,9 +345,11 @@ export function diagnosticsView(config, env = process.env) {
     },
     notes: [
       'Values are never shown here, only whether a variable is set.',
-      config.engine === 'local'
-        ? 'The local engine needs no API key; APINEX_* variables are ignored.'
-        : 'IRUSHY_ENGINE=apinex: answers need APINEX_API_KEY on this server.'
+      {
+        local: 'The local engine needs no API key; APINEX_* and OLLAMA_* variables are ignored.',
+        apinex: 'IRUSHY_ENGINE=apinex: answers need APINEX_API_KEY on this server.',
+        ollama: 'IRUSHY_ENGINE=ollama: answers come from OLLAMA_MODEL on the Ollama host; /api/health?deep=1 checks it is installed.'
+      }[config.engine]
     ]
   };
 }

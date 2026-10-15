@@ -4,7 +4,7 @@
 //
 // Works with no .env at all: the local engine needs no key, no account and
 // no network. Copy .env.example to .env only to change defaults or to turn
-// on the optional APInex backend (IRUSHY_ENGINE=apinex).
+// on an optional backend (IRUSHY_ENGINE=apinex or IRUSHY_ENGINE=ollama).
 
 import path from 'node:path';
 import { ROOT, loadEnvFile, buildConfig, secretValues, ConfigError } from './config.js';
@@ -50,6 +50,7 @@ const server = app.listen(config.port, config.host, () => {
     port,
     engine: engine.name,
     engine_version: engine.version,
+    ...(engine.model ? { model: engine.model } : {}),
     requires_key: engine.requiresKey,
     connected: engine.connected(),
     sample_content: knowledge.allowSample,
@@ -59,6 +60,19 @@ const server = app.listen(config.port, config.host, () => {
   });
   if (engine.name === 'apinex' && !engine.connected()) {
     log.warn('not_connected', { detail: 'IRUSHY_ENGINE=apinex but APINEX_API_KEY is not set: chat answers "IRUSHY is not connected yet."' });
+  }
+  // Optional Ollama backend: say at once whether Ollama is running and the
+  // model is installed, instead of at the first visitor's question.
+  if (engine.name === 'ollama') {
+    engine.probe().then((p) => {
+      const fields = { engine: 'ollama', ok: p.ok, model: p.model, reachable: p.reachable, model_listed: p.modelListed, remote_model: p.remoteModel };
+      if (p.ok) return log.info('engine_probe', fields);
+      let detail = 'Ollama answered, but OLLAMA_MODEL is not installed there: run "ollama pull <model>" on that machine.';
+      if (!p.reachable) detail = 'Ollama is not reachable at OLLAMA_BASE_URL: start it ("ollama serve" or the Ollama app).';
+      else if (p.status) detail = `Ollama answered /api/tags with HTTP ${p.status}.`;
+      else if (p.remoteModel) detail = 'OLLAMA_MODEL points at a cloud model (remote_host): set IRUSHY_OLLAMA_ALLOW_REMOTE=true to allow it, or use a local model.';
+      return log.warn('engine_probe', { ...fields, detail });
+    }).catch(() => {});
   }
 });
 

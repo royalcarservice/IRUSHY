@@ -14,6 +14,7 @@
     "smoke": "node tools/smoke-test.mjs",
     "check:ui": "node tools/ui-check.mjs",
     "verify:apinex": "node tools/verify-apinex.mjs",
+    "verify:ollama": "node tools/verify-ollama.mjs",
     "build:data": "node tools/build-resources-from-live.mjs"
   },
   "dependencies": {

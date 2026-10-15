@@ -22,7 +22,7 @@ export function siteRouter({ config, knowledge, engine, sessions, startedAt }) {
         engine_version: engine.version,
         requires_key: engine.requiresKey,
         key_on_server_only: true,
-        ...(engine.name === 'apinex' ? { model: engine.model } : {}),
+        ...(engine.model ? { model: engine.model } : {}),
         features: {
           sampleContent: knowledge.allowSample,
           webSearch: false,
@@ -53,7 +53,7 @@ export function siteRouter({ config, knowledge, engine, sessions, startedAt }) {
       connected,
       requires_key: engine.requiresKey,
       uses_network: !!engine.usesNetwork,
-      ...(engine.name === 'apinex' ? { model: engine.model } : {}),
+      ...(engine.model ? { model: engine.model } : {}),
       knowledge: { version: knowledge.version, ...knowledge.counts, warnings: knowledge.warnings.length },
       results_access: { available: false, neverSimulated: true },
       transcriptStored: false,
