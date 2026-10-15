@@ -166,7 +166,8 @@ export function chatRouter({ config, knowledge, engine, sessions, index, log, ch
         started,
         duplicate,
         historyTrimmed: trimmed,
-        debug: wantDebug
+        debug: wantDebug,
+        maxAnswerChars: config.limits.maxAnswerChars
       });
       log.info('chat_answered', {
         request_id: requestId,

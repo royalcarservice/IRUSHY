@@ -20,7 +20,7 @@ export const ERROR_TEXT = {
   rate_limited: { status: 429, retryable: true, en: 'Too many questions in a short time. Please wait a little and try again.', ta: 'குறுகிய நேரத்தில் அதிகமான கேள்விகள். சற்று நேரம் கழித்து மீண்டும் முயற்சி செய்யுங்கள்.' },
   busy: { status: 503, retryable: true, en: 'IRUSHY is busy right now. Please try again in a moment.', ta: 'IRUSHY தற்போது பரபரப்பாக உள்ளது. சிறிது நேரத்தில் மீண்டும் முயற்சி செய்யுங்கள்.' },
   engine_error: { status: 500, retryable: true, en: 'IRUSHY could not prepare an answer this time. Please try again, or use the links below.', ta: 'இந்த முறை IRUSHY யால் பதிலைத் தயாரிக்க முடியவில்லை. மீண்டும் முயற்சி செய்யுங்கள், அல்லது கீழே உள்ள இணைப்புகளைப் பயன்படுத்துங்கள்.' },
-  // optional APInex backend only
+  // optional backends only (APInex, Ollama)
   not_connected: { status: 503, retryable: false, en: 'IRUSHY is not connected yet. The website links below still work.', ta: 'IRUSHY இன்னும் இணைக்கப்படவில்லை. கீழே உள்ள இணையதள இணைப்புகள் வழக்கம்போல் செயல்படும்.' },
   invalid_credentials: { status: 502, retryable: false, en: 'The AI service rejected the server key. The site administrator needs to check it.', ta: 'சேவையகச் சாவியை AI சேவை ஏற்கவில்லை. தள நிர்வாகி அதைச் சரிபார்க்க வேண்டும்.' },
   insufficient_quota: { status: 502, retryable: false, en: 'The AI service account has no quota left. The site administrator needs to check it.', ta: 'AI சேவைக் கணக்கில் ஒதுக்கீடு தீர்ந்துவிட்டது. தள நிர்வாகி அதைச் சரிபார்க்க வேண்டும்.' },
@@ -33,20 +33,34 @@ export const ERROR_TEXT = {
   server_error: { status: 500, retryable: true, en: 'Something went wrong. Please try again.', ta: 'ஏதோ தவறு நடந்தது. மீண்டும் முயற்சி செய்யுங்கள்.' }
 };
 
-// For the site administrator (English, names the setting to look at). Only the
-// optional APInex backend can produce these configuration errors.
+// For the site administrator (English, names the setting to look at). Only
+// the optional backends can produce configuration errors, so most hints are
+// per backend; a hint never contains a secret or an address.
 export const ADMIN_HINTS = {
-  not_connected: 'IRUSHY_ENGINE=apinex needs APINEX_API_KEY in the server .env. Or remove IRUSHY_ENGINE to use the built-in local engine, which needs no key.',
-  invalid_credentials: 'Check APINEX_API_KEY in the server .env, then run npm run verify:apinex.',
-  insufficient_quota: 'The APInex account has no quota left. Top it up, or switch back to IRUSHY_ENGINE=local.',
-  model_unavailable: 'APINEX_MODEL is not available on this account. IRUSHY does not switch models unless IRUSHY_ALLOW_MODEL_FALLBACK=true.',
-  engine_error: 'See the server log line "chat_failed" for this request_id.'
+  apinex: {
+    not_connected: 'IRUSHY_ENGINE=apinex needs APINEX_API_KEY in the server .env. Or remove IRUSHY_ENGINE to use the built-in local engine, which needs no key.',
+    invalid_credentials: 'Check APINEX_API_KEY in the server .env, then run npm run verify:apinex.',
+    insufficient_quota: 'The APInex account has no quota left. Top it up, or switch back to IRUSHY_ENGINE=local.',
+    model_unavailable: 'APINEX_MODEL is not available on this account. IRUSHY does not switch models unless IRUSHY_ALLOW_MODEL_FALLBACK=true.'
+  },
+  ollama: {
+    network_error: 'IRUSHY could not reach Ollama at OLLAMA_BASE_URL. Start Ollama on that machine (the Ollama app, or "ollama serve"), then run npm run verify:ollama. Or remove IRUSHY_ENGINE to use the built-in local engine.',
+    model_unavailable: 'OLLAMA_MODEL is not installed on the Ollama host. Run "ollama pull <model>" there ("ollama list" shows what is installed). IRUSHY does not switch models on its own.',
+    timeout: 'The model took longer than IRUSHY_REQUEST_TIMEOUT_MS. Use a smaller model, lower IRUSHY_MAX_OUTPUT_TOKENS, or raise the timeout (the widget waits at most 60 s).',
+    provider_unavailable: 'Ollama returned a server error or is overloaded. The server log line "chat_failed" has the HTTP status. A model too large for this machine\'s memory is a common cause.',
+    invalid_request: 'Ollama, or a proxy in front of it, rejected the request. The server log line "chat_failed" has the HTTP status. IRUSHY sends no credentials to Ollama.',
+    bad_provider_response: 'Ollama sent an empty or unreadable answer. A thinking model can spend all of IRUSHY_MAX_OUTPUT_TOKENS on reasoning; an instruction model avoids that.'
+  },
+  any: {
+    engine_error: 'See the server log line "chat_failed" for this request_id.'
+  }
 };
 
-export function errorInfo(code) {
+export function errorInfo(code, engineName = null) {
   const e = ERROR_TEXT[code] || ERROR_TEXT.server_error;
   const known = ERROR_TEXT[code] ? code : 'server_error';
   const info = { code: known, status: e.status, retryable: e.retryable, message: { en: e.en, ta: e.ta } };
-  if (ADMIN_HINTS[known]) info.adminHint = ADMIN_HINTS[known];
+  const hint = (ADMIN_HINTS[engineName] && ADMIN_HINTS[engineName][known]) || ADMIN_HINTS.any[known];
+  if (hint) info.adminHint = hint;
   return info;
 }

@@ -81,6 +81,11 @@ export function dropUnknownCitations(text, idIndex) {
 // Markdown decoration. The local engine writes plain text by construction.
 export function stripMarkup(text) {
   return String(text)
+    // a model's reasoning trace is never shown: whole blocks, a block whose
+    // opening tag is missing, and a block cut off at the token limit
+    .replace(/<(think|thinking)>[\s\S]*?<\/\1>/gi, '')
+    .replace(/^[\s\S]*?<\/(think|thinking)>/i, '')
+    .replace(/<(think|thinking)>[\s\S]*$/i, '')
     .replace(/<\s*(script|style|iframe|object|embed|svg)[\s\S]*?<\s*\/\s*\1\s*>/gi, '')
     .replace(/<[^>]{0,500}>/g, '')
     .replace(/\bjavascript\s*:/gi, '')

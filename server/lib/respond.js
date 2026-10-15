@@ -9,8 +9,8 @@
 //         duplicate, history_trimmed, ms, debug? }
 
 import { pick } from './lang.js';
-import { filterUrls, dropUnknownCitations, stripMarkup, extractCitationIds } from './sanitize.js';
-import { errorInfo } from './errors.js';
+import { filterUrls, dropUnknownCitations, stripMarkup, extractCitationIds, truncateAtSentence } from './sanitize.js';
+import { errorInfo, EngineError } from './errors.js';
 import { fixedBoth } from './engine/voice.js';
 import { isVideoUrl } from './data.js';
 import { validateSvg } from './svg.js';
@@ -75,23 +75,45 @@ function baseMeta({ engine, knowledge, started, requestId, intent = null, confid
   };
 }
 
-export function successResponse({ knowledge, engine, base, result, notices, assessment, started, duplicate = false, historyTrimmed = false, debug = false }) {
+// The visible sample label for model output (the local engine adds its own,
+// picked with the request seed). First variant, so it is stable.
+export function modelSampleLabel(knowledge, lang) {
+  const frames = knowledge.phrasebook[lang] && knowledge.phrasebook[lang].frames;
+  const variants = frames && frames['sample.label'];
+  if (!Array.isArray(variants) || !variants.length) throw new Error(`phrasebook: frame "sample.label" is missing for language "${lang}"`);
+  return variants[0];
+}
+
+export function successResponse({ knowledge, engine, base, result, notices, assessment, started, duplicate = false, historyTrimmed = false, debug = false, maxAnswerChars = 2400 }) {
   const lang = base.lang;
+  const fromModel = result.source !== 'local';
   let text = String(result.text || '');
-  if (result.source !== 'local') text = stripMarkup(text);
+  if (fromModel) text = stripMarkup(text);
   const urls = filterUrls(text, knowledge.sitePages.map((p) => p.url));
   text = urls.text;
   const dc = dropUnknownCitations(text, knowledge.idIndex);
   text = dc.text.trim();
+  // Nothing left once markup, unverified URLs and invented ids are gone:
+  // report it as an unreadable answer rather than send an empty one.
+  if (fromModel && !text) throw new EngineError('bad_provider_response', 'model answer was empty after cleaning', { status: 502, retryable: true });
   const cited = extractCitationIds(text);
 
-  const used =
+  let used =
     result.source === 'local'
       ? [...new Set([...(result.usedIds || []), ...cited])].filter((id) => knowledge.idIndex.has(id))
       : cited.filter((id) => knowledge.idIndex.has(id));
   const attachments = safeAttachments(result.attachments);
   const isSample = (id) => knowledge.idIndex.get(id).provenance !== 'approved';
   const sampleContentUsed = !!result.sampleContentUsed || used.some(isSample) || attachments.some((a) => a.label);
+
+  // Model output gets the same two guarantees the local engine builds in:
+  // a bounded length, and the visible sample label as the last line.
+  if (fromModel) {
+    const label = sampleContentUsed ? modelSampleLabel(knowledge, lang) : '';
+    text = truncateAtSentence(text, Math.max(100, maxAnswerChars - (label ? label.length + 1 : 0))).text;
+    if (label) text = `${text}\n${label}`;
+    used = extractCitationIds(text).filter((id) => knowledge.idIndex.has(id));
+  }
 
   let links;
   if (result.source === 'local') {
@@ -114,10 +136,8 @@ export function successResponse({ knowledge, engine, base, result, notices, asse
   const meta = baseMeta({ engine, knowledge, started, requestId: base.request_id, intent: result.intent || null, confidence: result.confidence ?? null });
   meta.duplicate = duplicate;
   meta.history_trimmed = historyTrimmed;
-  if (result.source === 'apinex') {
-    meta.provider_model = result.providerModel || null;
-    meta.model_fallback_used = !!result.fallbackUsed;
-  }
+  if (fromModel) meta.provider_model = result.providerModel || null;
+  if (result.source === 'apinex') meta.model_fallback_used = !!result.fallbackUsed;
   if (debug && result.debug) meta.debug = result.debug;
 
   return {
@@ -162,7 +182,7 @@ export function blockedResponse({ knowledge, engine, base, refusal, notices, ass
 }
 
 export function errorResponse({ knowledge, engine, base, code, notices = [], assessment = null, started, retryAfterMs = 0 }) {
-  const info = errorInfo(code);
+  const info = errorInfo(code, engine && engine.name);
   const meta = baseMeta({ engine, knowledge, started, requestId: base.request_id });
   if (retryAfterMs) meta.retry_after_s = Math.ceil(retryAfterMs / 1000);
   return {

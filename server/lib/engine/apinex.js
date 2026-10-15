@@ -7,9 +7,8 @@
 // (IRUSHY_PROVIDER_RPM) only exists here.
 
 import { EngineError } from '../errors.js';
-import { buildMessages } from '../prompts.js';
+import { buildMessages, buildReferences, referenceProvenance, testContextFor } from '../prompts.js';
 import { createProviderLimiter } from '../limits.js';
-import { pick } from '../lang.js';
 
 export const APINEX_CLIENT_VERSION = '1.0.0';
 
@@ -71,24 +70,6 @@ export async function chatCompletion({ baseUrl, apiKey, model, messages, maxToke
   }
 }
 
-function hitText(h, lang) {
-  const e = h.entry;
-  switch (h.kind) {
-    case 'faq':
-      return `${pick(e.question, lang)} ${pick(e.answer, lang)}`;
-    case 'material':
-      return `${pick(e.title, lang)} (${e.class}th ${e.subject}, ${e.medium})`;
-    case 'concept':
-      return `${pick(e.title, lang)}: ${pick(e.definition, lang)} ${e.keyPoints.map((p) => pick(p, lang)).join(' ')}`;
-    case 'question':
-      return `${pick(e.question, lang)}`;
-    case 'glossary':
-      return `${e.en} = ${e.ta}`;
-    default:
-      return pick(e.title, lang);
-  }
-}
-
 export function createApinexEngine({ config, knowledge, fetchImpl = (...a) => globalThis.fetch(...a) }) {
   const a = config.apinex;
   const limiter = createProviderLimiter({ rpm: a.rpm });
@@ -101,12 +82,13 @@ export function createApinexEngine({ config, knowledge, fetchImpl = (...a) => gl
     connected: () => a.keyConfigured,
     describe: () => ({ engine: 'apinex', engine_version: APINEX_CLIENT_VERSION, requires_key: true, uses_network: true, model: a.model }),
     limiter,
-    async answer({ mode, lang, message, history, hits, destinations }) {
+    async answer({ mode, lang, message, history, hits, destinations, context, classification, assessment }) {
       if (!a.keyConfigured) throw new EngineError('not_connected', 'no APInex key on this server', { status: 503 });
       const slot = limiter.tryAcquire();
       if (!slot.ok) throw new EngineError('rate_limited', 'provider RPM budget used', { status: 429, retryable: true, retryAfterMs: slot.retryAfterMs });
-      const refs = (hits || []).map((h) => ({ id: h.id, kind: h.kind, provenance: knowledge.idIndex.get(h.id)?.provenance || 'unknown', text: hitText(h, lang) }));
-      const messages = buildMessages({ mode, lang, message, history, hits: refs, destinations });
+      const testContext = testContextFor({ assessment, context, knowledge });
+      const refs = buildReferences({ hits, knowledge, lang, classification, extraIds: testContext && testContext.conceptRef ? [testContext.conceptRef] : [] });
+      const messages = buildMessages({ mode, lang, message, history, hits: refs, destinations, testContext });
       let result;
       try {
         result = await chatCompletion({
@@ -129,19 +111,18 @@ export function createApinexEngine({ config, knowledge, fetchImpl = (...a) => gl
           throw err;
         }
       }
-      const usedIds = refs.map((r) => r.id);
-      const provenance = [];
-      if (refs.some((r) => r.provenance === 'approved')) provenance.push('approved');
-      if (refs.some((r) => r.provenance === 'sample-unapproved')) provenance.push('sample-unapproved');
+      const provenance = referenceProvenance(refs);
       return {
         text: result.content,
         citations: [],
-        usedIds,
+        usedIds: refs.map((r) => r.id),
         provenance,
+        // the model may use a sample entry without citing it
+        sampleContentUsed: provenance.includes('sample-unapproved'),
         source: 'apinex',
         providerModel: result.model,
         fallbackUsed: !!result.fallbackUsed,
-        debug: { engine: 'apinex', model: a.model, retrieved: refs.map((r) => r.id) }
+        debug: { engine: 'apinex', model: a.model, retrieved: (hits || []).map((h) => h.id), references: refs.map((r) => r.id), test_context: !!testContext }
       };
     },
     async probe() {
