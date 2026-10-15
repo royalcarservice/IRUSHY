@@ -33,7 +33,20 @@ export const ERROR_TEXT = {
   server_error: { status: 500, retryable: true, en: 'Something went wrong. Please try again.', ta: 'ஏதோ தவறு நடந்தது. மீண்டும் முயற்சி செய்யுங்கள்.' }
 };
 
+// For the site administrator (English, names the setting to look at). Only the
+// optional APInex backend can produce these configuration errors.
+export const ADMIN_HINTS = {
+  not_connected: 'IRUSHY_ENGINE=apinex needs APINEX_API_KEY in the server .env. Or remove IRUSHY_ENGINE to use the built-in local engine, which needs no key.',
+  invalid_credentials: 'Check APINEX_API_KEY in the server .env, then run npm run verify:apinex.',
+  insufficient_quota: 'The APInex account has no quota left. Top it up, or switch back to IRUSHY_ENGINE=local.',
+  model_unavailable: 'APINEX_MODEL is not available on this account. IRUSHY does not switch models unless IRUSHY_ALLOW_MODEL_FALLBACK=true.',
+  engine_error: 'See the server log line "chat_failed" for this request_id.'
+};
+
 export function errorInfo(code) {
   const e = ERROR_TEXT[code] || ERROR_TEXT.server_error;
-  return { code: ERROR_TEXT[code] ? code : 'server_error', status: e.status, retryable: e.retryable, message: { en: e.en, ta: e.ta } };
+  const known = ERROR_TEXT[code] ? code : 'server_error';
+  const info = { code: known, status: e.status, retryable: e.retryable, message: { en: e.en, ta: e.ta } };
+  if (ADMIN_HINTS[known]) info.adminHint = ADMIN_HINTS[known];
+  return info;
 }

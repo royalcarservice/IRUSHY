@@ -170,7 +170,7 @@ export function errorResponse({ knowledge, engine, base, code, notices = [], ass
     body: {
       ok: false,
       ...base,
-      error: { code: info.code, retryable: info.retryable, message: info.message },
+      error: { code: info.code, retryable: info.retryable, message: info.message, ...(info.adminHint ? { adminHint: info.adminHint } : {}) },
       answer: null,
       citations: [],
       links: siteLinksFor(knowledge, base.mode),

@@ -869,6 +869,8 @@ async function main() {
     check('IRUSHY_ENGINE=apinex without a key: config connected:false', c.json.config.connected === false);
     const r = await chat(N, 'What is RAM?', { lang: 'en' });
     check('IRUSHY_ENGINE=apinex without a key: "IRUSHY is not connected yet." (503)', r.status === 503 && r.json.error.code === 'not_connected' && r.json.error.message.en.startsWith('IRUSHY is not connected yet.') && r.json.answer === null);
+    check('not connected: adminHint names the setting and the keyless default', /APINEX_API_KEY/.test(r.json.error.adminHint) && /local engine/.test(r.json.error.adminHint));
+    check('not connected: the verified website links are still returned', r.json.links.length >= 4 && r.json.links.every((l) => SITE_URLS.has(l.url)));
     const def = await chat(S, 'What is RAM?', { lang: 'en' });
     check('the default local engine never says "not connected"', def.status === 200 && !/not connected/i.test(def.text));
   }
