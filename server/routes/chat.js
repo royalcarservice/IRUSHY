@@ -152,7 +152,10 @@ export function chatRouter({ config, knowledge, engine, sessions, index, log, ch
     };
     const dedupeKey = `${session.sid || clientKey(req)}|${requestId}`;
     try {
-      const { value: result, duplicate } = await deduper.run(dedupeKey, () => gate.run(() => engine.answer(input)));
+      const { value: answered, duplicate } = await deduper.run(dedupeKey, () => gate.run(() => engine.answer(input)));
+      // The intent comes from the same local classifier for every backend, so
+      // the widget can rely on meta.intent (e.g. the results notice).
+      const result = answered.intent ? answered : { ...answered, intent: cls.intent, confidence: cls.confidence };
       const out = successResponse({
         knowledge,
         engine,

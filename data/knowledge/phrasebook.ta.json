@@ -105,7 +105,7 @@
     "example.code.lead": ["நிரல் (code):", "Code:"],
     "example.steps.lead": ["செயல்முறை:", "படிப்படியாக:", "இது எவ்வாறு செயல்படுகிறது:"],
     "example.step": ["{n}. {text}", "படி {n}: {text}"],
-    "example.answer": ["விடை: {answer}", "முடிவு: {answer}"],
+    "example.answer": ["விடை: {answer}", "எனவே விடை: {answer}"],
     "misconception.lead": ["பொதுவாக நடக்கும் தவறு:", "இந்தத் தவறைத் தவிர்த்திடுங்கள்:", "பல மாணவர்கள் இங்கே தவறுகிறார்கள்:"],
     "misconception.claim": ["\"{claim}\" என்று நினைப்பது தவறு.", "தவறான எண்ணம்: \"{claim}\""],
     "misconception.fix": ["சரியான கருத்து: {correction}", "திருத்தம்: {correction}"],

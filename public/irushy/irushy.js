@@ -721,7 +721,10 @@
           log.appendChild(node);
           rememberTurn('assistant', data.answer || '');
           if (data.mode && data.mode !== state.mode && state.mode === 'teacher') showStatus('info', t('downgraded'));
-          if (data.results_access && data.results_access.available === false && /result|mark|score/i.test(text + ' ' + (data.answer || ''))) {
+          // Only when the server says the visitor asked about results: answers
+          // themselves often mention "result" or "mark" (an SQL lesson, a worked
+          // example), which must not trigger this notice.
+          if (data.results_access && data.results_access.available === false && data.meta && data.meta.intent === 'results_privacy') {
             showStatus('info', t('resultUnavailable'));
           }
         } else {

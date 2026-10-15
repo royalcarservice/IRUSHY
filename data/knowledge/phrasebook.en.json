@@ -104,7 +104,7 @@
     "example.code.lead": ["Code:", "The code:"],
     "example.steps.lead": ["Working:", "Step by step:", "How it works:"],
     "example.step": ["{n}. {text}", "Step {n}: {text}"],
-    "example.answer": ["Answer: {answer}", "Result: {answer}"],
+    "example.answer": ["Answer: {answer}", "So the answer is: {answer}"],
     "misconception.lead": ["A common mistake:", "Watch out for this mistake:", "Many students slip here:"],
     "misconception.claim": ["it is wrong to think \"{claim}\"", "the wrong idea is \"{claim}\""],
     "misconception.fix": ["The correct idea: {correction}", "Here is the fix: {correction}"],
