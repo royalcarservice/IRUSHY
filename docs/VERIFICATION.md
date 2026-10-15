@@ -20,12 +20,12 @@ npm run check:ui    # browser suite (needs Chromium once: npx playwright install
 Last run:
 
 ```
-npm test          RESULT: 1610 passed, 0 failed, 1610 total   (about 4 s)
+npm test          RESULT: 1609 passed, 0 failed, 1609 total   (about 4 s)
 npm run check:ui  RESULT: 69 passed, 0 failed, 69 total       (about 7 s)
 ```
 
 About the numbers:
-- **Server suite:** most of the 1610 are per-answer checks. Every chat answer
+- **Server suite:** most of the 1609 are per-answer checks. Every chat answer
   in the suite goes through the same contract, citation, link, labelling,
   language, length and determinism checks, which is why the count is high. The
   section table below shows where they come from.
@@ -95,7 +95,7 @@ network blocked). Each answer passes the full contract and quality checks:
 
 ---
 
-## What the 1610 server checks cover
+## What the 1609 server checks cover
 
 | Section | Checks |
 |---|---|
@@ -109,7 +109,7 @@ network blocked). Each answer passes the full contract and quality checks:
 | Default server: site copy (frames, ROWS/COLS, registration choices, NEET logins, no widget inside the site copy), widget (no key, `textContent`, lazy youtube-nocookie), static assets | 20 |
 | Acceptance matrix (above) | 352 |
 | Every intent in both languages, and materials filtering (Tamil request; class + subject + medium + type), Tamil term helper, teacher tool for non-teachers, results, not published, identity, visual request, no-visual honesty, Auto-language rules | 641 |
-| Practice flow: correct and wrong attempts marked, reveal, next question differs, no pending question, generated questions after the bank runs out (labelled), forged refs ignored | 122 |
+| Practice flow: correct and wrong attempts marked, reveal, next question differs, no pending question, generated questions after the bank runs out (labelled), forged refs ignored | 121 |
 | Bounded input and history: 413, 400 (empty, non-object, invalid JSON, oversized body), history trimmed, junk dropped, control characters, duplicate `request_id` answered once, teacher downgrade notice, debug field only on request and without message text | 13 |
 | Assessment guard without a secret: every test treated as active; a mistake request explains how it works | 16 |
 | Production defaults: sample content off, no unapproved note used, website help still answered, diagnostics need a teacher | 22 |

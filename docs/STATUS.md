@@ -8,7 +8,7 @@ label.
 > were rebuilt from the documents in this folder and the widget's contract,
 > and the default engine is now IRUSHY's own local engine. The earlier test
 > counts (157 / 65) belonged to code that is not in the repository; the new
-> suites report their own numbers (`npm test` 1610, `npm run check:ui` 69).
+> suites report their own numbers (`npm test` 1609, `npm run check:ui` 69).
 
 ---
 

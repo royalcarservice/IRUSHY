@@ -86,7 +86,7 @@ backend to the other on its own, and never switches to a paid model.
 |---|---|
 | `npm start` | run the server (API + local site preview) on `PORT` (default 8787) |
 | `npm run dev` | same, with auto-restart on file changes |
-| `npm test` | **1610** server checks in about 4 s. Every local-engine server runs with **outbound network blocked**. Covers the bilingual acceptance matrix, every intent, determinism, guards, limits, teacher tools, and the optional backend against a mock |
+| `npm test` | **1609** server checks in about 4 s. Every local-engine server runs with **outbound network blocked**. Covers the bilingual acceptance matrix, every intent, determinism, guards, limits, teacher tools, and the optional backend against a mock |
 | `npm run check:ui` | **69** real-browser checks (desktop + mobile) against the local engine, no mock; screenshots into `docs/screenshots/` |
 | `npm run verify:apinex` | the only real APInex call, for the optional backend. Refuses without a key (exit 2) |
 | `npm run build:data` | read-only re-check of the published materials and site pages; dry run unless `--write` |

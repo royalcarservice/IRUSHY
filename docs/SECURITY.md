@@ -1,7 +1,7 @@
 # IRUSHY security and privacy notes
 
 Everything below is implemented in `server/` and covered by `npm test`
-(1610 checks) and `npm run check:ui` (69 checks) unless marked otherwise.
+(1609 checks) and `npm run check:ui` (69 checks) unless marked otherwise.
 
 ---
 

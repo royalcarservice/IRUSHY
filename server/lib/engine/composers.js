@@ -7,7 +7,7 @@
 // all facts come from data/ (FAQ, materials, concept notes, banks). The
 // composer never writes a URL into the text and never invents a source.
 
-import { pick, normalize, contentTokens, overlapScore, hasTamil } from '../lang.js';
+import { pick, normalize, contentTokens, overlapScore, hasTamil, tokenize } from '../lang.js';
 import { matchGlossary } from './match.js';
 import { classOf, subjectOf, mediumOf, materialWords, lessonNumber } from './intent.js';
 import {
@@ -59,6 +59,17 @@ export class Draft {
 // ---------------------------------------------------------------------------
 // shared helpers
 // ---------------------------------------------------------------------------
+function capFirst(s) {
+  return /^[a-z]/.test(s) ? s[0].toUpperCase() + s.slice(1) : s;
+}
+
+// "operating system" for Operating systems, "database" for Database / SQL.
+function termIsTopic(term, concept) {
+  const topicWords = new Set(tokenize(`${concept.topic} ${concept.title.en}`));
+  const termWords = tokenize(term.term);
+  return termWords.length > 0 && termWords.every((w) => topicWords.has(w));
+}
+
 function topicTitle(concept, lang) {
   return pick(concept.title, lang);
 }
@@ -378,8 +389,10 @@ export function explanation(ctx, d) {
   const lang = ctx.lang;
   const sig = ctx.cls.signals;
   d.add(v.say('explain.opener', { topic: topicTitle(concept, lang) }));
-  if (term && r.via === 'message') {
-    d.add(v.say('explain.termFocus', { term: term.term, definition: pick(term.definition, lang) }) + cite(concept.id));
+  // Focus on a named term only when it is a part of the topic ("binary" in
+  // Number systems), not the topic itself ("computer network").
+  if (term && r.via === 'message' && !termIsTopic(term, concept)) {
+    d.add(v.say('explain.termFocus', { term: capFirst(term.term), definition: pick(term.definition, lang) }) + cite(concept.id));
     d.add(pick(concept.definition, lang), 2);
   } else {
     d.add(pick(concept.definition, lang) + cite(concept.id));

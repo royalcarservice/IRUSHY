@@ -83,7 +83,7 @@
     "explain.termFocus": ["{term}: {definition}", "{term}. {definition}"],
     "explain.keypoints.lead": ["Key points:", "The main ideas:", "Remember these points:"],
     "explain.step": ["{n}. {text}", "{n}) {text}"],
-    "definition.lead": ["Here is what {term} means.", "Let me define {term}.", "{term}, in short:"],
+    "definition.lead": ["Here is what {term} means.", "Let me define {term}.", "A short definition of {term}:"],
     "definition.topicLead": ["Here is what {topic} means.", "{topic}, in short:", "A quick definition of {topic}:"],
     "definition.context": [
       "It is part of the topic {topic}.",
